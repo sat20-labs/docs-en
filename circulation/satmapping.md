@@ -1,5 +1,6 @@
-聪映射
+Satoshi Mapping
 ====
 
-锁定在闪电通道中的聪，会被映射到二层网络，进入用户在二层网络的钱包中，然后在二层网络中流通。
-用户通过二层网络的钱包交易转移，每次签名，都会同步更新闪电通道状态，确保用户在任何时候都能安全撤离。
+Satoshis that are locked in Lightning channels are mapped to the layer-2 network and enter the user's wallet in the layer-2 network, where they can circulate within the network.
+
+Users can transfer and transact with their satoshis using wallets in the layer-2 network. Each time a transaction is signed, the Lightning channel state is updated accordingly, ensuring that users can safely exit at any time.

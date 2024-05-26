@@ -1,9 +1,8 @@
-旧手机组成的DePIN网络
+DePIN Network Composed of Old Phones
 ====
 
+Many old phones from 7-8 years ago already have a quad-core CPU, 2GB or more of RAM, and over 16GB of storage space. These phones are sufficient to serve as lightweight nodes, providing some computational and storage services. Moreover, these old phones consume very little power. If a large number of such phones are connected together to form a network, it can generate economies of scale.
 
-很多7-8年前的老手机，已经具备4核CPU和2G以上的内存，还有16G以上的存储空间，这样的手机足够当作一个轻量级的节点，提供一些计算和存储服务。而且这些旧手机的耗电量极小。如果大量这样的手机连接起来形成网络，就会产生规模效应。  
+What's remarkable is that the assets of SAT20 are only related to satoshis. Although the number of satoshis is large, the required storage space and computational power are actually minimal. If each person uses an old phone as a lightweight node, it forms a decentralized indexing service network. This network can not only verify one's own assets but also maintain the security of the entire network. Additionally, it can provide storage and computational services, distributed storage of network data, and perform SVM (Satoshi Virtual Machine), thereby earning some service fees.
 
-非常妙的是，SAT20的资产，仅仅与聪相关，聪的数量虽然大，但是需要的存储空间和计算量其实非常小，每个人家里放一台旧手机当作轻量级的节点，就形成一个去中心化的索引服务网络，不仅仅可以验证自己的资产，也可以维护整个网络的安全，更可以提供一些存储和计算服务，分布式保存网络数据，执行SVM，借此赚取一些服务费用。
-
-一个由旧手机组成的去中心化的BTC资产索引服务网络。
+It is a decentralized BTC asset indexing service network composed of old phones.

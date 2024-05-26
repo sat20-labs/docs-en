@@ -1,6 +1,6 @@
-微支付合约
+Micro Payment Contracts
 ====
 
-在软件领域，长期以来，因为拷贝复制的成本很低，导致软件抄袭几乎没有成本；另外一个方面，也是因为支付成本太高，比如很难接受支付一分钱的费用需要付出10块钱的成本。这两个原因，导致开源软件的费用支付成为难题。现在借助SAT20的微支付合约，几乎没有成本就可以支付一分钱（按照每个BTC10万美金计算，10聪等于1美分）；而SVM为软件创造了一个付费使用比拷贝复制成本更低的环境（即使源代码复制一样很容易，但是集成和调试，最终形成WASM软件包上链，成本很高）。这两者结合，有可能促进付费使用软件的风潮。而创作者得到经济激励，将会大大提升创新的积极性。
+In the software field, for a long time, the low cost of copying and replicating has resulted in virtually no cost for software plagiarism. On the other hand, the high cost of payments, such as the difficulty of accepting a payment of one cent that requires a $10 cost, has made cost-effective payment for open-source software a challenge. Now, with the help of SAT20's micro payment contracts, it is almost costless to make a payment of one cent (calculated based on $100,000 per BTC, where 10 satoshis equal 1 cent). Additionally, SVM (Satoshi Virtual Machine) creates an environment for software that allows for lower-cost paid usage compared to copying and replicating (even though copying source code is easy, integrating and debugging, and eventually forming a WASM software package on the blockchain, incurs high costs). The combination of these two factors has the potential to promote a trend of paid software usage. With creators receiving economic incentives, it will greatly enhance the motivation for innovation.
 
-软件只是数字资产的一种，微支付合约，一样适合其他所有的数字资产的使用。一个数字资产极大繁荣的时代即将到来。
+Software is just one type of digital asset, and micro payment contracts are equally suitable for the use of all other digital assets. An era of tremendous prosperity for digital assets is on the horizon.

@@ -1,9 +1,10 @@
-聪锁定和解锁
+Locking and Unlocking of Satoshis
 ====
 
-聪锁定和解锁是资产从一层进入二层的必要条件。
-我们采用闪电通道技术，将聪锁定在多签地址中，进入闪电通道。
-在闪电网络中，RSMC（Revocable Sequence Maturity Contract）是一种合约类型，用于确保闪电网络通道的安全性和可靠性。
-RSMC是基于时间锁定的合约，它允许参与方在特定条件下撤销或关闭闪电网络通道。它的设计目的是防止欺诈行为和恶意操作，并确保交易的安全性。
-我们使用RSMC合约来确保用户资金安全。
+Locking and unlocking satoshis are necessary conditions for assets to move from layer-1 to layer-2.
+We utilize Lightning Network's channel technology to lock satoshis in a multi-signature address and enter the Lightning channel.
+In the Lightning Network, the Revocable Sequence Maturity Contract (RSMC) is a contract type used to ensure the security and reliability of Lightning Network channels.
 
+RSMC is a contract based on time locks, allowing participants to revoke or close Lightning Network channels under specific conditions. Its design purpose is to prevent fraudulent behavior and malicious operations and ensure the security of transactions.
+
+We use RSMC contracts to ensure the security of user funds.

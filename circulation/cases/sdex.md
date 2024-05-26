@@ -1,10 +1,6 @@
-聪的dex
+Satoshi's DEX
 ====
 
-在一层网络，SAT20资产使用PSBT技术，可以提供orderbook的交易模式。
-在二层网络，借助SVM技术，除了提供orderbook交易模式，还可以提供更多的交易模型，比如AMM等。
-所有的交易模型，都是去中心化的交易模型，资金安全掌握在用户手中。
-
-
-
-
+In the layer-1 network, SAT20 assets utilize PSBT (Partially Signed Bitcoin Transaction) technology to provide an order book trading model.
+In the layer-2 network, with the help of SVM (Satoshi Virtual Machine) technology, in addition to the order book trading model, it can also provide more trading models such as AMM (Automated Market Maker).  
+All of these trading models are decentralized, ensuring that funds are securely controlled by users.  

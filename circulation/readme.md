@@ -1,15 +1,17 @@
-SAT20资产流通协议
+SAT20 Asset Circulation Protocol
 ====
 
-SAT20资产流通协议为聪在二层网络制上的进入、离开和流通等基本操作制定规范。
-何谓BTC原生二层网络？我们认为标准只有一个，用户必须能够在整个过程中掌握自己的资金安全，不需要任何一方的协助或者许可，就可以单方面决定是否进入二层、或者退回一层。只有这样的网络，才能算是BTC的原生二层网络。SAT20资产流通协议本身不是二层网络，它是一个关于聪资产如何进入二层网络，在二层网络如何交易转移，如何安全退回一层的协议。SAT20资产流通协议适应所有BTC原生的二层网络，不管是现有的还是以后出现的。
+The SAT20 Asset Circulation Protocol establishes specifications for basic operations such as entering, exiting, and circulating satoshis within the layer-2 network.
 
-SAT20资产流通协议的核心概念有以下几个：
-1. 聪锁定和解锁：通过通道技术，将聪锁定在主网上。锁定的聪在符合某种条件后自动解锁，或者用户主动解锁，确保用户资金安全。
-2. 聪映射：将锁定的聪，映射到二层网络上，聪在二层网络继续流通。
-3. 聪交换：聪交换是聪在二层网络通畅流通的核心技术。暂时不透露。
-4. 增强UTXO模型：在二层网络，通过增强UTXO模型，让聪的其他信息保存在增强的UTXO中。
-5. 客户端验证：任何聪资产，都可以通过聪的序号和资产发行记录验证真伪。
-6. SVM：聪虚拟机，最大化增强聪的能力，使用WASM技术。
+What is the BTC native layer-2 network? We believe there is only one standard: users must have full control over the security of their funds throughout the entire process, without requiring assistance or permission from any party, and have the unilateral ability to decide whether to enter the layer-2 or return to layer-1. Only such a network can be considered a BTC native layer-2 network. The SAT20 Asset Circulation Protocol itself is not a layer-2 network; it is a protocol that governs how satoshis enter the layer-2 network, how they are traded and transferred within the layer-2 network, and how they can be securely returned to layer-1. The SAT20 Asset Circulation Protocol is designed to adapt to all BTC native layer-2 networks, whether existing or future ones.
 
-锁定和解锁，并且映射到二层网络，需要一个成熟的通道技术。本质上，这些通道技术由BTC脚本语言构造。SAT20可以采用任何已经被证明是安全可靠的脚本来完成聪的锁定和解锁任务。到目前为止，最成熟的通道技术是闪电网络的通道技术，所以我们在闪电网络通道技术之上实现SAT20资产的流通协议，并且通过一个样本项目来展示协议的能力。
+The core concepts of the SAT20 Asset Circulation Protocol include the following:
+
+1. Satoshi locking and unlocking: Satoshis are locked on the mainnet through channel technology. Locked satoshis are automatically unlocked upon meeting certain conditions or can be manually unlocked by the user, ensuring the security of user funds.
+2. Satoshi mapping: Locked satoshis are mapped to the layer-2 network, where they continue to circulate.
+3. Satoshi swapping: Satoshi swapping is the core technology that enables seamless circulation within the layer-2 network. Details of this technology are not disclosed at this time.
+4. Enhanced UTXO model: In the layer-2 network, the enhanced UTXO model allows additional information about satoshis to be stored within enhanced UTXOs.
+5. Client-side verification: The authenticity of any satoshi asset can be verified using its ordinal number and asset issuance records.
+6. SVM (Satoshi Virtual Machine): The Satoshi Virtual Machine maximizes the capabilities of satoshis using WebAssembly (WASM) technology.
+
+Locking, unlocking, and mapping to the layer-2 network require a mature channel technology. Essentially, these channel technologies are constructed using BTC script languages. SAT20 can utilize any proven and secure scripts to accomplish the locking and unlocking tasks for satoshis. So far, the most mature channel technology is the Lightning Network's channel technology. Therefore, we have implemented the SAT20 asset circulation protocol on top of the Lightning Network channel technology and demonstrated the protocol's capabilities through a sample project.

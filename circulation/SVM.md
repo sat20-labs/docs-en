@@ -1,4 +1,4 @@
-聪虚拟机
+Satoshi Virtual Machine
 ====
 
-一个支持模板合约和WASM软件包、运行在索引器的虚拟机环境。所有的代码和数据都来源于链上（主网和二层网络），执行在二层网络，由用户签名驱动，是一个真正尊重用户安全，保障用户安全的虚拟运行环境。
+The Satoshi Virtual Machine is a virtual execution environment that supports template contracts, WASM (WebAssembly) packages, and runs on an indexer. All code and data originate from the blockchain (mainnet and layer-2 networks) and are executed within the layer-2 network. It operates under user-signed signatures, providing a truly user-centric and secure virtual runtime environment that prioritizes and safeguards user security.

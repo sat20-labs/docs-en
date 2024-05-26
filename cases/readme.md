@@ -1,13 +1,11 @@
-SAT20的应用场景
+Applications of SAT20
 ====
 
+What exciting scenarios can we expect after the construction of SAT20? Here, we present some possible scenarios.
 
-在SAT20建设完成后，我们可以有什么样让人激动的场景？在这里我们展示一些可能的场景。
-
-
-[L1.5去中心化网络]
-[稳定币]
+[L1.5 Decentralized Network]
+[Stablecoins]
 [RWA]
-[DIP]
+[DeIP]
 [DID]
 [AI]

@@ -1,6 +1,6 @@
-聪交换
+Satoshi Swapping
 ====
 
-核心技术，暂时保密。
+This core technology is currently kept confidential.
 
-聪锁定，聪映射，聪交换，是聪资产安全的从一层进入二层并且自由流通的核心技术，这一技术确保了用户资金的安全的前提下，让聪和聪资产得以自由流动在BTC原生二层网络。
+Satoshi locking, mapping, and swapping are the core technologies that enable secure movement of satoshi assets from layer-1 to layer-2 and facilitate their free circulation within the BTC native layer-2 network. This technology ensures the security of user funds while allowing satoshis and their associated assets to freely flow within the network.
