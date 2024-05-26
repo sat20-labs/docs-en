@@ -1,46 +1,32 @@
-路线
+Roadmap
 ============
 
+SAT20 is just the beginning of our efforts to build the BTC ecosystem. Throughout this development process, we adhere to the following principles, which we believe reflect future trends:
+1. Asset Issuance on the BTC Mainnet: There will be an increasing number of assets issued on the BTC mainnet.
+2. Asset Trading on Layer 2 Networks: Infinite liquidity while ensuring assets remain under users' control, offering security, cost-effectiveness, and speed.
+3. The BTC network will become the foundation of the digital world, leading to a "one sat, one world" future.
 
-SAT20是我们建设BTC生态的开始。在这个发展过程中，我们坚持这样的原则，也是我们对未来趋势的判断：   
-1. 资产在BTC主网上发行：BTC主网上会有越来越多的资产。
-2. 资产在二层网络上交易：无限的流动性，同时资产不脱离用户的控制，安全，经济，快捷。
-3. BTC网络将成为数字世界的基础，一聪一世界必将到来。
-
-
-SAT20资产发行协议（ordx）
+SAT20 Asset Issuance Protocol (ordx)
 ----
-2024上半年完成资产发行协议的开发工作。  
+The development of the asset issuance protocol will be completed in the first half of 2024.
 
-
-SAT20资产流通协议
+SAT20 Asset Circulation Protocol
 ----
-在二层网络之上建设一个DEX，让所有基于聪的资产，可以在不脱离用户的控制的情况下，进行安全经济快捷的交易。  
-上半年完成协议设计和技术原型开发，2024Q3推出第一个基于SAT20流通协议的产品。  
+We will build a decentralized exchange (DEX) on top of layer 2 networks, allowing secure, cost-effective, and fast trading of all sat-based assets while maintaining user control. The protocol design and technical prototype development will be completed in the first half of the year, with the first product based on the SAT20 circulation protocol launching in 2024 Q3.
 
-
-样本网络的开发：TVN
+Development of Sample Network: TVN
 ----
-2024Q4启动SAT20协议的应用样本项目，TVN。  
-在我们的计划中，这时一个用户进入BTC生态，甚至进入web3世界的门户。  
-最迟明年Q1会有一个基本可用的产品供用户体验。  
+The TVN project, a sample application of the SAT20 protocol, will be launched in 2024 Q4. In our plans, TVN will serve as a gateway for users to enter the BTC ecosystem and even the web3 world. By Q1 of next year at the latest, there will be a minimally viable product for users to experience.
 
-
-
-开源
+Open Source
 ----
-为了早期开发的效率，我们先完全闭源开发。  
-我们计划逐步开放并最终开源整个SAT20项目，最终通过社区管理的方式将SAT20变成完全去中心化的项目，继续发展SAT20协议。  
-SAT20协议不是一个孤立的协议，而是一个可以融合任何BTC原生技术的协议，比如BTC的原生智能合约，或者任何BTC原生二层网络等未来技术。  
-我们希望通过开源、无许可的合作方式，推动SAT20在BTC生态中的大面积使用，为BTC生态的繁荣贡献一份力量。  
-欢迎对SAT20感兴趣的团队一起加入建设聪的世界。
+To ensure efficient early-stage development, we will initially keep the project closed source. However, we plan to gradually open and eventually fully open-source the entire SAT20 project. Through community management, SAT20 will evolve into a fully decentralized project that can incorporate any BTC-native technologies, such as BTC native smart contracts or any future BTC-native layer 2 networks. We aim to promote mass adoption of SAT20 within the BTC ecosystem through open-source, permissionless collaboration and contribute to the prosperity of the BTC ecosystem. We welcome teams interested in SAT20 to join us in building a world of satoshis.
 
-计划：  
-1. 提供安装包，帮助合作团队自建服务节点 （2024.06开始）
-2. 逐步开源，成熟一个模块就开源一个模块 (2024Q4开始推进开源)
-    * 索引器
-    * 名字服务
-    * 流通协议
-    * 样本TVN网络
-3. 探索社区管理模式，继续推进SAT20发展 （开源后推进社区管理，让Pearl成为治理币：提案，投票...）
-
+Plan:
+1. Provide installation packages to assist collaborating teams in setting up their own service nodes (starting from June 2024).
+2. Gradually open-source the project, releasing one module at a time as they mature (beginning in Q4 2024):
+    * Indexer
+    * Name service
+    * Circulation protocol
+    * TVN sample network
+3. Explore community management models and continue the development of SAT20 (promoting community governance after open-sourcing, making Pearl the governance token for proposals, voting, etc.).

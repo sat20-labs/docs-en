@@ -1,61 +1,47 @@
-SAT20应用的样本: TVN
+Sample layer 2 network of SAT20: TVN
 ====
 
-SAT20是一个兼容所有BTC原生二层的开源协议，任何人都可以不经许可，无需付费，自主使用。  
+SAT20 is an open-source protocol compatible with all BTC-native layer 2 solutions, allowing anyone to use it without permission or fees.
 
-为了说明SAT20的无限潜力，推广SAT20的应用，我们计划开发一个二层网络，逐步实现我们关于“一聪一世界”的梦想。  
-TVN是一个设想中的BTC生态的二层网络，去中心化，无许可，抗审核，任何人都可以接入，使用。  
-TVN网络具备如下功能：  
+To demonstrate the unlimited potential of SAT20 and promote its applications, we plan to develop a layer 2 network that gradually realizes our vision of "one sat, one universe." TVN is a conceptual layer 2 network within the BTC ecosystem that is decentralized, permissionless, censorship-resistant, and open to anyone for access and use.  
+The TVN network features the following capabilities:
 
-自我托管的web3账户
+Self-Custodied Web3 Accounts
 ----
-每个人都能免费直接创建一个web3账户，TVN网络构建了一整套的web3账户自我托管系统，帮助用户管好自己的账户。
+Everyone can create a web3 account directly and free of charge. The TVN network incorporates a comprehensive self-custody system for web3 accounts, empowering users to manage their accounts independently.
 
-
-基于SAT20的名字服务
+SAT20-based Name Service
 ----
-永久不变，不需许可的名字，不可能被篡改，或者被屏蔽。
-将自己的账户和自己铸造或者从其他途径获得的名字绑在一起，成为自己的DID。
+Immutable and permissionless names that cannot be tampered with or blocked. Users can bind their accounts with names they mint or acquire from other sources, creating their own Decentralized Identifiers (DIDs).
 
-
-基于SAT20的密钥分片存储服务
+SAT20-based Key Sharding Storage Service
 ----
-将私钥分成多个分片，分散在几个聪上，再也不用担心助记词会丢失，或者被破解。
+Private keys are split into multiple shards and distributed across multiple satoshis, eliminating concerns about losing or compromising mnemonic phrases.
 
-
-超级账户
+Super Accounts
 ----
-TVN网络上的账户是一个超级账户，可以挂接无数个子账户，连接所有公链。
+Accounts on the TVN network are super accounts capable of connecting numerous sub-accounts and bridging across multiple blockchains.
 
-
-P2P的消息系统
+P2P Messaging System
 ----
-内置加密的端到端消息系统，也可以创建公共频道。
+An encrypted end-to-end messaging system is built into the network, allowing users to create public channels as well.
 
-
-集成SAT20的DEX
+Integrated SAT20 DEX
 ----
-TVN网络接入SAT20的DEX，用户在完全掌控自己的资金的情况下，参与数字资产交易。
+The TVN network integrates with a SAT20 decentralized exchange (DEX), enabling users to participate in digital asset trading while maintaining full control of their funds.
 
-
-分等级的数据存储
+Hierarchical Data Storage
 ----
-自己的数据，用自己的密钥加密存储最放心，分重要程度放在不同的网络上。  
-最重要最核心的资产和数据放在BTC网络，价格最贵，但是永远不丢失。  
-普通的资料放IPFS网络，便宜，但是安全系数不够。  
-小数据直接保存在TVN网络的DKVS系统中，价格适中，好处是方便。  
+Users can encrypt and store their data using their own keys, with different levels of importance distributed across various networks. The most critical assets and data are stored on the BTC network, ensuring they are never lost, albeit at a higher cost. Less critical data can be stored on IPFS for affordability, although with reduced security. Small-scale data can be directly stored on the TVN network's DKVS (Distributed Key-Value Store) system, providing intermediate pricing and convenience.
 
-
-创新内容的付费分享
+Paid Sharing of Innovative Content
 ----
-SVM、微支付、付费加密内容，三者的结合应用。
+Combining SVM (Satoshi Virtual Machine), micro-payments, and paid encrypted content.
 
-
-软件模块的付费使用
+Paid Usage of Software Modules
 ----
-SVM、微支付、付费API
+SVM, micro-payments, and paid APIs.
 
-
-小结
+Conclusion
 ----
-TVN网络的更多特性，值得我们一起探索和建设，为了我们自己拥有一个完全属于自己的数字世界，聪的世界。
+There is much more to explore and build within the TVN network, as we strive to create our own fully digital world—a universe of satoshis. Let us join together to shape and explore the additional features of the TVN network, ultimately realizing our vision of a digital world that belongs entirely to us.

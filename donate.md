@@ -1,11 +1,11 @@
-捐赠
+Donations
 ====
 
 
-我们没有发行任何token来募集资金，只通过网站收取的服务费来支持项目的发展。你如果想支持项目发展的话，请考虑捐赠！  
-捐赠地址为 bc1pmvn6lcluwfkge9n9lzef66h7q0glcldtm3j8sclh6ejy5624ve4s5dmh7u   
-![捐赠地址](assets/donate.jpg)
+We do not issue any tokens to raise funds. Instead, we rely on service fees collected through our website to support the project's development. If you would like to contribute to the project's growth, please consider making a donation!
+The donation address is: bc1pmvn6lcluwfkge9n9lzef66h7q0glcldtm3j8sclh6ejy5624ve4s5dmh7u   
+![Donation Address](assets/donate.jpg)
 
-收到的捐赠款将用于资助项目的维护和进一步开发，同时将支付sat20.org的托管费用。所有资金的使用将在网站公布。 
+The received donations will be used to fund the maintenance and further development of the project, as well as cover the hosting fees for sat20.org. All fund usage will be transparently disclosed on the website.  
 
-感谢你的捐赠！
+Thank you for your donation!

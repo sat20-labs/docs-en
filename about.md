@@ -1,15 +1,12 @@
-关于我们
+About Us
 ====
 
-我们是一群技术乐观主义者，一个聚焦于BTC生态的技术团队，我们只专注协议的开发。我们不发行任何资产，也没有任何的官方社区。任何使用SAT20协议发行的资产都是社区行为。我们愿意在技术上给社区提供支持，只要是符合SAT20协议原则并且在我们能力范围之内。我们将持续建设SAT20生态。
+We are a group of technology optimists, a technical team focused on the BTC ecosystem, and we are solely dedicated to protocol development. We do not issue any assets nor have an official community. Any assets issued using the SAT20 protocol are community-driven initiatives. We are willing to provide technical support to the community as long as it aligns with the principles of the SAT20 protocol and falls within our capabilities. We are committed to continuously building the SAT20 ecosystem.
 
-
-
-
-链接
+Links
 -----
 
-- [GitHub](https://github.com/SAT20_Protocol/)
-- [Twitter](https://x.com/SAT20_Protocol/)
+- [GitHub](https://github.com/sat20-labs/)
+- [Twitter](https://x.com/sat20-labs/)
 - [官网](https://sat20.org)
 

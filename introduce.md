@@ -1,39 +1,31 @@
-SAT20协议
+SAT20 Protocol
 =========
 
+SAT20 is a "Satoshi Standard" protocol for issuing and circulating BTC native assets, with its core feature being the binding of assets to satoshis and their free movement alongside satoshis.
+The SAT20 protocol consists of two components: the asset issuance protocol and the asset circulation protocol.
 
-SAT20是一个"**聪本位(Satoshi Standard)**"的BTC原生资产发行和流通协议，其核心特征是**资产绑定聪**，跟随聪自由流动。  
-SAT20协议由资产发行协议和资产流通协议组成。  
-
-
-资产发行协议
+Asset Issuance Protocol
 ----
-SAT20资产发行协议，发行的资产称为聪资产(SAT20 ASSETS)，资产绑定在聪上，具有聪的属性：
-1. 聪不可销毁，所以资产不可销毁。
-2. 聪绑定的数据不可变更，所以资产发行后就不可变更。
-3. 聪在哪里，资产就在哪里，资产跟随聪在不同的网络上自由流动。
-4. 聪属于谁，资产就属于谁，转移聪时，资产也就跟着转移。
-5. 聪的非均质化特性，决定资产的非均质化特性，资产天然具备SFT属性。
-6. 聪可以绑定任意数据，甚至是智能合约，决定了资产具备某种意义上的智能化  
-  
-  
-  
-资产流通协议
+The SAT20 asset issuance protocol is used to issue assets called SAT20 assets. These assets are bound to satoshis and inherit the properties of satoshis:
+1. Satoshis are not destructible, so the assets are also non-destructible.
+2. The data bound to satoshis is immutable, so once the assets are issued, they cannot be modified.
+3. Wherever the satoshis are, the assets are also present, allowing assets to freely move across different networks alongside satoshis.
+4. Assets belong to the owner of the satoshis, so when satoshis are transferred, the assets are transferred as well.
+5. The heterogeneous nature of satoshis determines the non-fungibility of assets, making them inherently SFT (Semi-Fungible Token) assets.
+6. Satoshis can be bound to any data, including smart contracts, enabling assets to have a certain level of intelligence.
+
+Asset Circulation Protocol
 ----
-SAT20资产流通协议，定义聪资产的流通规则，并提供一个实现样本。 
-1. 聪锁定：通过闪电网络通道锁定聪和解锁聪，支持用户自行退出，确保用户资金安全。
-2. 聪映射：锁定的聪，自动映射到二层网络，继续做为聪在二层网络中流通。
-3. 聪交换：聪在二层网络自由流动的核心技术。
-4. 核心原则：
-    * 安全撤离：任何时候，用户都可以自主决定撤离二层网络，不需要别人的许可。
-    * 客户端验证：任何资产，用户都可以通过聪的编号自我校验是否绑定资产。  
+The SAT20 asset circulation protocol defines the rules for the circulation of satoshis and provides an implementation sample.
+1. Satoshis Locking: Satoshis can be locked and unlocked via the Lightning Network channels, allowing users to exit autonomously and ensuring the safety of their funds.
+2. Satoshis Mapping: Locked satoshis are automatically mapped to the second layer networks, allowing them to continue circulating as satoshis within these networks.
+3. Satoshis Swapping: The core technology enabling the free movement of satoshis within the second layer networks.
+4. Core Principles:
+   * Safe Withdrawal: Users can decide to withdraw from the second layer networks at any time without requiring permission from others.
+   * Client Verification: Users can self-verify whether an asset is bound to a satoshi by its identifier.
 
-
-
-
-愿景
+Vision
 ----
-一聪一世界。  
-One sat, one universe.    
+One sat, one world.
 
-让每个人都能享受BTC网络带来的乐趣。
+Everyone can enjoy the benefits of the BTC network.
