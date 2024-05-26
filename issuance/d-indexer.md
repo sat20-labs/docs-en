@@ -1,6 +1,5 @@
-去中心化Indexer
+Decentralized Indexer
 ====
 
-Indexer可以相互连接起来，形成一个去中心化网络。这是一个对BTC生态非常重要的网络，是用户节点得以真正运作的网络，即使是手机，也能成为节点。
-这个去中心化网络的核心功能，将逐步揭晓。
-
+Indexers can connect with each other to form a decentralized network. This network is crucial for the BTC ecosystem and enables user nodes to operate effectively. Even smartphones can become nodes within this network.
+The core functionalities of this decentralized network will be gradually revealed.

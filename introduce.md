@@ -11,7 +11,7 @@ The SAT20 asset issuance protocol is used to issue assets called SAT20 assets. T
 2. The data bound to satoshis is immutable, so once the assets are issued, they cannot be modified.
 3. Wherever the satoshis are, the assets are also present, allowing assets to freely move across different networks alongside satoshis.
 4. Assets belong to the owner of the satoshis, so when satoshis are transferred, the assets are transferred as well.
-5. The heterogeneous nature of satoshis determines the non-fungibility of assets, making them inherently SFT (Semi-Fungible Token) assets.
+5. The non-fungible nature of satoshis determines the non-fungibility of assets, making them inherently SFT (Semi-Fungible Token) assets.
 6. Satoshis can be bound to any data, including smart contracts, enabling assets to have a certain level of intelligence.
 
 Asset Circulation Protocol

@@ -1,13 +1,14 @@
-铭刻
+Inscription
 ====
 
-在聪上写数据的技术称为铭刻（inscribe，来源于Ordinals协议）。  
+The technique of writing data on satoshis is called inscription ("inscribe," derived from the Ordinals protocol).
 
-目前在BTC主网上写入数据的方式有如下几种：
-1. UTXO，比如SRC20的数据写入方式
-2. SegWitness, 隔离见证区，比如Ordinals的写入方式
-3. OP_RETURN，比如Runes的写入方式
+Currently, there are several ways to write data on the BTC mainnet:
 
-SAT20支持多种方式在聪上铭刻数据，其目标是尽可能不影响BTC网络的安全。  
-目前SAT20采用Ordinals协议的铭刻技术。  
-在未来，SAT20会根据实际的情况，支持更多的数据写入方式。  
+1. UTXO: This method is used for data writing in protocols like SRC20.
+2. Segregated Witness (SegWit): This method, such as the one used in the Ordinals protocol, involves writing data in the SegWit area.
+3. OP_RETURN: This method, as used in protocols like Runes, involves writing data in the OP_RETURN field.
+
+SAT20 supports multiple methods for data inscription on satoshis, with the goal of minimizing any impact on the security of the BTC network. Currently, SAT20 adopts the inscription technology of the Ordinals protocol.
+
+In the future, SAT20 will expand its support for additional data writing methods based on practical needs and circumstances.

@@ -1,9 +1,12 @@
-NFT合集的铸造和管理
+Minting and Managing NFT Collections
 ====
 
-到目前为止，Ordinals协议已经是最优秀的BTC主网上发行NFT的协议，但是对合集的管理不太好。  
-现在，SAT20继承了Ordinals NFT的铸造能力，并且增强了NFT的能力和合集的管理，简单介绍如下：  
-1. 使用Ticker对合集进行管理：SAT20使用ticker来对NFT合集进行统一的管理，每一个铸造结果都是该ticker合集中的一次有效铸造，索引器已经为ticker的管理提供了全面的数据支撑。
-2. 自定义设置铸造条件：SAT20的铸造条件可以直接用在NFT的铸造上，方便项目方对NFT的铸造设定更多的条件。比如只能在某个区块高度内铸造，铸造时每个NFT包含多少聪，甚至可以对聪的属性进行设定，要求在某一类稀有聪，或者具备什么属性的聪才能铸造NFT。
-3. 为NFT的进一步变化提供可能性。到目前为止，Ordinals协议铸造的NFT，在铸造完成后就是确定的，不再改变。但是SAT20提供了进一步变化的可能，让该NFT在构成自身的聪发生变化之后，再次发生变化。
+Up to this point, the Ordinals protocol has been the most outstanding protocol for issuing NFTs on the BTC mainnet. However, it lacks efficient management for collections. Now, SAT20 inherits the minting capabilities of Ordinals NFTs and enhances the capabilities of NFTs and collection management. Here is a brief overview:
 
+1. Collection Management using Tickers: SAT20 utilizes tickers to manage NFT collections. Each minting result represents a valid minting within that ticker's collection. The indexer provides comprehensive data support for ticker management.
+
+2. Customizable Minting Conditions: SAT20 allows for the customization of minting conditions directly applicable to NFT minting. This enables project owners to set additional conditions for NFT minting. For example, minting can be limited to a specific block height, specify the amount of satoshis included in each NFT, or even set requirements for specific attributes or rare satoshis to be included in the NFT.
+
+3. Possibility for Further Changes to NFTs: Previously, NFTs minted under the Ordinals protocol remained static and unchangeable after minting. However, SAT20 introduces the possibility for further changes and evolution of NFTs. When the underlying satoshis that constitute the NFT undergo changes, the NFT itself can also undergo subsequent transformations.
+
+By incorporating these enhancements, SAT20 improves upon the minting and management of NFT collections, offering greater flexibility and possibilities for customization and evolution of NFTs.

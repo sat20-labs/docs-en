@@ -1,10 +1,10 @@
 DID
 ====
 
-基于SAT20名字服务，实现DID的以下特性：
-1. 唯一性：每个 DID 是唯一的，不重复的，以确保标识的独特性：由协议从底层支持DID的唯一性。
-2. 去中心化：DID 不依赖于中央机构或中介来验证或管理，而是由参与者自主控制和验证：谁拥有持有该名字的聪，谁就是该DID的主人。
-3. 可验证性：DID 具有可验证性，可以通过密码学证明来验证其所有权和控制权：同上。
-4. 持久性：DID 的生命周期应该是持久的，不会因为某些变化或失效而失效：聪是不可销毁的，铭刻在聪上数据也不可销毁。
+Based on the SAT20 Name Service, the following characteristics are achieved for DIDs (Decentralized Identifiers):
+1. Uniqueness: Each DID is unique and non-duplicative to ensure the uniqueness of the identifier. The uniqueness of DIDs is supported by the protocol at the underlying level.
+2. Decentralization: DIDs are not reliant on central authorities or intermediaries for verification or management. Instead, participants have autonomous control and verification. The individual who holds the satoshi with the corresponding name is the owner of the DID.
+3. Verifiability: DIDs have verifiability and can be validated through cryptographic proofs to demonstrate ownership and control. This aligns with the previous point.
+4. Persistence: DIDs should have a persistent lifecycle and not be invalidated due to certain changes or expiration. Satoshis are indestructible, and data inscribed on satoshis is also immutable.
 
-
+In summary, the SAT20 Name Service enables the implementation of DIDs with the characteristics of uniqueness, decentralization, verifiability, and persistence. The nature of satoshis ensures the longevity and immutability of the associated data.

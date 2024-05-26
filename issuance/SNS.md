@@ -1,50 +1,44 @@
-SAT20名字服务
+SAT20 Name Service
 ====
 
-聪是我们整个协议生态的基础，其序数可以看作是聪的索引。但是，序数是一个64位的整数，太长，不容易记住。为了更快索引到每一个聪，我们有必要发展一套基于聪的名字服务，供用户记住每个对他来说意义重大的聪。序数跟名字的关系，和IP地址和域名的关系类似。SAT20的名字服务，是一种完全去中心化的，基于BTC的名字服务，每个人都可以公平使用，不受任何第三方控制。
+Satoshis are the foundation of our entire protocol ecosystem, and their ordinal numbers can be considered as indices of satoshis. However, the ordinal numbers are 64-bit integers, which are too long and not easy to remember. In order to quickly index each satoshi, it is necessary to develop a name service based on satoshis, allowing users to remember satoshis that hold significant meaning to them. The relationship between ordinal numbers and names is similar to the relationship between IP addresses and domain names. The SAT20 Name Service is a completely decentralized, BTC-based name service that is available to everyone on a fair basis and is not controlled by any third party.
 
-名字服务的核心，是每个名字都是唯一的。没有子名字空间。这避免了欺诈的可能性。
-每个名字都是一个铭刻在聪上的数据，是一个nft。一个聪可以有多个名字，但是一个名字只属于一个聪。  
-名字绑定在聪上，谁拥有聪，名字也就属于谁。聪转给谁，名字也就转给谁。  
-名字也是一种聪资产。  
+The core of the name service is that each name is unique, and there are no sub-namespace. This avoids the possibility of fraud.
+Each name is an NFT (Non-Fungible Token) that is engraved on a satoshi. A satoshi can have multiple names, but each name belongs to only one satoshi.
+Names are bound to satoshis, so whoever owns the satoshi also owns the name. When a satoshi is transferred, the name is transferred along with it.
+Names are also a type of sat asset.
 
-
-命名规则
+Naming Rules
 ---
-1. 名称的第一个实例有效。
-2. 名称使用UTF-8字符。
-3. 大小写无关。所有名称/命名空间都将以小写形式索引。
-4. 名称不允许有空格。
-5. 名称不允许标点符号。(带句号的名字，都是来自其他名字协议)
-6. 名字长度，从3字节开始申请，但4字节暂时禁止注册。
+1. The first instance of a name is valid.
+2. Names use UTF-8 characters.
+3. Case-insensitive. All names/namespaces will be indexed in lowercase.
+4. No spaces are allowed in names.
+5. No punctuation marks are allowed in names. (Names with periods are from other name protocols.)
+6. Name length starts from 3 bytes, but 4-byte names are temporarily prohibited from registration.
 
-注：4字节预留给BRC20的ticker。1-2字节协议内部使用，从协议层面禁止注册，永不开放注册，杜绝无谓的炒作。
+Note: The 4-byte names are reserved for BRC20 tickers. 1-2 byte names are for internal protocol use only and are prohibited from registration at the protocol level. They will never be opened for registration to prevent unnecessary speculation.
 
-
-组合规则
+Combination Rules
 ---
-名字可以组合起来，形成某种特别含义。协议制定基本的规则如下：
-1. 名字用@符号组合起来，比如Alice@sat20
-2. 组合名字时需要双方都签名许可，也就是说组合是一种契约关系
-3. 后一个名字，比如sat20，属于组织形式上更高一级的名字，比如是公司，俱乐部等一些组织
+Names can be combined to form a special meaning. The protocol establishes the following basic rules:
+1. Names are combined using the "@" symbol, such as Alice@sat20.
+2. Both parties need to sign and agree to the combination, meaning that the combination represents a contractual relationship.
+3. The latter name, such as "sat20," belongs to a higher-level organizational form, such as a company or club.
 
-
-兼容性
+Compatibility
 ----
-SAT20名字服务兼容目前BTC网络上的主要名字服务。比如.btc为例，某个名字，1.btc，将做为一个整体，而不是分成名字1和名字空间.btc。根据我们的开发进展，我们计划兼容这些名字服务：（只读取名字，不支持铸造）
+The SAT20 Name Service is compatible with the major name services currently on the BTC network. For example, taking .btc as an example, a name like 1.btc will be treated as a whole, rather than splitting it into the name "1" and the namespace ".btc". As our development progresses, we plan to be compatible with these name services (read-only, without support for minting):
 1. .btc
 2. .x
-3. 其他
+3. Others
 
-注意，带.的名字，和不带.的名字，是不同的名字，比如123.btc和123，是两个独立的名字，相互之间没有关系。
+Note that names with a "." and names without a "." are different names. For example, 123.btc and 123 are two independent names with no relationship to each other.
 
-垄断性资源
+Monopolistic Resources
 ----
-名字是一种核心资源，也是一种资产。比如Ticker名字Pearl，就是一个名字，由Deploy这个ticker的地址自动持有。如果一个名字已经被注册，其他人就无法部署这个名字的ticker。通过注册某个名字，将自动获得该名字相关的所有权限，SAT20协议维护这种权限。
+Names are core resources and also assets. For example, the name "Pearl" as a ticker name is a name automatically held by the address that deployed the ticker. If a name has already been registered, other people cannot deploy a ticker for that name. By registering a name, one automatically gains all the permissions associated with that name, and the SAT20 protocol maintains these permissions.
 
-
-版税
+Royalties
 ----
-拥有某种资源的人，在资源被使用时，会自动根据某种可配置的税率收取版税，资源所有人自动获得版税收入。
-
-
+The owner of a resource will automatically receive royalties based on a configurable tax rate when the resource is used. The resource owner automatically receives royalty income.

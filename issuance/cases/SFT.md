@@ -1,38 +1,32 @@
-SFT
+SFT (Satoshis Fungible Tokens)
 ====
 
-SAT20的本质就是SFT，FT或者NFT仅仅是其某种表现形式。SAT20的SFT本质，来源于两个方面：
-1. 资产的底座，聪，本身就是非均质化的，可以通过聪的编号来体现
-2. 聪还可以绑定不同的数据，这为SFT的使用带来无限的想象空间
+The essence of SAT20 lies in SFT, where FT or NFT is just one of its manifestations. The nature of SAT20's SFT stems from two aspects:
 
+1. The base asset, satoshis, is inherently non-fungible, which can be reflected through the numbering of satoshis.
+2. Satoshis can also be bound to different data, which brings unlimited possibilities for the use of SFT.
 
-我们通过以下例子，说明SAT20的SFT属性。
-
+We illustrate the attributes of SAT20's SFT through the following examples:
 
 Pizza
 ----
-基于稀有聪Pizza铸造的SFT，演示图币一体的特性。
-聪的数量和属性，决定Pizza的显示样式，比如是一堆pizza，还是一张pizza，还是1/n pizza；馅料也会改变，不同聪属性有不同的馅料。
+SFT minted based on rare satoshis that showcases the characteristics of graphic representation.
+The quantity and attributes of satoshis determine the visual style of the pizza, such as a pile of pizzas, a single pizza, or a fraction of a pizza. The toppings can also change based on different satoshi attributes.
 
-
-稳定币
+Stablecoins
 ----
-发行多套稳定币，每套具有不同面额，比如1元，10元，100元，1000元等。
-每套根据需要铸造多张NFT，每一聪就是一枚coin。
-稳定币铸造在聪上，跟聪流动到二层网络，承担交易媒介，减少二层网络对大量BTC的要求。
+Issuing multiple sets of stablecoins with different denominations, such as $1, $10, $100, $1000, etc.
+Each set can mint multiple NFTs as needed, with each satoshi representing a coin.
+Minting stablecoins on satoshis and allowing satoshis to flow to Layer 2 networks serve as transaction media, reducing the demand for a large amount of BTC on Layer 2 networks.
 
-
-RWA
+RWA (Real-World Assets)
 ----
-以房产为例，比如一栋大楼做为一个Ticker发布，每个房间算一个nft，这个nft可以拆成多份，方便交易和流通。
+Taking real estate as an example, a Ticker can be issued for a building, and each room can be represented as an NFT. This NFT can be further divided into multiple fractions, facilitating trading and circulation.
 
-
-
-游戏装备
+Game Equipment
 ----
-游戏装备可以通过组成该NFT的聪的属性不断调整，可以充分激活交易。
+Game equipment can be continuously adjusted by the attributes of the satoshis that constitute the NFT, effectively activating trading.
 
-
-小结
+Summary
 ---
-SFT具有无限的潜力，以太坊上的ERC3525就是很好的的例子。
+SFT possesses infinite potential, and Ethereum's ERC3525 is a good example of this. It demonstrates the various possibilities and applications of SFT in the blockchain ecosystem.

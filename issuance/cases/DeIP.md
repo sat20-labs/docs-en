@@ -1,10 +1,10 @@
 DeIP
 ====
 
-基于BTC的去中心化网络，DeIP（Decentralized Intellectual Property）具有以下基本属性：
-1. 去中心化性质：创作者提交在BTC网络上的作品，自动获得DIP。
-2. 知识产权保护：类似开源软件，学习和个人使用不用付费，收费的业务使用需要付费。
-3. 去中介化：通过智能合约、分布式账本或其他去中心化技术来实现DIP的授权、验证和管理。
-4. 可验证性：数据铭刻在聪上，谁持有该聪，谁就是该DIP的owner。
+DeIP (Decentralized Intellectual Property) is a decentralized network based on BTC that possesses the following fundamental attributes:
+1. Decentralization: Creators who submit their works on the BTC network automatically obtain DeIP.
+2. Intellectual Property Protection: Similar to open-source software, learning and personal use do not require payment, but commercial usage requires fees.
+3. Decentralized Intermediation: DeIP authorization, verification, and management are achieved through smart contracts, distributed ledgers, or other decentralized technologies.
+4. Verifiability: Data is inscribed on satoshis, and the individual who holds the satoshi is the owner of the corresponding DeIP.
 
-简单说，上链的数据自动成为具有IP的数字资产，有收入的业务使用属于别人的数字资产，需要支付一些费用。
+In simple terms, data recorded on the blockchain automatically becomes a digital asset with intellectual property rights. Commercial usage that generates income using someone else's digital asset requires payment of fees.

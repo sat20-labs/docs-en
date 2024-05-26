@@ -1,10 +1,10 @@
-聪对象
+Satoshi Objects
 ====
 
-在传统的软件中，数字对象是可以无限复制的、廉价的对象。仅仅是这样普通的廉价的默默无闻的数字对象，结合算法，就构建起了我们现在的整个软件世界，包括传统互联网。在传统互联网往下一代互联网进化的过程中，一种完全不同的数字对象，已经呼之欲出，成为构建下一代互联网的基础。不可复制，有独特的价值并且有主，是这种全新的数字对象最核心的属性。
+In traditional software, digital objects are cheap and infinitely replicable. These ordinary and inexpensive digital objects, combined with algorithms, have built the entire software world we have today, including the traditional internet. In the process of evolving from the traditional internet to the next generation internet, a completely different kind of digital object has emerged as the foundation for building the next generation internet. These new digital objects are non-replicable, possess unique value, and have an owner. These are the core attributes of this new type of digital object.
 
-这种新的数字对象都是有价的并且有主的，复制出来的赝品一文不值，谁是创造者毋庸置疑，first is first。其内容的使用如果带来利益，谁获得利益也清清楚楚。这样的数字对象自带价值，自带权益和归属权，还天然带有可编程性。这是价值网络的最佳底层基础。这是可以发挥创造力的最佳载体。
+These new digital objects have inherent value and ownership. Counterfeit copies are worthless, and there is no doubt about who the creator is: "first is first." If the use of their content brings benefits, it is clear who will receive those benefits. These digital objects come with their own value, rights, ownership, and inherent programmability. They provide the best underlying foundation for a value network and serve as the optimal medium for unleashing creativity.
 
-btc的最基本单位，聪，就是这样一个真正的有价值承载的数字对象，我们称之为“聪对象”。无法凭空创造，也永不销毁。是你的，就不可能被夺走。有史以来，第一个具备如此之多让人过目难忘的属性的数字对象。潜力无限。我们无法用言语表达出的赞叹，只能归功于中本聪的巧夺天工的构思。
+The basic unit of BTC, the satoshi, is precisely such a valuable and meaningful digital object. We call it a "satoshi object." It cannot be created out of thin air, and it can never be destroyed. If it belongs to you, it cannot be taken away. It is the first digital object in history to possess such memorable attributes. Its potential is limitless. The admiration we have for it, which words cannot fully express, is owed to Satoshi Nakamoto's ingenious conception.
 
-“聪对象”的独特属性：有价，独特，有主，可编程性，在BTC主网和二层网络，会迸发出什么样的创新？我们无限看好，并且积极参与。
+The unique attributes of "satoshi objects" – value, uniqueness, ownership, and programmability – will spark remarkable innovations on the BTC mainnet and layer-2 networks. We have boundless optimism and active participation in exploring their possibilities.
