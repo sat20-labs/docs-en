@@ -7,6 +7,6 @@ Links
 -----
 
 - [GitHub](https://github.com/sat20-labs/)
-- [Twitter](https://x.com/sat20-labs/)
-- [官网](https://sat20.org)
+- [Twitter](https://x.com/SAT20Labs/)
+- [office website](https://sat20.org)
 
