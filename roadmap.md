@@ -6,17 +6,18 @@ SAT20 is just the beginning of our efforts to build the BTC ecosystem. Throughou
 2. Asset Trading on Layer 2 Networks: Infinite liquidity while ensuring assets remain under users' control, offering security, cost-effectiveness, and speed.
 3. The BTC network will become the foundation of the digital world, leading to a "one sat, one world" future.
 
-SAT20 Asset Issuance Protocol (ordx)
+SAT20 Asset Issuance Protocol (ORDX Protocol)
 ----
 The development of the asset issuance protocol will be completed in the first half of 2024.
 
-SAT20 Asset Circulation Protocol
+SAT20 Asset Circulation Protocol (Transcend Protocol)
 ----
-We will build a decentralized exchange (DEX) on top of layer 2 networks, allowing secure, cost-effective, and fast trading of all sat-based assets while maintaining user control. The protocol design and technical prototype development will be completed in the first half of the year, with the first product based on the SAT20 circulation protocol launching in 2024 Q3.
+A protocol that allows BTC (Satoshi) to circulate freely.  
+We hope to complete the prototype development of the Transcend Protocol in Q3 and run it on SatoshiNet.  
 
-Development of Sample Network: TVN
+Development of Sample Network: SatoshiNet
 ----
-The TVN project, a sample application of the SAT20 protocol, will be launched in 2024 Q4. In our plans, TVN will serve as a gateway for users to enter the BTC ecosystem and even the web3 world. By Q1 of next year at the latest, there will be a minimally viable product for users to experience.
+SatoshiNet is a modified version of the BTC network, and you can think of it as another BTC testnet. It is built on BTC core, and any technology that benefits the development of BTC can be tested on this network.
 
 Open Source
 ----

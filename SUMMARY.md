@@ -21,7 +21,7 @@
   * Asset Circulation Protocol
     * [Overview](circulation/readme.md)
     * [SAT Locking](circulation/satlock.md)
-    * [SAT Mapping](circulation/satmapping.md)
+    * [SAT Transcending](circulation/sattranscend.md)
     * [SAT Swapping](circulation/satswap.md)
     * [Enhanced UTXO](circulation/enUTXO.md)
     * [Client Verification](circulation/CA.md)

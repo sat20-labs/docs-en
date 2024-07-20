@@ -1,10 +1,10 @@
 Sample layer 2 network of SAT20: TVN
 ====
 
-SAT20 is an open-source protocol compatible with all BTC-native layer 2 solutions, allowing anyone to use it without permission or fees.
+SAT20 is an open source protocol compatible with all BTC native second layers. Anyone can use it independently without permission or payment. We have provided satoshinet as a sample of the second layer network, and we need an application to unleash the power of the second layer satoshinet.
 
-To demonstrate the unlimited potential of SAT20 and promote its applications, we plan to develop a layer 2 network that gradually realizes our vision of "one sat, one universe." TVN is a conceptual layer 2 network within the BTC ecosystem that is decentralized, permissionless, censorship-resistant, and open to anyone for access and use.  
-The TVN network features the following capabilities:
+To demonstrate the unlimited potential of SAT20 and promote its applications, we plan to develop a Dapp that gradually realizes our vision of "one sat, one universe."   
+TVN is a dapp in the envisioned BTC ecosystem, and can also be considered a third-layer network based on BTC's mainnet and satoshinet. It is decentralized, permissionless, and audit-resistant, and anyone can access and use it. The TVN network features the following capabilities:
 
 Self-Custodied Web3 Accounts
 ----
