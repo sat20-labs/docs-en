@@ -38,7 +38,7 @@ Or a ticker under the control of a project:
 }
 
 Rules for deploying tickers:
-1. The ticker name must not have been used before, or the deployer must own the ticker (DID).
+1. The ticker name must not have been used before.
 2. If the block parameter is provided, the deploy must be confirmed at a height greater than start height plus 1000.
 Tickers that violate these rules are considered invalid.
 
