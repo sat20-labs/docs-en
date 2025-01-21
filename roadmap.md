@@ -15,9 +15,16 @@ SAT20 Asset Circulation Protocol (Satoshi Transcending Protocol)
 A protocol that allows BTC (Satoshi) to circulate freely.  
 We hope to complete the prototype development of the Transcend Protocol in 2025Q1 and run it on SatoshiNet.  
 
-Development of Sample Network: SatoshiNet
+Native Extension Network: SatoshiNet
 ----
-SatoshiNet is a modified version of the BTC network, and you can think of it as another BTC testnet. It is built on BTCD source code, and any technology that benefits the development of BTC can be tested on this network.
+SatoshiNet is a modified BTC network based on BTCD source code. It is the first native extension network of the BTC mainnet based on the Satoshi Transcending Protocol (STP). Any technology that benefits BTC development can be experimented with on this network.
+SatoshiNet is expected to officially launch in Q2 2025.
+
+Satoshi Swap Market: SatSwap Market
+----
+SatSwap Market is a decentralized exchange (DEX) on the SatoshiNet, developed and operated by ordx.market, providing asset trading services for the SatoshiNet.
+ordx.market is a professional platform in the BTC ecosystem that offers complete services for asset minting, browsing, trading, and management. It supports all major assets in the BTC ecosystem, as well as both Layer 1 and Layer 2 networks. In the future, it will connect more ecosystems and public chains with SatoshiNet as the central hub.
+SatSwap Market is expected to launch alongside SatoshiNet in Q2 2025.
 
 Open Source
 ----
