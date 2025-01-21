@@ -1,8 +1,12 @@
-Why Do We Need SAT Assets
+Why Do We Need SAT20 Protocol
 ===
 
-The term "sat" as the basic unit of BTC carries profound significance from its inception. If the BTC ecosystem truly represents the development trend of BTC, then an asset issuance and circulation protocol based on "sat" is an inevitable outcome that will emerge sooner or later within the BTC ecosystem.
+The term "satoshi" as the basic unit of BTC carries profound significance from its inception. If the BTC ecosystem truly represents the development trend of BTC, then an asset issuance and circulation protocol based on "sat" is an inevitable outcome that will emerge sooner or later within the BTC ecosystem.
 
 First and foremost, SAT assets are the most natural way of issuing native assets on the BTC network without any adverse effects. During the minting phase, assets only require the inclusion of simple data on the BTC network. Subsequently, whether they are transferred or enter the second layer networks, no additional data needs to be written, ensuring no disruption to the mainnet. From another perspective, sats are users' assets, and SAT assets, through their association with sats, naturally belong to the users, with their security guaranteed by the mainnet. Therefore, SAT assets are the most natural and native form of asset issuance within the BTC ecosystem, regardless of how they are examined.
 
-On the other hand, SAT assets naturally adapt to the technological advancements of BTC. Regardless of BTC's technical developments or the emergence of various second layer networks in the future, SAT assets will undoubtedly be part of them. They require no one's permission and involve no unnecessary operations. SAT assets simply flow freely along with sats, moving seamlessly into these networks. If BTC's layer-one smart contracts, such as BitVM, are released as planned, SAT assets can be utilized on BitVM without any modifications necessary.
+Secondly, Sats-based assets are inherently aligned with BTC's technological evolution. No matter how BTC’s technology develops or what second-layer networks emerge in the future, Sats-based assets will inevitably be part of that ecosystem, requiring no permission or additional operations. Sats assets will flow freely alongside the movement of Sats themselves into these networks. If BTC’s first-layer smart contracts, such as BitVM, are successfully implemented, Sats-based assets can seamlessly interact with BitVM without any changes.
+
+Finally, even if BTC doesn’t yet have a native extension network, exploring and implementing a native BTC extension network that enables the free flow of Sats and fully unlocks their value is the mission of SAT20. Driven by this mission, we’ve created an extension network like the SatoshiNet.
+
+In conclusion, the SAT20 Sats Asset Protocol is an inevitable product of the BTC ecosystem’s evolution. It represents the potential of the smallest unit of BTC, Satoshi, and highlights the uniqueness of BTC-based assets. As BTC technology progresses, the value of Sats will increasingly be recognized and fully utilized.

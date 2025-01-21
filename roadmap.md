@@ -10,14 +10,14 @@ SAT20 Asset Issuance Protocol (ORDX Protocol)
 ----
 The development of the asset issuance protocol will be completed in the first half of 2024.
 
-SAT20 Asset Circulation Protocol (Transcend Protocol)
+SAT20 Asset Circulation Protocol (Satoshi Transcending Protocol)
 ----
 A protocol that allows BTC (Satoshi) to circulate freely.  
-We hope to complete the prototype development of the Transcend Protocol in Q3 and run it on SatoshiNet.  
+We hope to complete the prototype development of the Transcend Protocol in 2025Q1 and run it on SatoshiNet.  
 
 Development of Sample Network: SatoshiNet
 ----
-SatoshiNet is a modified version of the BTC network, and you can think of it as another BTC testnet. It is built on BTC core, and any technology that benefits the development of BTC can be tested on this network.
+SatoshiNet is a modified version of the BTC network, and you can think of it as another BTC testnet. It is built on BTCD source code, and any technology that benefits the development of BTC can be tested on this network.
 
 Open Source
 ----
@@ -28,6 +28,6 @@ Plan:
 2. Gradually open-source the project, releasing one module at a time as they mature (beginning in Q4 2024):
     * Indexer
     * Name service
-    * Circulation protocol
-    * TVN sample network
+    * SatoshiNet
+    * STP
 3. Explore community management models and continue the development of SAT20 (promoting community governance after open-sourcing, making Pearl the governance token for proposals, voting, etc.).

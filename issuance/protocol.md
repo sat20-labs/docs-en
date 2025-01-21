@@ -1,4 +1,4 @@
-Instructions
+Protocol 1.0
 ====
 
 The SAT20 asset issuance protocol only includes the "deploy" and "mint" instructions. There is no need for a "transfer" instruction.
