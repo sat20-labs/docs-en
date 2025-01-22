@@ -22,7 +22,7 @@ Mining nodes gain the right to mine by staking **Pearl** tokens.
 - **Guidance Period**: 3–5 nodes, no focus on economic profit.
 - **Development Period**: 10–100 nodes. With daily transactions under 100,000, if there are 100 nodes, each node will mine 72 blocks per day. With 10 transactions per block, each block earns 100 satoshis, yielding daily earnings of 7,200 satoshis, and yearly earnings of about 0.02628 BTC ($2,628 USD).
 - **Mature Period**: With 100 nodes, transaction volume increases by 10 times, resulting in annual earnings of $26,280 per node. At this stage, the required staking of Pearl might drop to 100,000 tokens.
-- **Explosive Period**: In the ideal scenario, with 10 million transactions per day and 1,000 mining nodes each staking 10,000 Pearl tokens, liquidity is largely locked within the nodes.
+- **Explosive Period**: In the ideal scenario, with 10 million transactions per day and 1,000 mining nodes each staking 100,000 Pearl tokens, liquidity is largely locked within the nodes. If the transaction volume can reach 100 million, the staking amount may drop to 10,000 Pearls.
 
 #### 3. Liquidity Pools
 The liquidity pool provides the inflow and outflow of funds for SatoshiNet. The SatoshiNet Foundation manages two pools (BTC and Pearl). The funds required for these pools vary in different stages (exact calculations are not available yet). The revenue from these pools is controlled by the foundation, which is responsible for establishing and managing them. If funds come from third parties, the profits will be distributed according to the pool’s fund share but will be subject to the foundation’s commission.
@@ -53,7 +53,7 @@ The liquidity pool provides the inflow and outflow of funds for SatoshiNet. The 
     - Node operator share (85%) = $31,625.
 
 **Node Costs**:
-- In the mature period, staking 10,000 Pearl tokens might cost $10,000 USD.
+- In the mature period, staking 100,000 Pearl tokens might cost $100,000 USD.
 - Hardware and network costs per node are expected to be less than $3,000 per year.
 
 **Node ROI**:  
