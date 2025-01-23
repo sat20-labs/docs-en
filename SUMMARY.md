@@ -13,6 +13,7 @@
   * [Liquidity Pool](satoshinet/liquid.md)
   * [Fundation](satoshinet/fundation.md)
   * [Economic Model](satoshinet/ecoModel.md)
+  * [Continuous Evolution](satoshinet/evolution.md)
   * [Scenarios]
     * [SATSWAP](satoshinet/cases/satswap.md)
     * [Stablecoin](satoshinet/cases/stablecoin.md)

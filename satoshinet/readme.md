@@ -19,4 +19,6 @@ SatoshiNet is developed on top of the BTC core code, and compared to the BTC mai
 4. **Enhanced UTXO Model**: Supports explicit expression of any asset
 5. **Supports Turing-complete Smart Contracts**: Activates OP_CAT and other instructions, turning Bitcoin scripts into Turing-complete scripts
 
+SatoshiNet is also constantly evolving. All technologies that cannot be implemented on the mainnet can be realized on SatoshiNet. One day, it will even be able to connect to all other public chains through SatoshiNet, making the BTC mainnet truly the foundation of the value Internet.
+
 SatoshiNet is also the ultimate goal of the SAT20 protocol, providing a secure, fast, and cost-effective native circulation environment for BTC and the native assets on the mainnet. SatoshiNet opens up entirely new possibilities for the development of the BTC ecosystem.
