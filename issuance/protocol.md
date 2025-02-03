@@ -12,6 +12,7 @@ deploy
 | op | Yes | Instruction: deploy |
 | tick | Yes | Ticker name: 3 to 16 characters (4 characters reserved for BRC-20) |
 | lim | No | Token limit for each mint, default is 10,000. If minting a special token on a specific sat, the default is 1. |
+| n | No | The number of tokens bound to each satoshi, 1 by default and the maximum is 100 million.（v2） |
 | selfmint | No | Proportion of self-minting (two decimal places). Only addresses holding the ticker are allowed to mint (parent-child inscription). |
 | max | No | Total minting limit, a 64-bit integer. |
 | block | No | Start and end heights for minting (start-end). |
