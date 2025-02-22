@@ -44,6 +44,6 @@
     * [DID](issuance/cases/DID.md)
     * [DeIP](issuance/cases/DeIP.md)
 * [Roadmap](roadmap.md)
-* [API](https://apiprd.ordx.space/mainnet/swagger/index.html)
+* [API](https://apiprd.sat20.org/mainnet/swagger/index.html)
 * [Donate](donate.md)
 * [About](about.md)
