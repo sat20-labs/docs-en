@@ -9,6 +9,6 @@ What is a BTC native Layer 2 network? We believe there is only one standard: fas
 
 The core concepts of the SAT20 asset circulation protocol are as follows:
 1. RSMC: The core technology of the Lightning Network, including commitment transactions, penalty transactions, and watchtowers, ensures that users maintain control over their assets in the channel and can unilaterally withdraw them to the mainnet at any time.
-2. Locking and Transitioning: Using Lightning channel technology, Satoshis are locked in a Lightning channel, and their ownership, i.e., the mapped assets, is then transferred to the Layer 2 network for circulation.
+2. Locking and Transcending: Using Lightning channel technology, Satoshis are locked in a Lightning channel, and their ownership, i.e., the mapped assets, is then transcended to the Layer 2 network for circulation.
 3. Dynamic Channel Capacity Adjustment: Using Splicing technology, the capacity of a Lightning channel can be adjusted, allowing for the addition and removal of assets in the channel at any time.
 4. Support for mainstream asset issuance protocols on the mainnet: Ordinals, ORDX, Runes, BRC20, etc.
