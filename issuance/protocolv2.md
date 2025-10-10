@@ -1,11 +1,10 @@
-ORDX Protocol v2.0
+ORDX Protocol v2.0 (Not implemented)
 ====
 
 The SAT20 asset issuance protocol, ORDX, will continue to evolve based on the needs of the BTC ecosystem while maintaining compatibility with previous versions.
 
 This upgrade primarily aims to enhance the circulation of Satoshi assets on Layer 2 networks, while making the protocol more streamlined and user-friendly.
 
-### Key Updates:
 
 #### Data Writing Method
 ---
@@ -20,8 +19,8 @@ These two instructions have permanent effects and are initiated by the owner to 
 ```
 OP_RETURN | MAGIC_NUMBER | CT_TYPE | CONTENT
 MAGIC_NUMBER = OP_16
-CT_DESTROY = OP_4
-CT_SWAP = OP_5
+CT_DESTROY = OP_DATA_40  
+CT_SWAP    = OP_DATA_41 
 ```
 
 ##### Destroy Content:
@@ -37,14 +36,6 @@ Note: The range of the input Satoshis must be controllable by the user. However,
 If the UTXO contains multiple ranges for the asset, each range requires a separate OP_RETURN execution.  
 The format for assetName is: protocol:type:tickername (For NFTs, use inscription_number).
 
-#### Exploring New Features
----
-The `stake/unstake` operation is similar to `deploy`, but with the added requirement of staking specified assets to issue corresponding new assets. This can simplify the management of staked assets.  
-This operation instruction must be used with a SatoshiNet channel to take effect. Assets issued via staking are not bound to Satoshis.
-
-```
-assetName | amt
-```
 
 ### Notes:
 Please note that the above new features are still in the exploratory phase and have not yet been officially implemented.

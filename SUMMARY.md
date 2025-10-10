@@ -1,6 +1,6 @@
 # Table of contents
 
-* SAT20 Protocol
+* SAT20 Protocol, the fundamental technology for BTC ecosystem liquidity
   * [Overview](readme.md)
   * [Background](why.md)
 * SatoshiNet
@@ -22,11 +22,9 @@
 * Asset Circulation Protocol: STP
   * [Overview](circulation/readme.md)
   * [Protocol](circulation/protocol.md)
-  * [SatSwap](circulation/satswap.md)
   * [RSMC](circulation/rsmc.md)
   * [Dynamic Channel](circulation/dynamicChannel.md)
   * [Full Assets](circulation/fullAssets.md)
-  * [Compitable](circulation/compatible.md)
 * Asset Issuance Protocol: ORDX
   * [Overview](issuance/readme.md)
   * [Protocol](issuance/protocol.md)
@@ -42,7 +40,6 @@
     * [NFT](issuance/cases/NFT.md)
     * [SFT](issuance/cases/SFT.md)
     * [DID](issuance/cases/DID.md)
-    * [DeIP](issuance/cases/DeIP.md)
 * [Roadmap](roadmap.md)
 * [API](https://apiprd.sat20.org/mainnet/swagger/index.html)
 * [Donate](donate.md)

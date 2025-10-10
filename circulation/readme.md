@@ -1,16 +1,14 @@
-SAT20 Asset Circulation Protocol: Satoshi Transending Protocol
+SAT20 Asset Circulation Protocol: Satoshi Transcending Protocol (BitBridge)
 ====
 
-The SAT20 Asset Circulation Protocol is a protocol that outlines how Satoshis (sats) can enter the BTC native Layer 2 network, how they can be traded and transferred within the Layer 2 network, and how they can be securely returned to the Layer 1 mainnet.
+The SAT20 Asset Circulation Protocol, also known as the Satoshi Transcending Protocol(STP), is a protocol for how Satoshi assets can enter the native BTC Layer 2 network and safely return to the Layer 1 mainnet. Its core technical foundation is the RSMC protocol for Lightning Channels. Through this protocol, assets are locked on the mainnet, and users retain control of their assets, allowing them to unilaterally withdraw them back to the Bitcoin mainnet at any time. The STP essentially maps the ownership of BTC mainnet assets to other networks for trading, allowing users to control them. Its functionality is similar to a bridge, but it inherits the decentralized and secure features of the BTC mainnet. Therefore, the STP is also known as BitBridge.
 
-The SAT20 Asset Circulation Protocol is just a protocol and not a Layer 2 network itself. Currently, there is no existing Layer 2 network supported natively by BTC in the market. The BTC ecosystem needs a native Layer 2 network that allows BTC to freely circulate onto the Layer 2 network.
+The SAT20 Asset Circulation Protocol is merely a protocol, not a Layer 2 network. The BTC ecosystem requires a native Layer 2 network that can support the secure, fast, and economical trading and circulation of BTC mainnet native assets.
 
-What is a BTC native Layer 2 network? We believe there is only one standard: complete user control. Users must have full control over the security of their assets without needing anyone's permission. They should be able to enter and exit the Layer 2 network at any time without compromising the security of their assets. The SAT20 Asset Circulation Protocol is designed to be compatible with all BTC native Layer 2 networks, whether existing or yet to emerge.
+What is a BTC native Layer 2 network? We believe there is only one standard: fast and economical circulation while ensuring asset security. Security here means that users have full control over their assets, without requiring permission from anyone else. They can enter or exit the Layer 2 network at any time, and even a Layer 2 network crash will not affect the security of their assets. This is the core and most distinctive feature of the SAT20 asset circulation protocol.
 
-The core concepts of the SAT20 Asset Circulation Protocol include:
-1. Sat Locking and Unlocking: Using Lightning Network channel technology, sats are locked on the mainnet. The battle-tested Lightning Network channel technology ensures the security of user assets.
-2. Sat Transcending: Sats can transcend between Layer 1 and Layer 2, entirely controlled by the user.
-3. Sat Swapping: Sats within the Layer 2 network gain remarkable liquidity through sat swapping.
-4. RSMC: The core technology of the Lightning Network, ensuring that users have control over the assets in the channel.
-5. Dynamic channel capacity adjustment technology: adjust the capacity of the lightning channel through Splicing technology.
-6. Support mainstream asset issuance protocols on the mainnet: Ordinals, ORDX, Runes, BRC20, etc.
+The core concepts of the SAT20 asset circulation protocol are as follows:
+1. RSMC: The core technology of the Lightning Network, including commitment transactions, penalty transactions, and watchtowers, ensures that users maintain control over their assets in the channel and can unilaterally withdraw them to the mainnet at any time.
+2. Locking and Transitioning: Using Lightning channel technology, Satoshis are locked in a Lightning channel, and their ownership, i.e., the mapped assets, is then transferred to the Layer 2 network for circulation.
+3. Dynamic Channel Capacity Adjustment: Using Splicing technology, the capacity of a Lightning channel can be adjusted, allowing for the addition and removal of assets in the channel at any time.
+4. Support for mainstream asset issuance protocols on the mainnet: Ordinals, ORDX, Runes, BRC20, etc.

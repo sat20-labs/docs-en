@@ -8,3 +8,5 @@ These new digital objects have inherent value and ownership. Counterfeit copies 
 The basic unit of BTC, the satoshi, is precisely such a valuable and meaningful digital object. We call it a "satoshi object." It cannot be created out of thin air, and it can never be destroyed. If it belongs to you, it cannot be taken away. It is the first digital object in history to possess such memorable attributes. Its potential is limitless. The admiration we have for it, which words cannot fully express, is owed to Satoshi Nakamoto's ingenious conception.
 
 The unique attributes of "satoshi objects" – value, uniqueness, ownership, and programmability – will spark remarkable innovations on the BTC mainnet and layer-2 networks. We have boundless optimism and active participation in exploring their possibilities.
+
+The potential of Satoshi objects has yet to be fully explored. We believe that as the BTC ecosystem develops, the potential of Satoshi objects will be gradually explored, creating unique application scenarios.

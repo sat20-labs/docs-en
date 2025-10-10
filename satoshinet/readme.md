@@ -9,16 +9,22 @@ SatoshiNet is native and based on the following core technologies:
 3. **Users retain control**: At any time, even if SatoshiNet shuts down, users can retrieve their assets without the need for any third-party involvement.
 4. **Same consensus**: Same addresses, same assets, same network fees.
 
-SatoshiNet represents a **new direction of evolution for the Lightning Network**. Unlike the original Lightning Network, which evolves into a network architecture using a combination of RSMC + HTLC protocols, SatoshiNet retains the RSMC protocol while abandoning HTLC. This allows the Lightning channel’s full potential to be unlocked, transforming it into a bridge between Layer 1 and Layer 2 networks. At the same time, a parallel BTC network is used as the second-layer network to record the transaction states of Lightning channels. This ensures that changes in Lightning channel states are traceable, auditable, and immutable as UTXO ledger records. Additionally, by activating OP_CAT and potentially more opcodes, SatoshiNet can evolve into a network supporting Turing-complete smart contracts. In this way, SatoshiNet allows the BTC ecosystem to compete with the ETH ecosystem.
+SatoshiNet is a Lightning Network that has evolved in another direction, or even a second-generation Lightning Network. This is not only because it circumvents and solves the capacity, traffic, routing, and single-point channel state storage issues of the traditional Lightning Network, but more importantly, SatoshiNet has expanded the RSMC framework and proposed the concept of channel contracts on this basis, giving SatoshiNet a special on-chain programming capability, greatly expanding the construction capabilities of the BTC ecosystem and giving SatoshiNet the opportunity to become the most promising and competitive native extension network in the BTC ecosystem.
 
-SatoshiNet is developed on top of the BTC core code, and compared to the BTC mainnet, it mainly differs in the following aspects:
+SatoshiNet is developed on top of the BTCD source code, and compared to the BTC mainnet, it mainly differs in the following aspects:
 
 1. **Consensus Mechanism**: Proof of Stake (POS)
 2. **Block Time**: 12 seconds
 3. **Transaction Network Fees**: 10 satoshis
 4. **Enhanced UTXO Model**: Supports explicit expression of any asset
-5. **Supports Turing-complete Smart Contracts**: Activates OP_CAT and other instructions, turning Bitcoin scripts into Turing-complete scripts
+5. **Enhanced script commands**: Activate OP_CAT or other more powerful commands (not yet implemented)
+6. **Channel contracts**: Support more flexible and powerful smart contracts through WASM
 
 SatoshiNet is also constantly evolving. All technologies that cannot be implemented on the mainnet can be realized on SatoshiNet. One day, it will even be able to connect to all other public chains through SatoshiNet, making the BTC mainnet truly the foundation of the value Internet.
 
-SatoshiNet is also the ultimate goal of the SAT20 protocol, providing a secure, fast, and cost-effective native circulation environment for BTC and the native assets on the mainnet. SatoshiNet opens up entirely new possibilities for the development of the BTC ecosystem.
+SatoshiNet is also the ultimate goal of SAT20Labs. We envision SatoshiNet to grow into the following network:
+1. A native extension of the BTC ecosystem: Providing a secure, fast, and economical native circulation loop for BTC and native assets on the mainnet.
+2. Making the BTC ecosystem a direct competitor to the EVM ecosystem: By enabling all existing financial applications and services on the EVM through channel contracts, the BTC ecosystem will become a direct competitor to the EVM ecosystem.
+3. Making SatoshiNet the most critical infrastructure for DAPPs in the crypto ecosystem: Continuously expanding SatoshiNet's basic functionality will enable a richer and more prosperous DAPP ecosystem based on SatoshiNet.
+
+We will continue to optimize and iterate SatoshiNet, promoting the development of the SatoshiNet ecosystem and, in turn, the BTC ecosystem, making the BTC ecosystem the premier ecosystem in the crypto industry.

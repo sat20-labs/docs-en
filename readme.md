@@ -1,20 +1,19 @@
 SAT20 Protocol
 =========
 
-SAT20 is a "Satoshi Standard" protocol for issuing and circulating BTC native assets, with its core feature being the binding of assets to satoshis and their free movement alongside satoshis.
-SatoshiNet is the native extension network of the BTC mainnet, based on Lightning channels and parallel BTC networks. Its purpose is to expand the liquidity of BTC's native assets. SatoshiNet is the implementation of the SAT20 protocol.
+SAT20 is a "Satoshi Standard" Bitcoin native asset issuance and circulation protocol. Its core feature is the secure, economical, and fast flow of assets tied to Satoshis. The circulation protocol is the core, aiming to support the secure, economical, and fast circulation of all native assets on the mainnet. It supports all UTXO-based asset issuance protocols on Bitcoin. Satoshi Network is a native extension of the Bitcoin mainnet, dedicated to expanding the liquidity of native assets on the Bitcoin mainnet and exploring a viable path for the development of the Bitcoin ecosystem.  
 
 SatoshiNet
----
-SatoshiNet is the native extension network of the BTC mainnet, built on Lightning channels and parallel BTC networks, providing a secure, fast, and cost-effective native circulation environment for BTC and the mainnet's native assets. SatoshiNet is an implementation example of the SAT20 protocol, constructed based on it.
+----
+SatoshiNet is a native extension of the BTC mainnet. Based on the BTCD source code, it provides a secure, fast, and economical native circulation environment for BTC and the mainnet's native assets. SatoshiNet is a centralized showcase of all achievements of the SAT20 protocol and the foundation for our in-depth development of the BTC ecosystem.
 
-Key Features of SatoshiNet:
-1. **Native second-layer** extension network for BTC
-2. **No bridge**: based on Lightning channels
-3. **No new tokens**: all assets come from the BTC mainnet
-4. **Same consensus**: same addresses, same network fees, same assets
-5. Fast block times, low fees
-6. Supports smart contracts
+Features of SatoshiNet:
+1. A native, extended layer 2 network for BTC: Based on the RSMC contract, asset security is guaranteed by the mainnet.
+2. Bridgeless: Anyone can independently transfer assets to SatoshiNet or withdraw them back to the mainnet without the need for a centralized funding bridge.
+3. Coinless: All assets originate from the BTC mainnet.
+4. Common consensus: Same address, same network fee, same assets, and same core code (based on BTCD).
+5. Secure, economical, and fast: User-controlled assets ensure fast block times and low fees.
+6. Smart Contract Support: An innovative channel contract framework provides a more flexible and secure smart contract solution.
 
 
 Asset Circulation Protocol (STP)
@@ -28,9 +27,8 @@ Features of the Satoshi Transcending Protocol:
 4. **Simple Atomic Interface**:
     * Open and close channels
     * Lock and unlock assets
-    * Splicing
-    * Satoshi Swap
-5. **Compatibility with Other Public Chains**
+    * Splicing in/out
+5. **Extensible channel contract framework**: Expand the RSMC protocol into a channel contract comparable to smart contracts
 
 
 Asset Issuance Protocol (ORDX)

@@ -1,40 +1,52 @@
 Roadmap
 ============
 
-SAT20 is just the beginning of our efforts to build the BTC ecosystem. Throughout this development process, we adhere to the following principles, which we believe reflect future trends:
-1. Asset Issuance on the BTC Mainnet: There will be an increasing number of assets issued on the BTC mainnet.
-2. Asset Trading on Layer 2 Networks: Infinite liquidity while ensuring assets remain under users' control, offering security, cost-effectiveness, and speed.
-3. The BTC network will become the foundation of the digital world, leading to a "one sat, one world" future.
+Based on our predictions of the following trends, we will build the BTC ecosystem over the long term:
+1. Asset issuance on the BTC mainnet: The BTC mainnet will see an increasing number of assets with real value.
+2. Asset trading on the Layer 2 network: While ensuring security, we will provide an economical and efficient circulation environment.
+3. The BTC network will become the foundation of the future value network: SatoshiNet strives to provide the most valuable construction work to achieve this goal.
 
-SAT20 Asset Issuance Protocol (ORDX Protocol)
+Phased Achievements
+---
+We officially entered the BTC ecosystem development phase in October 2023. After more than two years of development, we have achieved the following phased goals:
+
+1. SAT20 Asset Issuance Protocol (ORDX Protocol) – Development of the asset issuance protocol has be completed in the first half of 2024.
+
+2. SAT20 Asset Transcending Protocol - 90% complete, final standardization in progress:
+* First version released in Q1 2025
+* Support for the Runes protocol in Q2 2025
+* Channel contracts, including the launch pool contract, AMM trading contract, LimitOrder trading contract, and asset translocation contract, have be launched in Q3 2025
+* Channel contract framework standardized and publicly released in Q4 2025, supporting developer development of various channel contracts
+* The first standard version of the protocol will be completed and publicly released in Q1 2026 (only the protocol itself will be made public; the source code will not be disclosed for now. Those with sufficient reputation can apply for code access).
+
+3. Native Extension Network: SatoshiNet - SatoshiNet has officially launched in early August 2025 and undergone long-term iteration and optimization, evolving into the foundational network for thousands of DAPPs in the Bitcoin ecosystem.   
+4. SatSwap Market: SatSwap Market -- Trial operations has begun at the end of August 2025, with official operations planned for November 2025. ordx.market is a professional platform within the BTC ecosystem that provides a complete range of asset minting, browsing, trading, and management services. It supports all major assets in the BTC ecosystem, including both layer 1 and layer 2 networks.
+5. SAT20 Wallet -- The plugin wallet has been released on Google's plugin market, and the app version is under development.
+
+Building the SatoshiNet Ecosystem
+---
+We expect that by the end of 2025, SatoshiNet, our first native extension network for the BTC ecosystem, will have completed basic functional development and stabilized, entering a new phase. It's time to see what the future holds.
+
+To put it bluntly: SatoshiNet marks the beginning of our deep involvement in the BTC ecosystem. We hope that SatoshiNet can help the BTC ecosystem compete head-on with other ecosystems. SatoshiNet leverages the following capabilities to help the BTC ecosystem compete head-on:
+1. Assets issued on the BTC mainnet: The highest consensus, the most secure, and the most decentralized.   
+2. DIDs issued on the BTC mainnet: The highest consensus, the most secure, and the most decentralized, coupled with permissionless and permanent ownership. DIDs are the foundation for widespread adoption of crypto applications.
+3. Economical and quick, based on security: Users control their own assets, and the mainnet provides security guarantees. This is the foundation for the ecosystem's growth and development. Expanding the network without security guarantees is a castle in the air.
+4. A more secure smart contract framework: The channel contract framework, derived from the Lightning Network channel RSMC protocol, will provide a completely different smart contract framework from EVM smart contracts. Based on WASM, it is run by multiple nodes and verified by the entire SatoshiNet, making it more flexible and secure.
+5. Built-in DID-based message protocol: As a decentralized network, SatoshiNet naturally supports decentralized DIDs and a DID-based message protocol, which are the foundation for the development of DAPPs.
+
+All of this will be freely available and open-sourced in an orderly manner. Anyone can participate, unleash their imagination for the BTC ecosystem, realize everything on SatoshiNet, and reap the benefits of the long-term bull market of the BTC ecosystem.
+
+Open Source Plan
 ----
-The development of the asset issuance protocol will be completed in the first half of 2024.
+For the sake of efficiency in early development, we will initially maintain a completely closed-source development model.
+We plan to gradually open up and eventually open source the entire SAT20 project. Ultimately, through community management, SAT20 will become a fully decentralized project and continue to develop the SAT20 protocol.
 
-SAT20 Asset Circulation Protocol (Satoshi Transcending Protocol)
-----
-A protocol that allows BTC (Satoshi) to circulate freely.  
-We hope to complete the prototype development of the Transcend Protocol in 2025Q1 and run it on SatoshiNet.  
+Through open source and permissionless collaboration, we hope to promote the widespread use of SAT20 in the Bitcoin ecosystem and contribute to its prosperity.
 
-Native Extension Network: SatoshiNet
-----
-SatoshiNet is a modified BTC network based on BTCD source code. It is the first native extension network of the BTC mainnet based on the Satoshi Transcending Protocol (STP). Any technology that benefits BTC development can be experimented with on this network.
-SatoshiNet is expected to officially launch in Q2 2025.
+We welcome teams interested in Cong Network to join us in building the world of Cong.
 
-Satoshi Swap Market: SatSwap Market
-----
-SatSwap Market is a decentralized exchange (DEX) on the SatoshiNet, developed and operated by ordx.market, providing asset trading services for the SatoshiNet.
-ordx.market is a professional platform in the BTC ecosystem that offers complete services for asset minting, browsing, trading, and management. It supports all major assets in the BTC ecosystem, as well as both Layer 1 and Layer 2 networks. In the future, it will connect more ecosystems and public chains with SatoshiNet as the central hub.
-SatSwap Market is expected to launch alongside SatoshiNet in Q2 2025.
-
-Open Source
-----
-To ensure efficient early-stage development, we will initially keep the project closed source. However, we plan to gradually open and eventually fully open-source the entire SAT20 project. Through community management, SAT20 will evolve into a fully decentralized project that can incorporate any BTC-native technologies, such as BTC native smart contracts or any future BTC-native layer 2 networks. We aim to promote mass adoption of SAT20 within the BTC ecosystem through open-source, permissionless collaboration and contribute to the prosperity of the BTC ecosystem. We welcome teams interested in SAT20 to join us in building a world of satoshis.
-
-Plan:
-1. Provide installation packages to assist collaborating teams in setting up their own service nodes (starting from June 2024).
-2. Gradually open-source the project, releasing one module at a time as they mature (beginning in Q4 2024):
-    * Indexer
-    * Name service
-    * SatoshiNet
-    * STP
-3. Explore community management models and continue the development of SAT20 (promoting community governance after open-sourcing, making Pearl the governance token for proposals, voting, etc.).
+Open Source Plan: Gradually open source modules as they mature.
+* Mainnet Asset Indexer -- https://github.com/sat20-labs/indexer
+* SAT20 Wallet -- https://github.com/sat20-labs/sat20wallet
+* SatoshiNet -- https://github.com/sat20-labs/satoshinet
+* Circulation Protocol -- https://github.com/sat20-labs/transcend ( Not yet open source. Code permissions are available to those with sufficient reputation. )

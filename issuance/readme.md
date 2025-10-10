@@ -29,7 +29,7 @@ Other Related Services
 ----
 In addition, for convenient indexing and data manipulation of satoshis, some core services based on satoshis must be established:
 1. Naming service. Based on satoshis, it facilitates memorability and propagation, serving as the foundation of IP (Intellectual Property) development and an essential core service for protocol evolution.
-2. Data service. It enables the reading and writing of data bound to satoshis, where only the owner can write while anyone can read. In the future, income-generating services will require payment for accessing data.
-3. Payment service. SAT20 supports running software compiled into the WASM (WebAssembly) format on a virtual machine (VM). When income-generating services run other software packages on the VM, fees are charged, which are shared between node providers and software developers. The fees are low but not zero, denominated in satoshis.
+2. Data service. It enables the reading and writing of data bound to satoshis, where only the owner can write while anyone can read.
 
-The protocol's verification version was officially activated at height 827,307, and the official version is planned to be activated at height 845,000.
+
+The protocol's verification version was officially activated at height 827,307, and the official version was activated at height 845,000.
