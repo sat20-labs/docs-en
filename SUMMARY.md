@@ -6,7 +6,7 @@
 * SatoshiNet
   * [Overview](satoshinet/readme.md)
   * [Native](satoshinet/native.md)
-  * [Safe](satoshinet/safety.md)
+  * [Security](satoshinet/safety.md)
   * [POS](satoshinet/pos.md)
   * [Enhanced UTXO](satoshinet/enUTXO.md)
   * [Smart Contract](satoshinet/CA.md)
