@@ -13,10 +13,9 @@ To better consider the revenue sources for both platform operators and liquidity
     - **Explosive period**: Over 1 million transactions per day, with the most popular BTC ecosystem tokens being traded on SatoshiNet.
 
 #### 2. Mining Nodes
-Mining nodes gain the right to mine by staking **Pearl** tokens.
-- **Total network staking goal**: 50,000,000 Pearl (33% of total assets).
+Mining nodes gain the right to mine by staking **BTC** tokens.
 - **Mining node requirements**: The number of nodes required changes during each development phase.
-- **Staking amount** is temporarily set at 1 million Pearl tokens.
+- **Staking amount** is temporarily set at 1 BTC tokens.
 
 **Mining Revenue by Phase**:
 - **Guidance Period**: 2–3 nodes, no focus on economic profit.
@@ -53,7 +52,7 @@ The liquidity pool provides liquidity in and out of the SatoshiNet. In principle
     - Node operator share (85%) = 1.55125 BTC
 
 **Node Costs**:
-- In the mature period, staking 1,000,000 Pearl tokens might cost 10 BTC.
+- staking 1 BTC.
 - Hardware and network costs per node are expected to be less than 0.03 BTC per year.
 
 **Node ROI**:  
