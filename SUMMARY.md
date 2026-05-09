@@ -25,6 +25,7 @@
   * [RSMC](circulation/rsmc.md)
   * [Dynamic Channel](circulation/dynamicChannel.md)
   * [Full Assets](circulation/fullAssets.md)
+  * [EVM Smart Contracts](circulation/evm.md)
 * Asset Issuance Protocol: ORDX
   * [Overview](issuance/readme.md)
   * [Protocol](issuance/protocol.md)
