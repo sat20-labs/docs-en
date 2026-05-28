@@ -1,4 +1,4 @@
-序数
+Ordinals
 ====
 
 SAT20 strictly assigns ordinal numbers to satoshis based on their order of creation, ensuring a **one-to-one correspondence between ordinal numbers and satoshis, with a continuous increase**. This means that within the valid range, each ordinal number corresponds to a satoshi, and each satoshi corresponds to an ordinal number. This strict one-to-one relationship is permanent. The basic principles of ordinal numbers are as follows:
