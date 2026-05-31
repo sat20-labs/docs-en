@@ -81,6 +81,8 @@ The call transaction must output to the invoked contract address as gas/funding 
 
 EVM `msg.sender` is determined from the previous-output address spent by the last input of the call transaction, then mapped to a 20-byte EVM address. Nodes must not derive `msg.sender` from witness public keys.
 
+For EVM contracts, a default invocation means an empty-calldata call to the contract address. Satoshis in the output become `msg.value`; other assets remain represented by the SatoshiNet asset layer and the precompiled asset interfaces.
+
 
 StateDB and Executor
 ----

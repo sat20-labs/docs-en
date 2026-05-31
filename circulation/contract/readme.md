@@ -88,6 +88,8 @@ CONTENT_TYPE_CONTRACT_RESULT     = OP_DATA_33
 CONTENT_TYPE_CONTRACT_STATE_ROOT = OP_DATA_34
 ```
 
+If a transaction has no contract OP_RETURN but contains outputs sent to valid contract addresses, those outputs may be interpreted as default invocations. A default invocation carries no explicit action or parameters; its business meaning is defined by the contract type and the contract instance.
+
 
 CONTRACT_DEPLOY
 ----
@@ -113,7 +115,7 @@ The call transaction must contain at least one output to the invoked contract ad
 
 The invoked contract address is not written in OP_RETURN. Nodes determine the invoked contract from the Call TX output sent to a contract address.
 
-Each `CONTRACT_INVOKE` can call only one contract. If multiple outputs are sent to contract addresses, they must all belong to the same contract address.
+An explicit `CONTRACT_INVOKE` can call only one contract. If multiple outputs are sent to contract addresses, they must all belong to the same contract address. A default invocation has no explicit payload, so each contract output may independently trigger the default behavior of the corresponding contract.
 
 Caller identity is resolved from the address of the previous output spent by the last input of the call transaction. The consensus path does not use witness public keys, signature public keys, or other replaceable fields as the caller/invoker source. If the previous output of the last input is unavailable or cannot be decoded to an address, the call is invalid.
 
@@ -279,9 +281,9 @@ Mempool Rules
 Mempool must reject:
 
 1. `CONTRACT_DEPLOY` or `CONTRACT_INVOKE` with invalid payload format.
-2. `CONTRACT_INVOKE` without an output to a contract address.
-3. `CONTRACT_INVOKE` sent to a non-existing contract address.
-4. One `CONTRACT_INVOKE` sent to multiple different contract addresses.
+2. Explicit `CONTRACT_INVOKE` without an output to a contract address.
+3. Contract invocation sent to a non-existing contract address.
+4. One explicit `CONTRACT_INVOKE` sent to multiple different contract addresses.
 5. Missing gas limit or gas limit above protocol maximum.
 6. Insufficient gas/funding.
 7. Invalid gas asset type.

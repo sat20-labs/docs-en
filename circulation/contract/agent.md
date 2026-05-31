@@ -141,6 +141,8 @@ Invoke content may contain:
 
 The call transaction must output to the invoked contract address as gas/funding output. Invoker identity is resolved from the last input of the call transaction.
 
+A natural language contract default invocation carries no natural language material or structured action. In the first phase it may be treated as an ordinary on-chain transfer to the contract address; unless the contract protocol explicitly defines default behavior, it does not change natural language contract business state.
+
 Natural language contract calls are divided into two categories:
 
 1. CoreNode built-in calls: including `ready` and future Agent-only interfaces defined by the protocol. Only CoreNode can call them.

@@ -72,6 +72,8 @@ The call transaction must output to the invoked contract address. That output is
 
 Invoker identity is resolved from the last input of the call transaction. Runtime user state, LP ownership, refund permission, and history records use this identity.
 
+Template contracts may define default invocations. A default invocation is triggered by a transaction that has no contract OP_RETURN but sends an output to a template contract address. The contract interprets the business meaning from the asset type and amount in that output. If the output does not satisfy executable contract conditions, the contract may treat it as invalid business input without changing business state.
+
 
 Fees
 ----
@@ -110,12 +112,13 @@ Template runtimes must:
 First-Phase Templates
 ----
 
-The first phase implements two trading templates:
+The first phase implements three trading templates:
 
 1. Limit order trading contract.
 2. AMM trading contract.
+3. Asset exchange contract.
 
-Both templates migrate business logic from previous channel contracts, but remove:
+The limit order and AMM templates migrate business logic from previous channel contracts, but remove:
 
 1. channel-side signatures.
 2. RSMC channel state.
@@ -157,6 +160,12 @@ Refund rules:
 4. The invoker can cancel only their own orders.
 5. Assets already sent out by Result TX are not refundable.
 
+Default invocation rules:
+
+1. Sending satoshis to a limit order contract is interpreted as a buy at the currently executable sell price.
+2. Sending the contract asset to a limit order contract is interpreted as a sell at the currently executable buy price.
+3. If no reference trade price exists, the default invocation creates no new order and produces no asset settlement.
+
 
 AMM Trading Contract
 ----
@@ -194,6 +203,12 @@ AMM swap rules:
 7. Within the same block, AMM processes swaps before add/remove liquidity, matching the previous channel contract.
 8. If `addliq` makes the contract ready in a block, pending swaps are matched in later blocks.
 
+AMM default invocation rules:
+
+1. Sending satoshis to an AMM contract is interpreted as a buy.
+2. Sending the contract asset to an AMM contract is interpreted as a sell.
+3. A default invocation that does not match AMM trading semantics does not change AMM business state.
+
 Liquidity rules:
 
 1. `addliq` contains asset amount and satoshi amount to enter the pool.
@@ -204,3 +219,46 @@ Liquidity rules:
 6. Removing liquidity returns the corresponding pool share to the LP.
 7. If profit exists, LP receives 60% of profit. The previous server share and foundation share are merged and paid to the foundation.
 8. The current implementation uses deployer address as the foundation recipient.
+
+
+Asset Exchange Contract
+----
+
+The asset exchange contract sells inventory asset A according to deployer-defined rules. The invoker inputs asset B and receives asset A. The deployer receives the consumed asset B in the same canonical `CONTRACT_RESULT`.
+
+Deployment content contains:
+
+1. asset A name.
+2. asset B name.
+3. price mode.
+4. price step table.
+
+Price modes:
+
+1. `height`: choose the current price step by block height.
+2. `sold_a`: choose the current price step by cumulative sold asset A amount.
+
+In the price step table, `bPerA` means the amount of asset B required for 1 unit of asset A. The first threshold must be 0, and later thresholds must be strictly increasing.
+
+API rules:
+
+1. `exchange`: input asset B and exchange for asset A. The parameter may contain the minimum acceptable output amount of asset A.
+2. `close`: only the deployer can call it. It closes the contract and withdraws remaining asset A.
+3. A parameterless default invocation with asset A is treated as inventory funding.
+4. A parameterless default invocation with asset B is treated as an exchange at the current price.
+5. A parameterless default invocation with both asset A and asset B first adds asset A to inventory, then uses asset B for exchange.
+
+Exchange rules:
+
+1. Trade price is determined by the deploy-time price mode and current block state.
+2. The contract can output at most the currently available inventory asset A.
+3. If inventory asset A is insufficient for the input asset B, the contract partially fills at the current price and refunds unused asset B to the invoker.
+4. If the minimum output asset A in the `exchange` parameter is not satisfied, net input asset B is refunded to the invoker.
+5. After the contract is closed, it no longer accepts new exchanges and later exchange inputs fail.
+
+Gas-name rules:
+
+1. Asset A or asset B may have the same name as the unified gas asset.
+2. If the gas asset is asset A, the Result fee is deducted from available asset A first. Only the remainder can be inventory or exchange output.
+3. If the gas asset is asset B, the Result fee is deducted from the current input asset B first. Only the remainder participates in exchange.
+4. If the gas asset differs from both asset A and asset B, gas follows the common template contract fee rules.
