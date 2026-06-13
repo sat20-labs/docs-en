@@ -73,7 +73,7 @@ Contract-related transactions:
 3. `CONTRACT_RESULT`
 4. `COINBASE_CONTRACT_STATE_ROOT`
 
-Contract call data is carried in OP_RETURN:
+Contract transactions carry the deploy, invoke, result, and state-root protocol envelope in OP_RETURN:
 
 ```text
 OP_RETURN | SAT20_MAGIC_NUMBER | CONTENT_TYPE | CONTENT
@@ -87,6 +87,8 @@ CONTENT_TYPE_CONTRACT_INVOKE     = OP_DATA_32
 CONTENT_TYPE_CONTRACT_RESULT     = OP_DATA_33
 CONTENT_TYPE_CONTRACT_STATE_ROOT = OP_DATA_34
 ```
+
+For `CONTRACT_INVOKE`, OP_RETURN should contain only the action, nonce, gas limit, and non-economic parameters that cannot be derived from transaction outputs. Asset names, asset amounts, satoshi amounts, gas/funding outputs, and other economic parameters are determined by the Call TX outputs sent to the contract address and should not be duplicated in OP_RETURN. If a call type needs non-economic parameters such as slippage limits, minimum acceptable output, deadline, proof hash, or calldata, those parameters may be carried in the invoke payload.
 
 If a transaction has no contract OP_RETURN but contains outputs sent to valid contract addresses, those outputs may be interpreted as default invocations. A default invocation carries no explicit action or parameters; its business meaning is defined by the contract type and the contract instance.
 
@@ -261,12 +263,14 @@ Returned transaction, state, and asset results must be traceable to chain transa
 Indexer Persistence and Query Requirements
 ----
 
-Indexers must build a queryable on-chain view for contracts, including at least:
+Indexers must build a queryable on-chain view for contracts. An indexer only consumes confirmed blocks, canonical Result TXs, committed contract index events, and committed contract post-state projections. It must not execute template, EVM, or Agent runtimes, and it must not generate contract history by replaying contract state machines on its own.
+
+Indexers should provide at least the following unified views:
 
 1. Contract deployment table: contract address, contract type, deploy txid, deployer, payload, payload hash, creation height, creation time, and initial Result status.
 2. Contract invocation table: invoke txid, contract address, caller/invoker address, action, payload, gas/funding output, confirmation height, and execution status.
 3. Contract Result table: result txid, contract address, result type, call id, trigger id, input UTXOs, output asset transfers, gas fee, execution status, error details, height, and time.
-4. Contract state table: contract address, contract type, state root, current state, type-specific state, update time, and last Result txid.
+4. Contract state table: contract address, contract type, state root, current state, type-specific state, update time, and last Result txid. State data must come from committed post-state projections.
 5. EVM extension tables: EVM address mapping, code hash, storage root, logs/events, registered triggers, and trigger execution history.
 6. Agent extension tables: Agent contract content hash, ready result, bet records, outcome aggregation, confirm records, CoreNode public key, CoreNode signature, result hash, and settlement/refund details.
 7. Asset view: contract-address UTXO asset balance, locked pool funds, Result transfers, change, and fee collection.

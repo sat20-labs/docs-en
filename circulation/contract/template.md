@@ -198,7 +198,7 @@ AMM swap rules:
 2. AMM buy: user inputs satoshis and receives assets.
 3. AMM sell: user inputs assets and receives satoshis.
 4. In AMM sell, `Amt` is the minimum acceptable output satoshi amount. Input asset amount comes from the Call TX funding output.
-5. In AMM buy, `Amt` is the minimum acceptable output asset amount. Input satoshi amount is determined by `UnitPrice` and the funding output.
+5. In AMM buy, `Amt` is the minimum acceptable output asset amount. Input satoshi amount comes from the Call TX funding output; `UnitPrice` may only act as a quote or slippage constraint, not as a second source of the input amount.
 6. Slippage protection failure generates a refund result in the same block.
 7. Within the same block, AMM processes swaps before add/remove liquidity, matching the previous channel contract.
 8. If `addliq` makes the contract ready in a block, pending swaps are matched in later blocks.
@@ -211,8 +211,8 @@ AMM default invocation rules:
 
 Liquidity rules:
 
-1. `addliq` contains asset amount and satoshi amount to enter the pool.
-2. The satoshi amount entering the pool is the `Value` field in `addliq`, not all sats in the Call TX funding output.
+1. For `addliq`, asset amount and satoshi amount entering the pool come from the Call TX funding output.
+2. `addliq` parameters should only express constraints that cannot be derived from funding outputs, such as minimum acceptable LPT, ratio constraints, or deadline. They should not duplicate asset amount or satoshi amount entering the pool.
 3. Excess asset or satoshi is returned according to the pool ratio.
 4. `removeliq` contains the LPT amount to remove.
 5. If requested LPT exceeds the invoker balance, the actual invoker balance is used.
@@ -252,7 +252,7 @@ Exchange rules:
 
 1. Trade price is determined by the deploy-time price mode and current block state.
 2. The contract can output at most the currently available inventory asset A.
-3. If inventory asset A is insufficient for the input asset B, the contract partially fills at the current price and refunds unused asset B to the invoker.
+3. Input asset B amount comes from the Call TX funding output. If inventory asset A is insufficient for the input asset B, the contract partially fills at the current price and refunds unused asset B to the invoker.
 4. If the minimum output asset A in the `exchange` parameter is not satisfied, net input asset B is refunded to the invoker.
 5. After the contract is closed, it no longer accepts new exchanges and later exchange inputs fail.
 
