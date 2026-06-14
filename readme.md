@@ -47,14 +47,16 @@ If you want to build applications:
 If you want an AI Agent to operate STP:
 
 1. Read the [Bitcoin Ecosystem AI Agent Asset Safety Standard](ai/bitcoin-agent-safety-standard.md).
-2. Read [SAT20 Agent Wallet: Install and Use](ai/sat20-agent-wallet/readme.md).
-3. Install the skill:
+2. Install and initialize [SAT20 PWA Wallet](https://sat20.org/pwa/?install=1), create or import a wallet inside the wallet, and complete backup and unlock.
+3. Read [SAT20 Agent Wallet: Install and Use](ai/sat20-agent-wallet/readme.md).
+4. Install the SAT20 Agent Wallet skill:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/sat20-labs/docs/main/ai/sat20-agent-wallet/skills/sat20-agent-wallet/scripts/install.sh | bash
 ```
 
-4. Read the [SAT20 Agent Wallet Verification Matrix and Data Gaps](ai/sat20-agent-wallet/verification-and-data-gaps.md).
+5. Let the Agent call `wallet.status`, `stp.status`, and `stp.safety_snapshot` through the PWA adapter to verify wallet, network, Core Node, and channel safety state.
+6. Read the [SAT20 Agent Wallet Verification Matrix and Data Gaps](ai/sat20-agent-wallet/verification-and-data-gaps.md).
 
 ## Official Links
 

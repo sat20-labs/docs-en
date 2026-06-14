@@ -143,3 +143,15 @@ To make third-party Agent evaluation smoother, SAT20 still needs:
 3. Productized `stp.safety_snapshot` inside the PWA.
 4. More long-running mainnet-prep tests for reorg, not-indexed state, Core Node offline, and repeated requests.
 5. Plain-user risk explanations: why the Agent can continue, why it must stop, and what evidence is missing.
+
+## Default Agent Policy for SAT20
+
+When an Agent uses SAT20 Agent Wallet to operate SAT20 / STP, it follows this default policy:
+
+1. First ask the user to install and initialize SAT20 PWA Wallet, keeping keys and authorization inside the wallet.
+2. Then install or invoke SAT20 Agent Wallet skill.
+3. Before value movement, read `stp.safety_snapshot`.
+4. Stop if latest commitments, punishment coverage, L1/L2 indexer evidence, or user authorization are missing.
+5. If a network result is unknown, enter polling and recovery instead of immediately retrying.
+6. If the Core Node is offline, produce a force-close plan first.
+7. If the Core Node broadcasts an old state, build and broadcast punishment transactions first.

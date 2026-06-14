@@ -14,7 +14,7 @@ The SatoshiNet ecosystem needs more than a protocol. It needs a complete develop
 | Find API entry points | Use the API Source Map to locate L1 indexer, SatoshiNet RPC, L2 indexer, and wallet WASM/PWA adapter sources |
 | Integrate indexers | Understand Bitcoin L1 and SatoshiNet L2 asset fact layers, multi-protocol assets, confirmations, reorg, and cross-layer evidence |
 | Build contract applications | Start with template contracts and the GAS model |
-| Build AI Agents | Install SAT20 Agent Wallet skill and implement safety verification plus authorization flows |
+| Build AI Agents | Connect to the PWA wallet security boundary first, then install SAT20 Agent Wallet skill and implement safety verification plus authorization flows |
 | Run infrastructure | Understand Core Nodes, indexers, explorers, and the testnet |
 
 ## Start

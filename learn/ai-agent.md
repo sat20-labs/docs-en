@@ -27,7 +27,14 @@ Agent boundaries:
 
 SAT20 provides the SAT20 Agent Wallet skill so Agents can operate wallets and Core Nodes through a unified JSON adapter.
 
-Install:
+Recommended order:
+
+1. The user first installs [SAT20 PWA Wallet](https://sat20.org/pwa/?install=1).
+2. The user creates or imports a wallet inside the PWA, completes backup, unlocks it, and selects the network.
+3. The Agent then installs SAT20 Agent Wallet skill and calls the wallet through the PWA adapter.
+4. The Agent first runs `wallet.status`, `stp.status`, and `stp.safety_snapshot` before moving assets.
+
+Install the skill:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/sat20-labs/docs/main/ai/sat20-agent-wallet/skills/sat20-agent-wallet/scripts/install.sh | bash

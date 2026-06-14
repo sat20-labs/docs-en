@@ -13,7 +13,17 @@ This page gives developers the shortest path into the SAT20 / SatoshiNet ecosyst
 | AI Agent | SAT20 Agent Wallet skill, PWA adapter, safety verification matrix |
 | Explorer or data service | L1/L2 indexers and transaction state model |
 
-## Install SAT20 Agent Wallet
+## Install Wallet and Agent Skill
+
+For ordinary users and mainnet scenarios, install and initialize SAT20 PWA Wallet before installing SAT20 Agent Wallet skill. The PWA wallet is the security boundary for private keys, mnemonics, signing, authorization prompts, and the channel database. The skill is the Agent's operation knowledge and workflow.
+
+Install SAT20 PWA Wallet:
+
+```text
+https://sat20.org/pwa/?install=1
+```
+
+After creating or importing a wallet inside the PWA, backing it up, and unlocking it, install the skill:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/sat20-labs/docs/main/ai/sat20-agent-wallet/skills/sat20-agent-wallet/scripts/install.sh | bash

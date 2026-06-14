@@ -4,7 +4,7 @@ The Use section is for ordinary users, asset holders, and community members. Its
 
 ## Recommended Path
 
-1. Install SAT20 PWA Wallet.
+1. Install [SAT20 PWA Wallet](https://sat20.org/pwa/?install=1).
 2. Create or import a wallet.
 3. Connect to the default Core Node.
 4. Open an STP channel.
