@@ -1,52 +1,100 @@
-Roadmap
-============
+# Roadmap
 
-Based on our predictions of the following trends, we will build the BTC ecosystem over the long term:
-1. Asset issuance on the BTC mainnet: The BTC mainnet will see an increasing number of assets with real value.
-2. Asset trading on the Layer 2 network: While ensuring security, we will provide an economical and efficient circulation environment.
-3. The BTC network will become the foundation of the future value network: SatoshiNet strives to provide the most valuable construction work to achieve this goal.
+The SAT20 / SatoshiNet roadmap is organized around one long-term goal: building a Bitcoin-native extension network where Bitcoin L1 assets can enter a programmable, low-cost, automatable application environment while preserving user control.
 
-Phased Achievements
----
-We officially entered the BTC ecosystem development phase in October 2023. After more than two years of development, we have achieved the following phased goals:
+The roadmap is not a price promise and not a fixed-date schedule. It records current priorities, phase goals, and public milestones that need verifiable evidence.
 
-1. SAT20 Asset Issuance Protocol (ORDX Protocol) – Development of the asset issuance protocol has be completed in the first half of 2024.
+## Phase 1: STP + Indexer Asset Foundation
 
-2. SAT20 Asset Transcending Protocol - 90% complete, final standardization in progress:
-* First version released in Q1 2025
-* Support for the Runes protocol in Q2 2025
-* Channel contracts, including the launch pool contract, AMM trading contract, LimitOrder trading contract, and asset translocation contract, have be launched in Q3 2025
-* Channel contract framework standardized and publicly released in Q4 2025, supporting developer development of various channel contracts
-* The first standard version of the protocol will be completed and publicly released in Q1 2026 (only the protocol itself will be made public; the source code will not be disclosed for now. Those with sufficient reputation can apply for code access).
+Goal: prove that assets entering SatoshiNet are not entering a custodial bridge, but a cross-layer asset system supported by unified asset indexing and user-verifiable channels. The indexer expresses asset facts on Bitcoin L1; STP brings those assets into a channel safety boundary with exit capability and punishment for revoked states.
 
-3. Native Extension Network: SatoshiNet - SatoshiNet has officially launched in early August 2025 and undergone long-term iteration and optimization, evolving into the foundational network for thousands of DAPPs in the Bitcoin ecosystem.   
-4. SatSwap Market: SatSwap Market -- Trial operations has begun at the end of August 2025, with official operations planned for November 2025. ordx.market is a professional platform within the BTC ecosystem that provides a complete range of asset minting, browsing, trading, and management services. It supports all major assets in the BTC ecosystem, including both layer 1 and layer 2 networks.
-5. SAT20 Wallet -- The plugin wallet has been released on Google's plugin market, and the app version is under development.
+Focus:
 
-Building the SatoshiNet Ecosystem
----
-We expect that by the end of 2025, SatoshiNet, our first native extension network for the BTC ecosystem, will have completed basic functional development and stabilized, entering a new phase. It's time to see what the future holds.
+1. Unified indexing of multi-protocol Bitcoin L1 assets.
+2. L1/L2 ascend, descend, and channel asset evidence chains.
+3. STP channel lifecycle.
+4. Splicing-in / splicing-out.
+5. Unlock / lock / lock-with-expand.
+6. Commitment export.
+7. Punish coverage.
+8. Testnet old-commitment broadcast and punishment drills.
+9. SAT20 Agent Wallet skill and PWA adapter.
 
-To put it bluntly: SatoshiNet marks the beginning of our deep involvement in the BTC ecosystem. We hope that SatoshiNet can help the BTC ecosystem compete head-on with other ecosystems. SatoshiNet leverages the following capabilities to help the BTC ecosystem compete head-on:
-1. Assets issued on the BTC mainnet: The highest consensus, the most secure, and the most decentralized.   
-2. DIDs issued on the BTC mainnet: The highest consensus, the most secure, and the most decentralized, coupled with permissionless and permanent ownership. DIDs are the foundation for widespread adoption of crypto applications.
-3. Economical and quick, based on security: Users control their own assets, and the mainnet provides security guarantees. This is the foundation for the ecosystem's growth and development. Expanding the network without security guarantees is a castle in the air.
-4. A more secure smart contract framework: The channel contract framework, derived from the Lightning Network channel RSMC protocol, will provide a completely different smart contract framework from EVM smart contracts. Based on WASM, it is run by multiple nodes and verified by the entire SatoshiNet, making it more flexible and secure.
-5. Built-in DID-based message protocol: As a decentralized network, SatoshiNet naturally supports decentralized DIDs and a DID-based message protocol, which are the foundation for the development of DAPPs.
+Current docs:
 
-All of this will be freely available and open-sourced in an orderly manner. Anyone can participate, unleash their imagination for the BTC ecosystem, realize everything on SatoshiNet, and reap the benefits of the long-term bull market of the BTC ecosystem.
+- [Indexer: Bitcoin Asset Fact Layer](learn/indexer.md)
+- [Indexer Integration and Asset Fact Layer](build/indexer.md)
+- [STP Technical Whitepaper](protocol/stp/readme.md)
+- [SAT20 Agent Wallet Asset Safety Control Guide](ai/sat20-agent-wallet/asset-safety.md)
+- [SAT20 Agent Wallet: Install and Use](ai/sat20-agent-wallet/readme.md)
 
-Open Source Plan
-----
-For the sake of efficiency in early development, we will initially maintain a completely closed-source development model.
-We plan to gradually open up and eventually open source the entire SAT20 project. Ultimately, through community management, SAT20 will become a fully decentralized project and continue to develop the SAT20 protocol.
+## Phase 2: Smart Contracts and GAS
 
-Through open source and permissionless collaboration, we hope to promote the widespread use of SAT20 in the Bitcoin ecosystem and contribute to its prosperity.
+Goal: evolve SatoshiNet from an asset circulation network into an application network.
 
-We welcome teams interested in Cong Network to join us in building the world of Cong.
+Focus:
 
-Open Source Plan: Gradually open source modules as they mature.
-* Mainnet Asset Indexer -- https://github.com/sat20-labs/indexer
-* SAT20 Wallet -- https://github.com/sat20-labs/sat20wallet
-* SatoshiNet -- https://github.com/sat20-labs/satoshinet
-* Circulation Protocol -- https://github.com/sat20-labs/transcend ( Not yet open source. Code permissions are available to those with sufficient reputation. )
+1. Template contracts.
+2. AMM, limit orders, stablecoins, payments, and other basic applications.
+3. GAS fee model.
+4. Contract indexer and L2 state indexing.
+5. Contract developer tooling.
+6. EVM compatibility path.
+7. Natural language contracts and AI Agent contract experiments.
+
+Current docs:
+
+- [Smart Contracts and GAS](learn/smart-contracts-and-gas.md)
+- [Smart Contract Protocol](protocol/contracts/readme.md)
+- [GAS Ecosystem Opportunity](ecosystem/gas.md)
+
+## Phase 3: Developers and Infrastructure
+
+Goal: lower the integration cost for external teams so wallets, exchanges, indexers, explorers, Agents, and application developers can participate.
+
+Focus:
+
+1. Developer quickstart.
+2. Wallet and exchange integration.
+3. L1/L2 Indexer APIs, L2 node-embedded indexing, and distributed L1 fact verification.
+4. PWA Wallet adapter.
+5. Multi-language STP clients.
+6. Testnet tools and sample applications.
+
+Current docs:
+
+- [Developer Center](build/readme.md)
+- [Developer Quickstart](build/quickstart.md)
+- [Exchange and Wallet Integration](build/exchange-and-wallet.md)
+
+## Phase 4: Ecosystem Growth
+
+Goal: bring asset communities, developers, exchanges, institutions, and AI Agent teams into the SatoshiNet ecosystem.
+
+Focus:
+
+1. Builder Program.
+2. GAS ecosystem narrative.
+3. Asset-community and inscription-community integration.
+4. Exchange and market maker partnerships.
+5. Indexer / Explorer node ecosystem.
+6. Official content, videos, tutorials, and community FAQ.
+7. X and Telegram community building.
+
+Current docs:
+
+- [Ecosystem](ecosystem/readme.md)
+- [Builder Program](ecosystem/builder-program.md)
+
+## Long-Term Direction
+
+SatoshiNet is designed to become the application layer for Bitcoin assets:
+
+1. Asset facts are expressed by Bitcoin L1 and indexers.
+2. Asset control is protected by STP.
+3. Application execution is handled by SatoshiNet smart contracts.
+4. Network resources are priced by GAS.
+5. User experience is improved by wallets and AI Agents.
+6. Ecosystem growth is driven by developers, asset communities, exchanges, indexers, and the broader community.
+
+Every phase must produce verifiable evidence: transactions, code, testnet drills, APIs, documentation, and user-reproducible workflows.
