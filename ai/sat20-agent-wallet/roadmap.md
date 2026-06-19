@@ -94,7 +94,7 @@ The current testnet drill has verified:
 | Real punish drill | Verified with old Core Node commitment broadcast and user-side punish package |
 | ORDX small-amount drill | Verified; `ordx:o` objects are ignored by STP ascend |
 | Full PWA transaction polling | Still pending |
-| Short video | Script and evidence list prepared; production remains pending |
+| Short video | Produced. See the [narrated demo](video/sat20-agent-wallet-one-minute-en.mp4) |
 
 ## User-Facing Statement
 

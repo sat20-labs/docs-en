@@ -4,6 +4,11 @@ SAT20 Agent Wallet is a general skill and adapter specification that lets AI Age
 
 Codex can install the skill directly. Other Agents can read the same `SKILL.md`, references, and scripts from the SAT20 docs repository.
 
+## Short Video
+
+- [One-minute English narrated demo](video/sat20-agent-wallet-one-minute-en.mp4)
+- [Video notes](video/README.md)
+
 ## Design Goal
 
 SAT20 Agent Wallet is built on the [Bitcoin Ecosystem AI Agent Asset Safety Standard](../bitcoin-agent-safety-standard.md). Before operating SAT20/STP, an Agent evaluates asset control, exit ability, chain evidence, Core Node risk, and missing data.

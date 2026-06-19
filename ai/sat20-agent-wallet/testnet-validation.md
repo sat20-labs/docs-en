@@ -37,21 +37,32 @@ The testnet drill has covered:
 
 The validated material includes real Bitcoin testnet4 and SatoshiNet txids. The latest complete punish-oriented line uses a fresh channel, multi-asset movement, old Core Node commitment, and four confirmed punishment transactions.
 
-Key evidence:
+Latest minimal safety loop, verified on 2026-06-18:
 
 | Segment | Evidence |
 | --- | --- |
-| Fresh open funding | `fc2282849c15286fe2e7dba05847dad376d4d49a04fde06111d0a3ceac48093c` |
-| Runes splicing-in | `4ab20f45818dc73e11ad5834249f358a017c5c6b384074530c9e96e5364f06ed` |
-| BRC20 splicing-in package | commit `03fb93e84154bd55c4fb47c5f08eb839189229ea13f6ade710c9b2bd6ff24d03`, reveal `015b6d3cbfce0ef37899d812a68713cfbb89fd84e25616fda6edf648aa52b66f`, splicing `c6481a19471dc2fc15ec411f9c2b04f5c48a13ea33a74e4e4be494cc3f703793` |
-| BRC20 unlock / lock | `2e5e0fe1f44a8a6e1754558c5a9829a2b78bd6b661c7ba10f215e755888cd862`, `63fd7bf150e2678956fa765b4780c2ff5cf07cd203d0d04e7eb3ae31f7e3c289` |
-| Retained old Core Node-side commitment | `151226853632d61d177b3279fcf99a7c144beaa3d018abd55f00f5b2adc24909` |
-| State advance after retain | `86310825ffa2d7d229d95b175c164ed2e32cefa354459f2060d68fb65ea326d7` |
-| Punish package | `459877810aa391f4da5ce6a7b0a817daee0dd63f4a24b8d77062dee7ef47fbee`, `23b3e6809eb5277ff9da7fb767ca8dc54e75f034104069f8c8a873b5e7c41451`, `c80dd18b79bbf1600a1a630be953de7e9f698d96c5b6a1d20eecf8f27dbb6859`, `22643d7c0b8f4a6aee93bcafceecc318ca56b9d31196e17b87fda43a9ee845d5` |
-| Fresh open after punish | `e9c283cc9979bafa4f32f872dc2d0c910b89d810ef6801a1ad55bbeb5e585782` |
-| Fresh channel safety close-out | unlock `b88653f646e192765acaecbf338138c057c4ae420cbfddf7476f3cf5ea7994a8`, punish `84524f5aaa367f6ff7bcb15e1d01f8f7fa97fa93779c04cb96bc5ec58afa31a4` |
+| Normal open | `cda894102cfe72667c54e14b259b95d38037f8cbb6e39d1adeef7f8efb5d00f7:0`, confirmed at BTC testnet4 height `140402` |
+| Retained Core Node commitment | `0d033af198e477de429c7ab656afec6e2cac5e672e62692fecf5b2a385c08f83`, retained at commit height `0` |
+| State advance | sats unlock `d7a593b9301ecf795fc58d9c339b741663723e226cb984fb981a2ceebb953a11`, commit height `0 -> 1` |
+| Old commitment broadcast | `0d033af198e477de429c7ab656afec6e2cac5e672e62692fecf5b2a385c08f83`, confirmed at BTC testnet4 height `140407` |
+| Punish tx | `6221d7793f2bbc2687d959aa2c144e25cc01be2decf9dbf2e4069cd9d21376e8`, confirmed at BTC testnet4 height `140407` |
+| Post-punish status | local client `status=-2`, Core Node `status=-1` |
 
-These txids are testnet evidence. They are suitable for technical demos and Agent verification examples, not for mainnet claims.
+This minimal loop proves the Agent-facing safety path: the PWA wallet holds the mnemonic and signs protocol messages; the Agent submits verifiable STP operations; after a revoked Core Node commitment appears on Bitcoin L1, the client wallet can build, broadcast, and verify punishment on L1. The canonical JSON evidence lives in [`sat20-labs/docs`](https://github.com/sat20-labs/docs/blob/main/ai/sat20-agent-wallet/evidence/testnet-minimal-punish-evidence-2026-06-18.json).
+
+Current compact safety loop, also verified on 2026-06-18:
+
+| Segment | Evidence |
+| --- | --- |
+| Fresh open funding | `dbaff278b630215bfe12543ab0f84287c7a3df424fc8381121a2057966003df1:0`, confirmed at BTC testnet4 height `140388` |
+| BRC20 expand | `97e9fae9442559ac597649c03ad4eee095f6f58d4c2b5217fa6d7290b6747265`, commit height `1` |
+| Sats unlock / lock | `4b3a2ab3a957f99884cb2e862b9879f61d8d9d2dcc1d1b79fd34eb77f4f45b04`, `41170da95b97d33723c47af6b1633e1d409b364aa01b9c0785595a44dbe5c19d` |
+| BRC20 splicing-out | `ddf3e3e712d9b5bb343fccdf6c4485accb4587dcb6afb1731fe8a87c36b64238`, confirmed at BTC testnet4 height `140395` |
+| Retained old Core Node-side commitment | `d6084d8f789a8977c5e6ed6f7245587aab71129df4776bf5b60a851cafda2939`, retained at commit height `4` |
+| State advance after retain | `030b357ad599d900564831cef63f79a2e07531022c3af4ceed8dd0d0df37bfdc`, commit height `4 -> 5` |
+| Punish package | `2364b55db774a2a032ec16f991b49ddc70ee7e4aa3b8c96aaf99960669c8ab7a`, `79a1fc6d17befb774aeee54e7f1675aa1f323653714441d1034ef1ead7912a22`, `f2d01ac1e9b1df247b45e2e4536efef8cfbfe70d563972197e7fa6f37f004e0c`, `4a426d996035e29e78ffb9f5fa570f0cce4ce26c17e1e39f06ed66303c7f7539` |
+
+These txids are current testnet evidence. Older rollback-era L2 txids are intentionally omitted from this page because they are no longer independently queryable on the current SatoshiNet testnet indexer.
 
 ## What the Agent Learns
 

@@ -2,6 +2,10 @@
 
 This storyboard is the short public version of the SAT20 Agent Wallet / STP demo. It targets Bitcoin-native users who understand UTXOs and channel safety but do not want implementation internals.
 
+Current English outputs:
+
+- [Narrated one-minute demo](video/sat20-agent-wallet-one-minute-en.mp4)
+
 ## One-Minute Version
 
 | Time | Visual | Message |

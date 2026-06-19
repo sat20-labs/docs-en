@@ -7,6 +7,10 @@ This guide defines two video versions:
 
 The target audience understands Bitcoin, UTXOs, and channel safety. The video uses real testnet transactions and real wallet state. It does not use simulated txids as if they were real.
 
+Current English short-video outputs:
+
+- [Narrated one-minute demo](video/sat20-agent-wallet-one-minute-en.mp4)
+
 ## Core Narrative
 
 STP is not a custodial bridge. Users can bring BTC, Runes, BRC20, ORDX, and other Bitcoin-native assets into a channel, move them on SatoshiNet, and still hold latest commitments and punishment ability. If a Core Node broadcasts an old state, the user wallet can punish it.
