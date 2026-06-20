@@ -35,7 +35,7 @@ Older documents or APIs may use the term `STP Server`. At the protocol level, th
 | Role | Responsibility |
 | --- | --- |
 | Bootstrap Node | Assists Core Node discovery and admission |
-| Core Node | Provides STP service, opens private channels with wallets, co-signs channel transactions, maintains the service-side channel state, and runs or configures an L1 indexer |
+| Core Node | Includes all Mining Node capabilities and provides STP service, opens private channels with wallets, co-signs channel transactions, maintains the service-side channel state, and runs or configures an L1 indexer |
 | Mining Node | Produces SatoshiNet blocks, but does not provide STP channel service |
 | Wallet Client | User wallet or client. It connects to a Core Node and holds keys, channel state, commitments, and punishment material |
 

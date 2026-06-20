@@ -2,6 +2,18 @@
 
 * [Welcome to SAT20](readme.md)
 
+* Start Here: Choose Your Path
+  * [Overview](start-here/readme.md)
+  * [I Run a BTC Community](start-here/btc-community.md)
+  * [I Am a Developer](start-here/developers.md)
+  * [I Run Infrastructure](start-here/infrastructure.md)
+  * [I Am a Wallet or Exchange](start-here/wallet-exchange.md)
+  * [I Am an AI Agent Developer](start-here/ai-agent-builders.md)
+  * [I Want to Provide Liquidity](start-here/liquidity.md)
+
+* Community Stack: Community-Owned Infrastructure
+  * [Build Complete Infrastructure for Your BTC Community](community-stack/readme.md)
+
 * Learn: Understanding SatoshiNet
   * [Overview](learn/readme.md)
   * [Why Bitcoin Needs a Native Extension Network](learn/bitcoin-native.md)
@@ -11,17 +23,52 @@
   * [Smart Contracts and GAS](learn/smart-contracts-and-gas.md)
   * [AI Agents and User Asset Control](learn/ai-agent.md)
 
-* Use: Using SatoshiNet
+* Use SatoshiNet
   * [Overview](use/readme.md)
+  * [Wallet and Assets](use/wallet-and-assets.md)
+  * [Get Test Assets and Test GAS](use/test-assets-and-gas.md)
+  * [Complete Your First Swap](use/first-swap.md)
+  * [Provide AMM Liquidity](use/amm-liquidity.md)
+  * [Use Limit Orders](use/limit-order.md)
+  * [Join a Launchpad](use/launchpad.md)
+  * [Register DAO UID](use/dao-uid.md)
+  * [Donate to a Community Fund](use/community-fund-donation.md)
+  * [Apply for and Review Airdrops](use/airdrop.md)
+  * [Join a Community DEX](use/community-dex.md)
+  * [Verify Transactions with Explorer](use/explorer-verification.md)
+  * [Use an AI Agent](use/ai-agent.md)
+  * [Exit SatoshiNet and Recover](use/exit-and-recovery.md)
+  * [FAQ](use/faq.md)
 
-* Build: Developer Center
+* Developer Center
   * [Overview](build/readme.md)
   * [Developer Quickstart](build/quickstart.md)
+  * [EVM Developer Preview](build/evm-quickstart.md)
+  * [Build a Community DEX / DAO](build/community-dex-quickstart.md)
+  * [Deploy a Community DAO](build/dao-quickstart.md)
+  * [Deploy an AMM Pool](build/amm-pool-quickstart.md)
+  * [Deploy Launchpad](build/launchpad-quickstart.md)
+  * [Deploy Limit Order Module](build/limit-order-quickstart.md)
+  * [Run Core Node, Indexer, and Explorer](build/infrastructure-quickstart.md)
+  * [Integrate Wallet SDK](build/wallet-sdk-quickstart.md)
+  * [Build a White-Label DEX](build/white-label-dex.md)
+  * [Build a SatoshiNet AI Agent](build/ai-agent-quickstart.md)
+  * [Contract Template Catalog](build/contract-template-catalog.md)
   * [API Source Map](build/api-source-map.md)
   * [Indexer Integration and Asset Fact Layer](build/indexer.md)
   * [Exchange and Wallet Integration](build/exchange-and-wallet.md)
 
-* Protocols and Whitepapers
+* Run the Network: Nodes and Infrastructure
+  * [Overview](run/readme.md)
+  * [Mining Node](run/mining-node.md)
+  * [Core Node](run/core-node.md)
+  * [L1 / L2 Indexer](run/indexer.md)
+  * [Explorer / RPC](run/explorer-rpc.md)
+  * [Monitoring, Backup, and Upgrades](run/operations.md)
+  * [Node Staking and Exit](run/staking-and-exit.md)
+  * [Decentralization Roadmap](run/decentralization-roadmap.md)
+
+* Protocol and Security
   * [SAT20 Protocol Stack](protocol/readme.md)
   * Indexer
     * [Indexer: Bitcoin Asset Fact Layer](learn/indexer.md)
@@ -40,11 +87,21 @@
     * [Template Contracts](protocol/contracts/template.md)
     * [Natural Language Contracts](protocol/contracts/agent.md)
     * [EVM Contracts](protocol/contracts/evm.md)
+  * Security
+    * [Threat Model and Trust Assumptions](protocol/security/threat-model.md)
 
-* AI Agent
+* Network Economics
+  * [Overview](network-economics/readme.md)
+  * [GAS: Network Fee and Security Asset](network-economics/gas.md)
+  * [Fees and Node Incentives](network-economics/fees-and-incentives.md)
+  * [Mining / Core Node Staking](network-economics/node-staking.md)<!-- * [GAS Distribution Draft](network-economics/distribution-draft.md) -->
+  * [Open Design Questions](network-economics/open-questions.md)
+
+* AI Agent: Automation and Safety
   * [Overview](ai/readme.md)
   * [Bitcoin Ecosystem AI Agent Asset Safety Standard](ai/bitcoin-agent-safety-standard.md)
   * [AI Agents and User Asset Control](learn/ai-agent.md)
+  * [Community Builder Agent](ai/community-builder-agent.md)
   * SAT20 Agent Wallet
     * [Install and Use](ai/sat20-agent-wallet/readme.md)
     * [Interoperability Skill Specification](ai/sat20-agent-wallet/interoperability.md)
@@ -52,17 +109,31 @@
     * [Verification Matrix and Data Gaps](ai/sat20-agent-wallet/verification-and-data-gaps.md)
     * [Agent-Controlled Wallet Roadmap](ai/sat20-agent-wallet/roadmap.md)
     * [Testnet Validation Record](ai/sat20-agent-wallet/testnet-validation.md)
-    * [Testnet Drill Summary](ai/sat20-agent-wallet/testnet-drill-summary-2026-06-13.md)
-    * [One-Minute Demo Script](ai/sat20-agent-wallet/testnet-demo-storyboard.md)
-    * [Punish Drill Video Production Guide](ai/sat20-agent-wallet/testnet-punish-drill-video.md)
 
 * Ecosystem
   * [Overview](ecosystem/readme.md)
+  * [SatoshiNet Today: Current Capabilities](ecosystem/satoshinet-today.md)
+  * [Built on SatoshiNet](ecosystem/built-on-satoshinet.md)
+  * [Current Ecosystem Needs](ecosystem/ecosystem-needs.md)
   * [Builder Program](ecosystem/builder-program.md)
-  * [GAS Ecosystem Opportunity](ecosystem/gas.md)
+  * [Strategic Partners](ecosystem/strategic-partners.md)
+  * [Partners and Contribution Guide](ecosystem/partners-and-contribution.md)
 
-* [Roadmap](roadmap.md)
-* [Background](why.md)
-* [API Source Map](build/api-source-map.md)
-* [Donate](donate.md)
-* [About](about.md)
+* Governance and Support
+  * [Overview](governance-support/readme.md)
+  * [SAT20 Labs](governance-support/sat20-labs.md)
+  * [Future Foundation](governance-support/future-foundation.md)
+  * [SIP Improvement Process](governance-support/sip.md)
+  * [Support Protocol Development](governance-support/support-development.md)
+  * [Security Disclosure](governance-support/security-disclosure.md)
+
+* Status and Roadmap
+  * [Roadmap](roadmap.md)
+  * [Docs Success Metrics](ecosystem/docs-success-metrics.md)
+  * [Docs Content Plan](docs-restructure-plan.md)
+
+* Resources
+  * [Background](why.md)
+  * [API Source Map](build/api-source-map.md)
+  * [Support the SatoshiNet Ecosystem](donate.md)
+  * [About](about.md)

@@ -6,7 +6,7 @@ Codex can install the skill directly. Other Agents can read the same `SKILL.md`,
 
 ## Short Video
 
-- [One-minute English narrated demo](video/sat20-agent-wallet-one-minute-en.mp4)
+- [One-minute English narrated demo](demo-video.md)
 - [Video notes](video/README.md)
 
 ## Design Goal

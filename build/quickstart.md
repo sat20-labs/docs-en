@@ -1,71 +1,39 @@
 # Developer Quickstart
 
-This page gives developers the shortest path into the SAT20 / SatoshiNet ecosystem.
+This page gives the shortest path into SAT20 / SatoshiNet development.
 
-## Choose What You Are Building
+## Choose a Runnable Target
 
-| What you build | Starting point |
+| Target | Guide |
 | --- | --- |
-| STP wallet or client | `sat20-agent-wallet` skill and adapter contract |
-| Indexer / data service | L1/L2 indexers, asset fact layer, and multi-protocol asset state |
-| SatoshiNet application | Smart contract docs and testnet |
-| Exchange integration | Indexers, STP state, deposits, and withdrawals |
-| AI Agent | SAT20 Agent Wallet skill, PWA adapter, safety verification matrix |
-| Explorer or data service | L1/L2 indexers and transaction state model |
+| Understand EVM Developer Preview | [EVM Developer Preview](evm-quickstart.md) |
+| Build a community DEX / DAO | [Community DEX / DAO Quickstart](community-dex-quickstart.md) |
+| Deploy a community DAO | [DAO Quickstart](dao-quickstart.md) |
+| Deploy an AMM pool | [AMM Pool Quickstart](amm-pool-quickstart.md) |
+| Deploy Launchpad | [Launchpad Quickstart](launchpad-quickstart.md) |
+| Deploy limit order module | [Limit Order Quickstart](limit-order-quickstart.md) |
+| Run Core Node, Indexer, Explorer | [Infrastructure Quickstart](infrastructure-quickstart.md) |
+| Integrate Wallet SDK | [Wallet SDK Quickstart](wallet-sdk-quickstart.md) |
+| Build a white-label DEX | [White-Label DEX](white-label-dex.md) |
+| Build a SatoshiNet AI Agent | [AI Agent Quickstart](ai-agent-quickstart.md) |
+| Check contract template status | [Contract Template Catalog](contract-template-catalog.md) |
+| Integrate wallet or exchange | [Exchange and Wallet Integration](exchange-and-wallet.md) |
 
-## Install Wallet and Agent Skill
-
-For ordinary users and mainnet scenarios, install and initialize SAT20 PWA Wallet before installing SAT20 Agent Wallet skill. The PWA wallet is the security boundary for private keys, mnemonics, signing, authorization prompts, and the channel database. The skill is the Agent's operation knowledge and workflow.
-
-Install SAT20 PWA Wallet:
-
-```text
-https://sat20.org/pwa/?install=1
-```
-
-After creating or importing a wallet inside the PWA, backing it up, and unlocking it, install the skill:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/sat20-labs/docs/main/ai/sat20-agent-wallet/skills/sat20-agent-wallet/scripts/install.sh | bash
-```
-
-After installation, the Agent should call the wallet adapter through `SAT20_ADAPTER_URL` or `SAT20_CLIENT_CMD`.
-
-The canonical skill source is maintained in `sat20-labs/docs`; it is not copied into `docs-en`.
-
-## Implement an Adapter
-
-A minimal adapter should support:
-
-1. `wallet.status`
-2. `stp.status`
-3. `stp.safety_snapshot`
-4. `stp.open`
-5. `stp.splicing_in`
-6. `stp.unlock`
-7. `stp.lock`
-8. `stp.splicing_out`
-9. `stp.transaction`
-
-Full contract: [adapter contract](https://github.com/sat20-labs/docs/blob/main/ai/sat20-agent-wallet/skills/sat20-agent-wallet/references/adapter-contract.md).
-
-## Integrate Indexers
-
-If you are building a wallet, exchange, explorer, or Agent, start with [Indexer Integration and Asset Fact Layer](indexer.md). A minimal implementation should query L1 UTXO assets, transaction confirmations, spent state, L2 UTXOs, ascend / descend events, and channel-related state.
-
-Interfaces are still evolving quickly. Use the [API Source Map](api-source-map.md) to find authoritative source entries. The old Swagger only covers part of the early ORDX indexer and is not the complete current SAT20 / SatoshiNet API documentation.
+Pages with status labels are still planning or depend on systems that are in development.
 
 ## Testnet Acceptance
 
-Developers should verify at least the following on testnet:
+Developers should eventually verify at least:
 
-1. Open an ordinary client-core channel.
+1. Open a normal client-core channel.
 2. Splice in one protocol asset.
-3. Run unlock / lock round trip.
+3. Unlock / lock round trip.
 4. Splice out back to Bitcoin L1.
-5. Export commitment transactions.
+5. Export commitment transaction.
 6. Verify punish coverage.
 7. Handle unknown network results.
-8. Verify L1/L2 asset evidence through indexers.
+8. Use indexers to verify L1/L2 asset evidence.
 
-Checklist: [Third-Party STP Client Implementation Checklist](../protocol/stp/implementation-checklist.md).
+See [Third-Party STP Client Implementation Checklist](../protocol/stp/implementation-checklist.md).
+
+**Page Status: Planning**

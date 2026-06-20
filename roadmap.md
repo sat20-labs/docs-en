@@ -1,100 +1,47 @@
 # Roadmap
 
-The SAT20 / SatoshiNet roadmap is organized around one long-term goal: building a Bitcoin-native extension network where Bitcoin L1 assets can enter a programmable, low-cost, automatable application environment while preserving user control.
+The SAT20 / SatoshiNet roadmap is organized around one long-term goal: building an open Bitcoin-native execution network where Bitcoin L1 assets can enter a programmable, low-cost, automatable application environment while preserving user control.
 
-The roadmap is not a price promise and not a fixed-date schedule. It records current priorities, phase goals, and public milestones that need verifiable evidence.
+The roadmap is not a price promise and not a fixed-date schedule. Every completed item should map to public code, documentation, transactions, contract addresses, test records, or external deployment cases whenever possible.
 
-## Phase 1: STP + Indexer Asset Foundation
+## Now
 
-Goal: prove that assets entering SatoshiNet are not entering a custodial bridge, but a cross-layer asset system supported by unified asset indexing and user-verifiable channels. The indexer expresses asset facts on Bitcoin L1; STP brings those assets into a channel safety boundary with exit capability and punishment for revoked states.
+| Item | Status | Acceptance Criteria | Contribution Entry |
+| --- | --- | --- | --- |
+| Real Community Stack deployment docs | Planning | At least one reproducible community DEX / DAO testnet flow | [Community Stack](community-stack/readme.md) |
+| First DEX / DAO pilots | Planning | Testnet entry, contract or transaction evidence, and user guide | [Builder Program](ecosystem/builder-program.md) |
+| EVM Developer Preview | In Development | RPC, Chain ID, Faucet, sample repository, and Explorer verification are defined | [EVM Developer Preview](build/evm-quickstart.md) |
+| Testnet user loop | Planning | Wallet, test assets, first swap, Explorer verification, exit, and recovery are reproducible | [Use](use/readme.md) |
+| Mining / Core Node and GAS economics draft | Design in Progress | Staking, fees, penalties, exit, and open questions are public | [Network Economics](network-economics/readme.md) |
+| Builder Program application entry | Planning | A submittable form or GitHub Issue Template exists | [Builder Program](ecosystem/builder-program.md) |
+| Sustainable protocol development support | Planning | Support methods, fund usage, deliverables, and responsible entity are clear | [Support Protocol Development](governance-support/support-development.md) |
 
-Focus:
+## Next
 
-1. Unified indexing of multi-protocol Bitcoin L1 assets.
-2. L1/L2 ascend, descend, and channel asset evidence chains.
-3. STP channel lifecycle.
-4. Splicing-in / splicing-out.
-5. Unlock / lock / lock-with-expand.
-6. Commitment export.
-7. Punish coverage.
-8. Testnet old-commitment broadcast and punishment drills.
-9. SAT20 Agent Wallet skill and PWA adapter.
+| Item | Status | Acceptance Criteria | Contribution Entry |
+| --- | --- | --- | --- |
+| Reproducible white-label DEX toolkit | Planning | Frontend, backend, contracts, Indexer, Explorer, and wallet integration can be deployed | [White-Label DEX](build/white-label-dex.md) |
+| Third-party nodes and indexers | Planning | External teams can run them and provide public evidence | [Run the Network](run/readme.md) |
+| EVM SDK / RPC | In Development | Minimal contract deploy, invoke, event, and Result TX are verifiable | [EVM Contracts](protocol/contracts/evm.md) |
+| Community Builder Agent | In Development | Requirement intake, config draft, human confirmation, testnet deployment plan, and evidence report | [Community Builder Agent](ai/community-builder-agent.md) |
+| First external ecosystem cases | Planning | Built on SatoshiNet includes at least one external project | [Built on SatoshiNet](ecosystem/built-on-satoshinet.md) |
+| Core English docs | Planning | Homepage, Community Stack, Today, Security, Nodes, GAS, and Builder Program are synced in English | docs-en |
 
-Current docs:
+## Later
 
-- [Indexer: Bitcoin Asset Fact Layer](learn/indexer.md)
-- [Indexer Integration and Asset Fact Layer](build/indexer.md)
-- [STP Technical Whitepaper](protocol/stp/readme.md)
-- [SAT20 Agent Wallet Asset Safety Control Guide](ai/sat20-agent-wallet/asset-safety.md)
-- [SAT20 Agent Wallet: Install and Use](ai/sat20-agent-wallet/readme.md)
+| Item | Status | Acceptance Criteria | Contribution Entry |
+| --- | --- | --- | --- |
+| Conversational semi-automated deployment | Planned | Agent can generate deployment config and execute after administrator confirmation |
+| Multi-community shared liquidity | Planned | AMM, limit order, aggregation, and cross-community routing are verifiable |
+| More open node admission | Design in Progress | Node registration, staking, exit, penalties, and public status page are defined |
+| Future foundation and public Treasury Policy | Planned | Legal structure, governance, multisig, funding sources, and conflict policy are public |
+| SIP protocol improvement process | Planned | Proposal format, discussion process, versioning, and governance boundary are defined |
+| More complete developer support system | Planned | Grant, sponsorship, service contract, audit, and docs collaboration mechanisms are defined |
 
-## Phase 2: Smart Contracts and GAS
+## Principles
 
-Goal: evolve SatoshiNet from an asset circulation network into an application network.
-
-Focus:
-
-1. Template contracts.
-2. AMM, limit orders, stablecoins, payments, and other basic applications.
-3. GAS fee model.
-4. Contract indexer and L2 state indexing.
-5. Contract developer tooling.
-6. EVM compatibility path.
-7. Natural language contracts and AI Agent contract experiments.
-
-Current docs:
-
-- [Smart Contracts and GAS](learn/smart-contracts-and-gas.md)
-- [Smart Contract Protocol](protocol/contracts/readme.md)
-- [GAS Ecosystem Opportunity](ecosystem/gas.md)
-
-## Phase 3: Developers and Infrastructure
-
-Goal: lower the integration cost for external teams so wallets, exchanges, indexers, explorers, Agents, and application developers can participate.
-
-Focus:
-
-1. Developer quickstart.
-2. Wallet and exchange integration.
-3. L1/L2 Indexer APIs, L2 node-embedded indexing, and distributed L1 fact verification.
-4. PWA Wallet adapter.
-5. Multi-language STP clients.
-6. Testnet tools and sample applications.
-
-Current docs:
-
-- [Developer Center](build/readme.md)
-- [Developer Quickstart](build/quickstart.md)
-- [Exchange and Wallet Integration](build/exchange-and-wallet.md)
-
-## Phase 4: Ecosystem Growth
-
-Goal: bring asset communities, developers, exchanges, institutions, and AI Agent teams into the SatoshiNet ecosystem.
-
-Focus:
-
-1. Builder Program.
-2. GAS ecosystem narrative.
-3. Asset-community and inscription-community integration.
-4. Exchange and market maker partnerships.
-5. Indexer / Explorer node ecosystem.
-6. Official content, videos, tutorials, and community FAQ.
-7. X and Telegram community building.
-
-Current docs:
-
-- [Ecosystem](ecosystem/readme.md)
-- [Builder Program](ecosystem/builder-program.md)
-
-## Long-Term Direction
-
-SatoshiNet is designed to become the application layer for Bitcoin assets:
-
-1. Asset facts are expressed by Bitcoin L1 and indexers.
-2. Asset control is protected by STP.
-3. Application execution is handled by SatoshiNet smart contracts.
-4. Network resources are priced by GAS.
-5. User experience is improved by wallets and AI Agents.
-6. Ecosystem growth is driven by developers, asset communities, exchanges, indexers, and the broader community.
-
-Every phase must produce verifiable evidence: transactions, code, testnet drills, APIs, documentation, and user-reproducible workflows.
+1. Separate plans from reality.
+2. Express safety with evidence, not absolute slogans.
+3. Do not use price, fixed-yield, or buyback narratives for GAS or node economics.
+4. AI Agents are an interface and automation layer for complex infrastructure, not the reason SatoshiNet exists.
+5. The goal of an open network is to let communities, developers, nodes, and infrastructure teams participate independently.

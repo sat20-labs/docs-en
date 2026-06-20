@@ -1,44 +1,35 @@
 # Ecosystem
 
-The SatoshiNet ecosystem needs developers, asset communities, exchanges, wallets, indexers, market makers, AI Agent builders, researchers, and community members.
+SatoshiNet needs BTC communities, developers, node operators, wallets, exchanges, indexers, explorers, market makers, AI Agent builders, researchers, and content contributors.
 
-The goal of this documentation is not only to explain protocols, but to help every type of builder understand where they can create value.
+The ecosystem pages help external builders decide what SatoshiNet can do now, what they can participate in, and how to enter testnet or cooperation flows.
 
-## Why Build on SatoshiNet
+## Primary Ecosystem Claim
 
-1. Assets originate from Bitcoin L1.
-2. Indexers express multi-protocol assets as verifiable asset facts.
-3. STP provides verifiable user control.
-4. SatoshiNet provides lower cost, faster confirmation, and a smart contract environment.
-5. GAS provides the economic entry point for contract execution and ecosystem incentives.
-6. AI Agents lower the usability barrier of complex protocols.
+**Let every BTC community own its own financial infrastructure.**
 
-## Builder Map
+A BTC community can gradually reduce dependence on external exchanges, explorers, and wallet entry points. SatoshiNet helps communities own Core Node, Indexer, Explorer, wallet, Launchpad, AMM, limit orders, DAO, community funds, DEX frontend and backend, and uses AI Agents to reduce deployment and operations complexity.
 
-| Builder | Opportunity |
-| --- | --- |
-| Wallet teams | PWA adapters, mobile wallets, hardware wallet integration |
-| Exchanges | Bitcoin L1 / SatoshiNet deposits and withdrawals, asset markets |
-| Developers | AMMs, stablecoins, payments, asset issuance, games, DePIN |
-| Indexer / Explorer teams | L1/L2 assets, channels, contracts, and transaction data |
-| AI Agent teams | Automated wallets, contract assistants, safety verification assistants |
-| Asset communities | Runes, BRC20, ORDX, and other assets entering SatoshiNet liquidity |
-| Institutions | GAS ecosystem, infrastructure, and application opportunities |
+## Role Paths
 
-## Ecosystem Flywheel
-
-1. Indexers unify multi-protocol Bitcoin L1 asset facts.
-2. STP lets Bitcoin assets safely enter SatoshiNet.
-3. Smart contracts create use cases.
-4. GAS prices network resources.
-5. Wallets and Agents lower the user barrier.
-6. Exchanges, indexers, and explorers provide liquidity and visibility.
-7. More assets and applications enter SatoshiNet.
+| Role | Goal | Entry |
+| --- | --- | --- |
+| BTC community | Build community DEX, DAO, wallet, and infrastructure | [Community Path](../start-here/btc-community.md) |
+| Solidity / EVM developer | Deploy first contract, migrate classic contracts, use Bitcoin-native assets | [Developer Path](../start-here/developers.md) |
+| Infrastructure team | Run Core Node, Indexer, Explorer, or public RPC | [Infrastructure Path](../start-here/infrastructure.md) |
+| Wallet or exchange | Integrate asset queries, deposits, withdrawals, STP state, and wallet authorization | [Wallet / Exchange Path](../start-here/wallet-exchange.md) |
+| AI Agent developer | Integrate wallet safety boundaries, deployment tools, and contract operation interfaces | [AI Agent Path](../start-here/ai-agent-builders.md) |
+| Market maker / liquidity partner | Build AMM pools, limit order markets, and cross-community liquidity | [Liquidity Path](../start-here/liquidity.md) |
 
 ## Next
 
+- [Community Stack](../community-stack/readme.md)
+- [SatoshiNet Today](satoshinet-today.md)
+- [Built on SatoshiNet](built-on-satoshinet.md)
+- [Current Ecosystem Needs](ecosystem-needs.md)
 - [Builder Program](builder-program.md)
-- [GAS Ecosystem Opportunity](gas.md)
-- [Indexer Integration and Asset Fact Layer](../build/indexer.md)
-- [Developer Center](../build/readme.md)
-- [SAT20 Agent Wallet: Install and Use](../ai/sat20-agent-wallet/readme.md)
+- [Strategic Partners](strategic-partners.md)
+- [Partners and Contribution Guide](partners-and-contribution.md)
+- [Network Economics](../network-economics/readme.md)
+
+**Page Status: Planning**

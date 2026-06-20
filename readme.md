@@ -1,62 +1,104 @@
-# SAT20 and SatoshiNet
+# SAT20 / SatoshiNet
 
-SAT20 is a protocol and network stack built around Bitcoin-native assets. Its core goal is to let BTC, Ordinals, Runes, BRC20, ORDX, and other Bitcoin L1 assets move into a lower-cost, faster, programmable environment while preserving user control.
+## SatoshiNet Is an Open Bitcoin-Native Execution Network
 
-SatoshiNet is the Bitcoin-native extension network in the SAT20 ecosystem. It is not a custodial bridge, and it is not an independent asset system unrelated to Bitcoin. Assets enter SatoshiNet from Bitcoin L1; asset facts are expressed by indexers; the safety boundary is formed by STP channels, commitment transactions, punishment transactions, force-close paths, and verifiable Bitcoin L1 transactions.
+SatoshiNet lets BTC communities build, own, and operate their own financial infrastructure. Bitcoin L1 provides asset origin, final settlement, and dispute boundaries. Indexers provide queryable and verifiable asset facts. STP provides cross-layer asset control, exits, and punishment paths for revoked states. SatoshiNet provides transactions, smart contracts, and application execution. Wallets and AI Agents provide user authorization, safety checks, and interaction.
 
-## Core Thesis
+SAT20 is the protocol and open-source technology stack around Bitcoin-native assets. SatoshiNet is the open execution network in the SAT20 stack.
 
-The Bitcoin ecosystem has long lacked a network that satisfies three requirements at the same time:
+- [Build a DEX / DAO for My Community](community-stack/readme.md)
+- [View Current Capabilities and Evidence](ecosystem/satoshinet-today.md)
+- [Run Nodes and Infrastructure](run/readme.md)
+- [Understand GAS and Node Economics](network-economics/readme.md)
+- [Join the Builder Program](ecosystem/builder-program.md)
 
-1. Assets originate from Bitcoin L1, instead of being custodially bridged or created from nothing.
-2. Users retain an exit path, even when a Core Node fails or behaves maliciously.
-3. The network is cheap, fast, and programmable enough for trading, contracts, AI Agents, and richer applications.
+## Names and Relationships
 
-SatoshiNet is built to solve this problem.
-
-## Four Foundations
-
-| Foundation | Role |
+| Name | Positioning |
 | --- | --- |
-| STP | Moves Bitcoin L1 assets into, across, and out of SatoshiNet while preserving user control |
-| Indexer | Expresses BTC, Ordinals, Runes, BRC20, ORDX, and other L1 assets as queryable, verifiable asset facts |
-| Smart Contracts | Turn SatoshiNet from an asset circulation layer into an application network |
-| GAS | Provides the economic entry point for contract execution, transaction processing, and ecosystem incentives |
+| SAT20 | Protocol and open-source technology stack around Bitcoin-native assets |
+| SatoshiNet | Open Bitcoin-native execution network |
+| Indexer | Asset fact layer for Bitcoin L1 and SatoshiNet |
+| STP / Transcend | Cross-layer asset control protocol between Bitcoin L1 and SatoshiNet |
+| ORDX | Satoshi-denominated asset protocol in the SAT20 stack |
+| GAS | SatoshiNet-native network fee and security staking asset |
 
-STP and indexers are the foundation for moving assets into SatoshiNet. The indexer tells wallets which assets exist on Bitcoin L1, which UTXOs carry them, and whether their state is confirmed. STP brings those assets into a channel safety boundary where users can exit and punish revoked states. Smart contracts and GAS then allow those assets to participate in trading, market making, payments, contracts, and more complex applications.
+## Why SatoshiNet Exists
 
-AI Agents are a new user interface. STP channel safety, commitment transactions, punishment transactions, and cross-layer states are complex for most users, but an Agent can read the evidence, run checks, call wallet adapters, and explain whether the next action is safe.
+Bitcoin L1 is well suited for scarce assets, final settlement, and long-term security. It is not designed to carry every high-frequency transaction, complex contract, community governance flow, or application execution. Scaling execution is a natural direction for Bitcoin, but the hard problem is preserving links to Bitcoin asset facts, user control, and exit paths while gaining better execution.
 
-## Where to Start
+SatoshiNet explores an open path:
 
-If this is your first time learning about SAT20:
+1. Assets originate from Bitcoin L1.
+2. Asset facts can be traced and verified.
+3. Users retain protection and exit paths in abnormal situations.
+4. Applications execute in a faster, lower-cost, programmable network.
+5. Communities and third parties can run infrastructure independently instead of permanently depending on SAT20 Labs.
 
-1. Read [Why Bitcoin Needs a Native Extension Network](learn/bitcoin-native.md).
-2. Read [Asset Safety Model](learn/security-model.md).
-3. Read [Indexer: Bitcoin Asset Fact Layer](learn/indexer.md).
-4. Read [STP Introduction](learn/stp.md).
-5. Read [Smart Contracts and GAS](learn/smart-contracts-and-gas.md).
-6. Read [AI Agents and User Asset Control](learn/ai-agent.md).
+## From Bitcoin Facts to Programmable Execution
 
-If you want to build applications:
-
-1. Start with the [Developer Center](build/readme.md).
-2. Read the [Developer Quickstart](build/quickstart.md).
-3. Choose the STP, Indexer, smart contract, or PWA adapter integration path.
-
-If you want an AI Agent to operate STP:
-
-1. Read the [Bitcoin Ecosystem AI Agent Asset Safety Standard](ai/bitcoin-agent-safety-standard.md).
-2. Install and initialize [SAT20 PWA Wallet](https://sat20.org/pwa/?install=1), create or import a wallet inside the wallet, and complete backup and unlock.
-3. Read [SAT20 Agent Wallet: Install and Use](ai/sat20-agent-wallet/readme.md).
-4. Install the SAT20 Agent Wallet skill:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/sat20-labs/docs/main/ai/sat20-agent-wallet/skills/sat20-agent-wallet/scripts/install.sh | bash
+```text
+Bitcoin L1
+   ↓
+Indexer: Asset Facts
+   ↓
+STP: Control and Exit
+   ↓
+SatoshiNet: Transactions and Contract Execution
+   ↓
+DEX · DAO · Wallet · Explorer · AI Agent
 ```
 
-5. Let the Agent call `wallet.status`, `stp.status`, and `stp.safety_snapshot` through the PWA adapter to verify wallet, network, Core Node, and channel safety state.
-6. Read the [SAT20 Agent Wallet Verification Matrix and Data Gaps](ai/sat20-agent-wallet/verification-and-data-gaps.md).
+## What You Can Do Now
+
+| Capability | Use | Entry |
+| --- | --- | --- |
+| Community infrastructure | Plan nodes, indexers, explorers, wallets, DEX, DAO, and operations backend for BTC communities | [Community Stack](community-stack/readme.md) |
+| Bring assets into SatoshiNet | Use Indexer to identify Bitcoin L1 asset facts and STP to place assets into a user-exitable channel safety boundary | [STP Introduction](learn/stp.md) |
+| User flows | Install wallet, enter SatoshiNet, complete first swap, and verify with Explorer | [Use](use/readme.md) |
+| Developer integration | Integrate Indexer, wallet, STP, contracts, and community DEX / DAO | [Build](build/readme.md) |
+| Network operation | Run Mining Node, Core Node, Indexer, Explorer, RPC, and monitoring | [Run the Network](run/readme.md) |
+| Network economics | Understand GAS, fee flows, node staking, incentives, and open design questions | [Network Economics](network-economics/readme.md) |
+| AI Agent operations | Let Agents perform asset safety checks and actions without holding private keys or bypassing wallet authorization | [AI Agent](ai/readme.md) |
+| Ecosystem cooperation | Apply for pilots, contribute tools, provide liquidity, run nodes, or support protocol development | [Ecosystem](ecosystem/readme.md) |
+
+## Choose Your Role
+
+| Who You Are | Start Here |
+| --- | --- |
+| I run a BTC community | [Community Path](start-here/btc-community.md) |
+| I am a Solidity / EVM developer | [Developer Path](start-here/developers.md) |
+| I run infrastructure | [Infrastructure Path](start-here/infrastructure.md) |
+| I am a wallet or exchange | [Wallet and Exchange Path](start-here/wallet-exchange.md) |
+| I am an AI Agent developer | [AI Agent Path](start-here/ai-agent-builders.md) |
+| I want to provide liquidity | [Liquidity Path](start-here/liquidity.md) |
+
+## Security Is Expressed with Evidence
+
+SatoshiNet does not use a centralized custodial bridge as its core cross-layer model. User protection depends on STP channel state, valid commitment transactions, punishment coverage, wallet backup, indexer evidence, and executable Bitcoin L1 paths.
+
+Users and Agents need to verify:
+
+1. Whether assets are on Bitcoin L1, in an STP channel, in a SatoshiNet user address, or in a contract address.
+2. Whether critical transactions can be traced to txid, vout, height, and confirmations.
+3. Whether the wallet holds the latest commitment transaction and required backup material.
+4. Whether revoked states have punishment coverage.
+5. Whether users still have exit or protection paths when a Core Node is offline, refuses service, or behaves maliciously.
+
+## Status and Evidence
+
+Docs use consistent status labels:
+
+| Status | Meaning |
+| --- | --- |
+| Implemented | Code and core flow exist, but this does not automatically imply full production maturity |
+| Testnet | Reproducible testnet flow exists |
+| In Development | Code is being developed; full availability is not promised |
+| Design in Progress | Rules, parameters, or governance are not finalized |
+| Planned | Direction is defined but no verifiable implementation exists yet |
+| Experimental | Research feature that may change or be removed |
+
+Every status should eventually link to code, documentation, demo, Explorer, contract address, test transaction, or validation record.
 
 ## Official Links
 
@@ -65,16 +107,4 @@ curl -fsSL https://raw.githubusercontent.com/sat20-labs/docs/main/ai/sat20-agent
 - X: [SAT20Labs](https://x.com/SAT20Labs)
 - GitHub: [sat20-labs](https://github.com/sat20-labs)
 
-## Documentation Structure
-
-| Section | Content |
-| --- | --- |
-| Learn | Explains SatoshiNet, STP, Indexer, the safety model, smart contracts, GAS, and AI Agents |
-| Use | Guides users through wallets, cross-layer movement, asset verification, and risk boundaries |
-| Build | For developers, wallets, exchanges, and infrastructure teams |
-| Protocol | For implementers and auditors: STP, SatoshiNet, ORDX, Indexer, and contract protocols |
-| AI Agent | For Agent developers and wallet adapters that need verifiable asset control |
-| Ecosystem | For builders, asset communities, exchanges, institutions, and community members |
-| Roadmap | Describes ecosystem phases, public milestones, and the long-term direction |
-
-This documentation will keep evolving. The priority is accurate protocol facts, reproducible testnet evidence, and executable developer paths. English docs, website content, and community material will continue to improve alongside the protocol.
+This documentation serves users, developers, communities, node operators, wallets, exchanges, AI Agents, infrastructure teams, and strategic partners. The website explains outcomes, opportunities, and action paths. Docs provide protocol facts, implementation details, evidence, and risk boundaries.
