@@ -76,6 +76,8 @@
     * [Asset Issuance Protocols](protocol/indexer/asset-issuance.md)
   * STP
     * [STP Technical Whitepaper](protocol/stp/readme.md)
+    * [STP Messages and Data Model](protocol/stp/messages-and-data-model.md)
+    * [STP Message Sequences](protocol/stp/message-sequences.md)
     * [Third-Party STP Client Integration Guide](protocol/stp/client-integration.md)
     * [Third-Party STP Client Implementation Checklist](protocol/stp/implementation-checklist.md)
   * SatoshiNet

@@ -28,7 +28,7 @@ STP is designed to provide:
 5. Verifiable asset facts: the client must verify UTXOs, assets, ascend, descend, confirmations, and channel state through L1/L2 indexers.
 6. Language-independent interoperability: a client only needs to follow the message, signature, transaction, state, and recovery rules.
 
-## SatoshiNet Node Roles
+## SatoshiNet Network Roles
 
 Older documents or APIs may use the term `STP Server`. At the protocol level, this is the STP service capability exposed by a Core Node.
 
@@ -184,7 +184,14 @@ A safe STP client needs:
 7. Unknown-result recovery.
 8. Safety snapshot, commitment export, punish status, force-close plan, and sweep build interfaces.
 
-Third-party implementation details are covered in [Third-Party STP Client Integration Guide](client-integration.md) and [Third-Party STP Client Implementation Checklist](implementation-checklist.md).
+Interoperability documents:
+
+| Document | Purpose |
+| --- | --- |
+| [STP Messages and Data Model](messages-and-data-model.md) | Defines the message families, shared fields, asset objects, commitment objects, and error semantics a third-party client needs |
+| [STP Message Sequences](message-sequences.md) | Describes message order and validation points for open, splicing, lock, unlock, close, punish, and recovery flows |
+| [Third-Party STP Client Integration Guide](client-integration.md) | Integration guidance for wallets, SDKs, PWA adapters, CLIs, and AI Agents |
+| [Third-Party STP Client Implementation Checklist](implementation-checklist.md) | Capability checklist before a third-party client enters testnet or mainnet |
 
 ## Verifiable Safety for AI Agents
 
