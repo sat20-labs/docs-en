@@ -127,13 +127,9 @@
   * [Support Protocol Development](governance-support/support-development.md)
   * [Security Disclosure](governance-support/security-disclosure.md)
 
-* Status and Roadmap
-  * [Roadmap](roadmap.md)
-  * [Docs Success Metrics](ecosystem/docs-success-metrics.md)
-  * [Docs Content Plan](docs-restructure-plan.md)
-
 * Resources
   * [Background](why.md)
+  * [Roadmap](roadmap.md)
   * [API Source Map](build/api-source-map.md)
   * [Support the SatoshiNet Ecosystem](donate.md)
   * [About](about.md)
