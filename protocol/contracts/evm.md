@@ -43,11 +43,35 @@ The EVM account model and the SatoshiNet UTXO model must stay consistent:
 
 This avoids treating off-chain or non-canonical EVM traces as final asset transfers.
 
+## Native Asset Precompile
+
+EVM contracts cannot spend UTXOs directly. They can only query contract asset state and emit asset-transfer intents through the SatoshiNet native asset precompile.
+
+The first-stage asset precompile interface is:
+
+1. `balanceOf(address, assetName)`: returns the available balance of the specified asset for the contract address derived from the EVM address.
+2. `transferAsset(assetName, to, amount, extraData)`: declares an asset-transfer intent. This call does not directly spend UTXOs. The final asset movement must be settled by canonical `CONTRACT_RESULT` and re-verified by validators.
+
+`receivedAsset(assetName)` is not a first-stage interface. If a future protocol version needs to expose the amount of a specific asset received by the current invoke transaction, that behavior should be specified and implemented separately. The current implementation derives asset inputs and settlement from Call TX outputs, the contract UTXO set, and Result TX validation.
+
 ## GAS
 
 EVM Contracts use the unified SatoshiNet GAS asset. GAS pays for contract call cost, VM execution, Result TX packaging, and trigger execution where applicable.
 
 The first stage can use protocol-defined fixed gas pricing. Future versions may introduce more flexible pricing while preserving deterministic validation.
+
+Default GAS limits:
+
+1. The per-deploy/invoke gas limit is `50,000,000`.
+2. The per-trigger execution gas limit is `5,000,000`.
+3. The per-block EVM execution gas limit is `1,000,000,000`.
+
+Height triggers registered through the SatoshiNet trigger precompile are part of EVM state and therefore part of the EVM state root. A valid trigger registration and execution must satisfy all of the following rules:
+
+1. The trigger gas limit must be positive.
+2. The trigger gas limit must not exceed the per-trigger execution gas limit.
+3. The contract must have enough GAS funding for trigger execution and Result TX packaging.
+4. The accumulated EVM gas used in the block must not exceed the per-block EVM execution gas limit.
 
 ## Compatibility Scope
 

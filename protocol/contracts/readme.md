@@ -118,6 +118,8 @@ Smart contracts use a unified GAS asset for fees.
 
 Fee categories include contract call fee, VM execution fee, Result TX packaging fee, and trigger execution fee. Fees are paid by the caller or by the contract itself, depending on the contract rule. The first stage uses a protocol-defined fixed gas price. Fees are paid to block producers. Fee portions inside a gas/funding output do not enter the contract asset balance.
 
+Default limits are: per-deploy/invoke gas limit `50,000,000`, per-trigger execution gas limit `5,000,000`, and per-block EVM execution gas limit `1,000,000,000`.
+
 If execution succeeds and no asset transfer is needed, a Result TX may be unnecessary. If asset transfer, refund, revert, or out-of-gas settlement is needed, a Result TX must be generated.
 
 ## Canonical Result TX
