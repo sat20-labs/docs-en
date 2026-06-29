@@ -74,6 +74,8 @@ Deployment includes asset name, initial asset amount, initial sat amount, and co
 
 AMM buy uses sats as input and outputs assets. AMM sell uses assets as input and outputs sats. Slippage and minimum output are non-economic invocation parameters; actual input assets are derived from the Call TX output to the contract address.
 
+Multiple AMM swaps in the same block are priced from the pool state and `K` at the start of that block's settlement. Swaps with the same direction and same input amount should receive the same quoted output. Actual settlement is still bounded by the pool assets available in that block. Within a block, swaps are processed before add/remove liquidity, matching the earlier channel-contract behavior.
+
 ## Asset Exchange Contract
 
 The asset exchange template supports deterministic exchange between two SatoshiNet assets. Its state, price curve, fee rule, and refund rule are encoded in template content and enforced through canonical Result TX.

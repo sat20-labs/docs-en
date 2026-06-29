@@ -70,6 +70,14 @@ The contract transaction families are:
 
 If a transaction has no contract OP_RETURN but contains an output to a valid contract address, that output can be interpreted as a default invocation. Its business meaning is defined by the specific contract type and instance.
 
+## Contract Close and Profit Distribution
+
+Smart contracts use a common close rule. A `close` invocation can be made only by the contract deployer. Before closing, each contract type may return assets with clear ownership according to its own state rules, such as open orders, LP shares, or other user-owned positions.
+
+After close processing, remaining contract-managed assets without clear user ownership are treated as contract profit and distributed 60% to the deployer and 40% to the bootstrap recipient. Assets held at the contract address that exceed the runtime-managed asset records are not used for contract business settlement; on close they are sent to the bootstrap recipient for later handling.
+
+This rule applies to Template, EVM, and Natural Language contracts. A contract family may define which assets have clear user ownership before close, but it cannot change the common handling of unowned profit and unmanaged assets.
+
 ## `CONTRACT_DEPLOY`
 
 `CONTRACT_DEPLOY` deploys a contract. The deployment payload contains the contract type, content, version, deployer, nonce, and gas limit. Each contract family defines its own deployment payload, but the contract address and initial state must be deterministically derived.
