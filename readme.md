@@ -27,8 +27,8 @@ AI Agents, DKVS, and distributed L1 indexing serve the future open value network
 | Indexer | Asset fact layer for Bitcoin L1 and SatoshiNet |
 | STP / Transcend | Cross-layer asset control, exit, and punishment protocol between Bitcoin L1 and SatoshiNet |
 | Smart Contracts | Application logic, trading logic, and automation framework on SatoshiNet |
-| DKVS | Distributed key-value infrastructure direction under R&D |
-| Distributed L1 Indexer | Lightweight, distributed L1 asset-fact verification network under R&D |
+| DKVS | Distributed key-value infrastructure direction in development |
+| Distributed L1 Indexer | Lightweight, distributed L1 asset-fact verification network in development |
 | ORDX | Satoshi-denominated asset protocol in the SAT20 stack |
 | GAS | SatoshiNet-native network fee and security staking asset |
 
@@ -98,6 +98,19 @@ Users, wallets, and Agents need to verify:
 4. Whether revoked states have punishment coverage.
 5. Whether users still have exit or protection paths when a Core Node is offline, refuses service, or behaves maliciously.
 6. Whether design-stage capabilities are clearly marked rather than presented as finished products.
+
+## Current Key Status
+
+The website and docs use the same status language to express capability boundaries:
+
+| Capability | Current Status | Notes |
+| --- | --- | --- |
+| SatoshiNet Core / Indexer / Wallet / Explorer | Implemented | Core flow, wallet entry, explorer, and base applications have demonstrable foundations |
+| STP | Implemented · Mainnet | STP has been implemented and deployed to mainnet for cross-layer asset control, exit paths, and punishment coverage |
+| EVM Runtime | Testnet | The EVM Runtime has been implemented and deployed to testnet for Solidity / ABI, UTXO asset-interface, and developer-experience validation |
+| DKVS | In Development | Distributed key-value infrastructure is in development |
+| Distributed L1 Indexer | In Development | Distributed L1 indexing is in development to reduce storage and compute requirements for indexer operators |
+| VSN / Agent-Controlled Wallet / Long-Term Governance | Design / R&D | These areas remain under design, experimentation, and validation, and should not be presented as finished production capabilities |
 
 ## Status and Evidence
 
