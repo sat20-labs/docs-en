@@ -20,7 +20,9 @@ Natural Language Contracts are not EVM contracts, do not require Solidity, ABI, 
 
 ## Core Node Agent
 
-The first stage treats the SatoshiNet network as having one protocol Agent executed by the built-in Core Node. Core Node-generated confirmations must include the Core Node public key and signature. Validators verify that the signer is the protocol-recognized Core Node identity and that the signature covers the relevant contract address and confirmation parameters.
+The first stage treats the SatoshiNet network as having one protocol Agent executed by the built-in Core Node. Core Node identity is checked through the common caller rule: validators derive the caller from the last input's previous output address and require that address to equal the configured Core Node address for Core Node-only actions such as `ready`, `reject`, and `confirm`.
+
+Core Node confirmation payloads do not repeat Core Node public key or signature fields. The confirmation transaction must be sent by the valid Core Node address, and Result TXs and state roots are still independently verified by all nodes. This keeps Agent identity checks aligned with other contract calls and avoids redundant identity fields in payloads.
 
 The Core Node Agent acts as:
 
@@ -83,12 +85,117 @@ Asset movement is never executed directly by the Agent. The Agent produces a pro
 
 ## First-Stage Scope
 
-The first stage focuses on prediction-style Agent contracts. The expected user flow is:
+The first stage focuses on prediction-style Agent contracts, and this subtype is testnet-only. On mainnet, Agent contracts currently expose no usable subtype; nodes, oracle services, indexers, and markets should not show or execute prediction contracts as mainnet contracts.
+
+The expected user flow is:
 
 1. User deploys natural-language contract text.
 2. Core Node Agent reviews and activates or rejects it.
 3. Participants submit materials or execution requests.
-4. Core Node Agent signs the protocol conclusion.
+4. Core Node Agent submits the structured protocol conclusion from the configured Core Node address.
 5. SatoshiNet records the canonical Result TX.
 
 The long-term direction is to support richer verification sources, multi-Agent consensus, dispute mechanisms, and more complex contract types while keeping the same principle: asset movement is driven by verifiable contract results, not by an off-chain Agent transferring funds.
+
+## Prediction Contracts
+
+Prediction contracts are the first fixed subtype of Natural Language Contracts:
+
+```text
+prediction
+```
+
+They represent an event with multiple candidate outcomes. Users bet by sending the configured betting asset to the contract address through a `bet` invocation. After the event, the Core Node Agent checks the configured data source and submits a structured `confirm` result. The runtime then settles winners or refunds users through canonical Result TXs.
+
+### Deployment Payload
+
+A prediction deployment payload contains:
+
+```json
+{
+  "subtype": "prediction",
+  "title": "...",
+  "description": "...",
+  "time_base": "unix",
+  "event_time": 1780310400,
+  "bet_deadline": 1780306800,
+  "confirm_after": 1780396800,
+  "source_url": "https://example.com",
+  "bet_asset": "::",
+  "min_bet_unit": "100",
+  "outcomes": [
+    {"id": "a", "text": "..."},
+    {"id": "b", "text": "..."}
+  ]
+}
+```
+
+`time_base` can be `unix` or `height`. `bet_asset` uses the SatoshiNet asset-name string format. `min_bet_unit` is a Decimal string interpreted with the betting asset's precision. Outcome ids are lowercase letters and must be unique.
+
+### Bet
+
+After Core Node activation, the common contract state is `Ready` and the prediction runtime state is `Betting`. A `bet` invocation contains:
+
+```json
+{
+  "outcome_id": "a"
+}
+```
+
+The bet amount is derived from the Call TX funding output to the contract address, not from the payload. It must use the configured `bet_asset`, be at least `min_bet_unit`, and be an integer multiple of `min_bet_unit`. The same address can bet on multiple outcomes or add to an existing outcome position.
+
+### Confirm
+
+`confirm` is a Core Node-only action. Its payload contains:
+
+```json
+{
+  "result_type": "outcome",
+  "outcome_id": "a",
+  "result_url": "https://example.com/match/result/123",
+  "result": "Team A 2-1 Team B",
+  "observed_at": 1780314000,
+  "agent_version": 1,
+  "model_version": "model-v1"
+}
+```
+
+Rules:
+
+1. `result_type` is one of `outcome`, `cancelled`, `invalid`, or `unverifiable`.
+2. For `outcome`, `outcome_id` must exist in the deployment payload.
+3. For refund result types, `outcome_id` must be empty.
+4. `result_url` must remain within the site scope defined by deployment `source_url`; the scheme must match and the host must be the same host or a subdomain, including after redirects.
+5. `result` records the observed real-world result or explanation and is limited to 128 bytes.
+6. `observed_at` records the time or height at which the Agent observed the result.
+7. `agent_version` is an integer Agent implementation version. `model_version` records the model version.
+
+Consensus validation checks the Core Node caller identity and the structured confirmation result. It does not refetch external web pages during block validation. Explorers and audit tools can use `result_url`, `result`, `observed_at`, and Agent logs to review the confirmation process.
+
+### Settlement and Refund
+
+Prediction contracts do not expose a public `settle` or `refund` action. A valid `confirm` automatically triggers settlement or refund.
+
+When there are winners, the runtime-recorded valid betting pool is split as:
+
+1. 6% to deployer.
+2. 3% to Agent.
+3. 1% to bootstrap.
+4. 90% to winners pro rata by winning bet amount.
+
+If there are no winners, or if the result is `cancelled`, `invalid`, or `unverifiable`, no fee is charged and runtime-recorded valid bets are refunded by original bet amount.
+
+Only valid `bet_asset` amounts recorded by the runtime participate in prediction settlement. Invalid calls, non-betting assets, and assets held at the contract address beyond the runtime-managed record are handled by the common framework rules and do not participate in the prize pool.
+
+### Runtime States
+
+Prediction runtime states include:
+
+1. `Betting`: bets are open.
+2. `ClosedForBet`: the betting deadline has passed.
+3. `PendingResult`: `confirm_after` has been reached and the Agent should confirm.
+4. `Confirmed`: a result has been accepted.
+5. `Settled`: payouts or refunds have been settled.
+6. `Refundable`: the contract is in a refund path.
+
+`Betting` and the other prediction runtime states are subtype-specific runtime states, not replacements for the common Agent contract states such as `Ready`, `Rejected`, or `Completed`.

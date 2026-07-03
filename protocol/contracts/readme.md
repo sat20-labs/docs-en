@@ -70,6 +70,8 @@ The contract transaction families are:
 
 If a transaction has no contract OP\_RETURN but contains an output to a valid contract address, that output can be interpreted as a default invocation. Its business meaning is defined by the specific contract type and instance.
 
+Deploy transactions may split large contract content across multiple contract OP_RETURN outputs. Ordinary transactions and contract invocations should not abuse OP_RETURN outputs. Except for protocol-defined deployment chunking, the mempool policy limits ordinary paths; the current ordinary path should not exceed four OP_RETURN outputs.
+
 ## Contract Close and Profit Distribution
 
 Smart contracts use a common close rule. A `close` invocation can be made only by the contract deployer. Before closing, each contract type may return assets with clear ownership according to its own state rules, such as open orders, LP shares, or other user-owned positions.
@@ -86,9 +88,9 @@ Every valid deployment must be recorded by a canonical `CONTRACT_RESULT` in the 
 
 ## `CONTRACT_INVOKE`
 
-`CONTRACT_INVOKE` calls a contract. The call transaction must include at least one output to the called contract address. That output binds the Call TX to the Result TX, carries assets sent to the contract, prepays the contract call fee, and can be spent by `CONTRACT_RESULT`.
+`CONTRACT_INVOKE` calls a contract. The call transaction must include exactly one gas/funding output to the called contract address. That output binds the Call TX to the Result TX, carries assets sent to the contract, prepays the contract call fee, and can be spent by `CONTRACT_RESULT`.
 
-The called contract address is determined from outputs, not from OP\_RETURN. A transaction with explicit `CONTRACT_INVOKE` should call one contract. If multiple contract-address outputs exist, they must belong to the same contract address. Default invocations may trigger per-output behavior.
+The called contract address is determined from outputs, not from OP\_RETURN. An explicit `CONTRACT_INVOKE` can call only one contract, and the called contract must have exactly one gas/funding output in that call. This keeps the economic input source, caller, refund recipient, and Result TX binding deterministic. Default invocations may trigger per-output behavior.
 
 Caller identity is derived from the address of the previous output spent by the last input of the call transaction. Consensus does not use witness public keys or replaceable signature fields as caller identity.
 
@@ -144,3 +146,33 @@ Output rules:
 4. Change outputs are placed after asset-transfer outputs.
 
 Any block whose Result TXs cannot be reproduced by validators is invalid.
+
+## Mempool Policy
+
+The mempool performs structural, address, fee, and basic protocol checks. Business-level invalid contract actions should not block the mempool or block production. Execution should treat them as no-op calls or produce deterministic refund results according to the contract rule. `CONTRACT_RESULT` is different: Result TXs are produced by nodes, and a mismatch makes the block invalid.
+
+The mempool must reject:
+
+1. Malformed `CONTRACT_DEPLOY` or `CONTRACT_INVOKE` payloads.
+2. Explicit invocations without exactly one output to the called contract address.
+3. Calls to non-existent contract addresses.
+4. Missing or out-of-range gas limits.
+5. Insufficient gas/funding.
+6. Invalid gas asset type.
+7. Excessive OP_RETURN outputs outside deployment chunking.
+8. Externally submitted `CONTRACT_RESULT` transactions.
+
+## Wallet, Explorer, and Market Interfaces
+
+Wallets, explorers, asset browsers, and markets should share these interface semantics:
+
+1. Deployment APIs return deploy txid, contract type, contract address, deployer, payload hash, initial state, and same-block Result status.
+2. Invocation APIs build `CONTRACT_INVOKE` transactions with the single gas/funding output to the contract address and display the caller derived from the last input's previous output.
+3. Result queries expose canonical Result TXs, state changes, asset transfers, gas fees, and execution errors.
+4. State queries return contract type, current state, state root, update height, balances, and type-specific state view.
+5. EVM interfaces provide SatoshiNet contract address mapping, ABI calldata construction, logs/events, storage/code hash, trigger queries, compiler config, and source metadata where available.
+6. Agent interfaces expose prediction deploy/ready/bet/confirm state, aggregated bets, outcomes, confirmation material, Core Node caller identity, and settlement/refund results.
+7. Asset interfaces query all UTXO-backed balances at a contract address and distinguish contract-managed assets, gas/funding inputs, Result outputs, and change.
+8. Markets should display only contracts whose runtime exists and whose type-specific status is publicly displayable; before value-moving actions they must query the latest node state and balances.
+
+These interfaces must be traceable to on-chain transactions, canonical Result TXs, and block state roots rather than relying only on frontend inference.

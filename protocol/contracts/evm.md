@@ -30,7 +30,7 @@ Nodes execute deployment through the EVM executor, initialize EVM state, and rec
 
 `CONTRACT_INVOKE` calls an EVM Contract. The Call TX output to the contract address binds the invocation, provides GAS/funding, and can carry SatoshiNet assets into the contract.
 
-EVM calldata, method selector, deadline, slippage, or other non-economic parameters can be carried in the invoke payload. Economic parameters are derived from transaction outputs to the contract address.
+EVM calldata is passed directly to the EVM as the call input. The protocol layer does not predefine business actions or business parameters for EVM contracts. Method selectors, deadlines, slippage, or other non-economic parameters can be carried in calldata. Economic parameters are derived from transaction outputs to the contract address. If a contract needs to know the assets carried by the current Call TX, it should read the funding output through the native asset precompile instead of asking the user to duplicate the same economic value in calldata.
 
 ## Asset Boundary
 
@@ -47,12 +47,61 @@ This avoids treating off-chain or non-canonical EVM traces as final asset transf
 
 EVM contracts cannot spend UTXOs directly. They can only query contract asset state and emit asset-transfer intents through the SatoshiNet native asset precompile.
 
+The current asset precompile address is:
+
+```text
+0x0000000000000000000000000000000000534E01
+```
+
 The first-stage asset precompile interface is:
 
-1. `balanceOf(address, assetName)`: returns the available balance of the specified asset for the contract address derived from the EVM address.
-2. `transferAsset(assetName, to, amount, extraData)`: declares an asset-transfer intent. This call does not directly spend UTXOs. The final asset movement must be settled by canonical `CONTRACT_RESULT` and re-verified by validators.
+1. `balanceOf(address owner, string assetName) returns (string)`: returns the available balance of the specified asset for the contract address derived from the EVM address.
+2. `fundingAssetAmount(string assetName) returns (string)`: returns the remaining claimable amount of the specified asset in the current Call TX funding output. If `assetName` is the unified GAS asset, the amount is returned after reserving the Result fee for this call.
+3. `fundingSats() returns (uint256)`: returns the plain sats amount in the current Call TX funding output.
+4. `claimFundingAsset(string assetName, string amount) returns (bool)`: explicitly claims an amount from the current funding output for business processing.
+5. `callerAddress() returns (string)`: returns the SatoshiNet caller address derived by the common caller rule.
+6. `transferAsset(string assetName, string to, string amount, bytes extraData) returns (bool)`: declares one asset-transfer intent.
+7. `transferAssets(string[] assetNames, string[] recipients, string[] amounts, bytes[] extraData) returns (bool)`: declares multiple asset-transfer intents. This is the preferred interface for close and batch settlement.
+8. `compareAmount(string left, string right) returns (int256)`: compares two asset amount strings with Decimal semantics.
+9. `addAmount`, `subAmount`, `mulAmount`, and `divAmount`: perform Decimal arithmetic on asset amount strings.
+10. `uintToAmount(uint256)`, `amountToUintFloor(string)`, and `amountToUintCeil(string)`: convert between integer values and asset amount strings.
 
-`receivedAsset(assetName)` is not a first-stage interface. If a future protocol version needs to expose the amount of a specific asset received by the current invoke transaction, that behavior should be specified and implemented separately. The current implementation derives asset inputs and settlement from Call TX outputs, the contract UTXO set, and Result TX validation.
+Asset amounts in the precompile interface are string-first. A Solidity contract may convert to `uint256` for internal calculations, but final transfer intents must return to asset amount strings and are still checked against asset precision by Result TX validation.
+
+## Contract Metadata and State View
+
+To let wallets, markets, and explorers show useful information without knowing the full Solidity source, EVM contracts should implement a small read-only base interface:
+
+```solidity
+function contractName() external view returns (string memory);
+function contractSubtype() external view returns (string memory);
+function managedAssetCount() external view returns (uint256);
+function managedAsset(uint256 index) external view returns (string memory);
+function managedAssetBalance(uint256 index) external view returns (string memory);
+function managedAssetBalance(string calldata assetName) external view returns (string memory);
+```
+
+Nodes try to call these methods when building an EVM state view. If `contractName()` is unavailable, the display name is `unknown`. The managed-asset methods return the assets and amounts that the contract itself believes it manages. Explorers may also show the actual UTXO-backed balance at the contract address; the two views are related but not required to be identical.
+
+Contracts can also implement:
+
+```solidity
+function stateView() external view returns (string memory);
+```
+
+`stateView()` returns a contract-defined JSON string for order books, pools, user shares, or other business-specific views. It is a display projection, not a replacement for consensus state.
+
+## Deployment Tooling and Source Metadata
+
+Wallets may provide a Solidity source compilation flow. Compiler parameters are defined by the SatoshiNet-supported configuration instead of being freely chosen by users. The current test-stage defaults are:
+
+1. `solcVersion`: `0.8.30`.
+2. `evmVersion`: `paris`.
+3. optimizer enabled with `runs=200`.
+4. metadata `bytecodeHash=none`.
+5. single-file source only; imports are not allowed.
+
+After deployment confirms, wallets or deployment tools can submit contract address, Solidity source, ABI, compiler config, constructor arguments, and init/runtime code hashes to the L2 indexer metadata API. This metadata helps wallets, markets, and explorers display and encode calls. It is not consensus state and does not replace the on-chain deployment transaction, code hash, or state root.
 
 ## GAS
 
@@ -95,3 +144,15 @@ The EVM path should evolve toward:
 5. Safe templates for Bitcoin-native asset handling.
 
 EVM is one smart-contract family in SatoshiNet. It complements template contracts and natural-language contracts rather than replacing them.
+
+## Close Rule
+
+EVM contracts use the common smart-contract close rule. When the deployer closes a contract, the EVM executor first attempts to call:
+
+```solidity
+function close() external returns (bool);
+```
+
+The contract should use the native asset precompile to emit transfer intents for assets with clear ownership, such as LP shares, open orders, deposits, or other user positions. After `close()` finishes, the framework applies the common close handling for remaining contract-managed profit and unmanaged assets held at the contract address.
+
+Public EVM contracts should implement an explicit `close()` and use `transferAssets` when close needs to distribute multiple assets to multiple recipients.
