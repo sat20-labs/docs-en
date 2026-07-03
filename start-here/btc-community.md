@@ -19,7 +19,7 @@ You do not need to understand every STP, Indexer, or contract detail first. Star
 
 ## Recommended Flow
 
-1. Read [Community Stack](../community-stack/readme.md).
+1. Read [Community Stack](../community-stack/).
 2. Check [SatoshiNet Today](../ecosystem/satoshinet-today.md).
 3. Prepare a community requirements brief.
 4. Submit cooperation intent through [Builder Program](../ecosystem/builder-program.md).

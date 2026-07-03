@@ -2,7 +2,7 @@
 
 This guide is for wallets, SDKs, PWA adapters, CLIs, backend services, and AI Agent tools that want to implement an STP client. The goal is language-independent interoperability with a compatible Core Node.
 
-This guide only covers STP client interoperability. Wallet creation, mnemonic import/export, password changes, and ordinary asset sends belong to the SAT20 Wallet or SAT20 Agent Wallet adapter layer. See [SAT20 Agent Wallet](../../ai/sat20-agent-wallet/readme.md).
+This guide only covers STP client interoperability. Wallet creation, mnemonic import/export, password changes, and ordinary asset sends belong to the SAT20 Wallet or SAT20 Agent Wallet adapter layer. See [SAT20 Agent Wallet](../../ai/sat20-agent-wallet/).
 
 ## Integration Goals
 
@@ -19,15 +19,15 @@ Every value movement should be brought back to verifiable evidence: transactions
 
 ## Recommended Architecture
 
-| Module | Responsibility |
-| --- | --- |
-| Wallet boundary | Stores keys, mnemonic, and user authorization. This can be a PWA, hardware wallet, mobile wallet, or local secure wallet |
-| STP engine | Implements STP messages, commitment state, channel actions, and recovery |
-| Transaction engine | Builds and verifies Bitcoin L1, SatoshiNet, commitment, punish, and sweep transactions |
-| Asset engine | Parses BTC, ORDX, Runes, BRC20, and amount precision |
-| State store | Persists channel data, commitment height, commitments, revocation material, and pending operations |
-| Chain query | Queries L1/L2 UTXOs, assets, transaction visibility, confirmations, ascend/descend, and channel state |
-| Safety monitor | Produces safety snapshots, commitment exports, punish status, force-close plans, and sweep plans |
+| Module             | Responsibility                                                                                                           |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| Wallet boundary    | Stores keys, mnemonic, and user authorization. This can be a PWA, hardware wallet, mobile wallet, or local secure wallet |
+| STP engine         | Implements STP messages, commitment state, channel actions, and recovery                                                 |
+| Transaction engine | Builds and verifies Bitcoin L1, SatoshiNet, commitment, punish, and sweep transactions                                   |
+| Asset engine       | Parses BTC, ORDX, Runes, BRC20, and amount precision                                                                     |
+| State store        | Persists channel data, commitment height, commitments, revocation material, and pending operations                       |
+| Chain query        | Queries L1/L2 UTXOs, assets, transaction visibility, confirmations, ascend/descend, and channel state                    |
+| Safety monitor     | Produces safety snapshots, commitment exports, punish status, force-close plans, and sweep plans                         |
 
 For AI Agents, the recommended path is SAT20 PWA Wallet Adapter: the PWA stores keys and database state, while the Agent sends authorized JSON operations and reads safety evidence.
 
@@ -242,16 +242,16 @@ If cooperative close is impossible, the client must expose a force-close plan be
 
 Every production-quality client should expose:
 
-| Operation | Purpose |
-| --- | --- |
-| `stp.safety_snapshot` | Returns channel point, commitment height, commitment availability, balances, CSV, and punishment coverage |
-| `stp.commitment_export` | Exports current commitment transactions and read-only verification data |
-| `stp.punish_status` | Lists revoked remote commitments and punishment coverage |
-| `stp.punish_build` | Builds and dry-runs a punishment transaction for a given old commitment |
-| `stp.punish_broadcast` | Broadcasts a verified punishment transaction |
-| `stp.force_close_plan` | Produces the local commitment, CSV delay, and sweep conditions |
-| `stp.sweep_build` | Builds and verifies a sweep transaction after CSV |
-| `stp.transaction` | Tracks pending reservation, txids, channel state, and next action |
+| Operation               | Purpose                                                                                                   |
+| ----------------------- | --------------------------------------------------------------------------------------------------------- |
+| `stp.safety_snapshot`   | Returns channel point, commitment height, commitment availability, balances, CSV, and punishment coverage |
+| `stp.commitment_export` | Exports current commitment transactions and read-only verification data                                   |
+| `stp.punish_status`     | Lists revoked remote commitments and punishment coverage                                                  |
+| `stp.punish_build`      | Builds and dry-runs a punishment transaction for a given old commitment                                   |
+| `stp.punish_broadcast`  | Broadcasts a verified punishment transaction                                                              |
+| `stp.force_close_plan`  | Produces the local commitment, CSV delay, and sweep conditions                                            |
+| `stp.sweep_build`       | Builds and verifies a sweep transaction after CSV                                                         |
+| `stp.transaction`       | Tracks pending reservation, txids, channel state, and next action                                         |
 
 Agents must treat `PUNISH_COVERAGE_UNKNOWN` and `PUNISH_COVERAGE_MISSING` as blockers for value movement.
 
@@ -293,12 +293,12 @@ Clients must separate commitment balances from spendable SatoshiNet UTXOs.
 
 ## Asset Rules
 
-| Asset | Rule |
-| --- | --- |
-| Plain sats | Bitcoin L1 has dust and fee constraints. SatoshiNet L2 does not have the same dust limit |
-| ORDX | ORDX binds to sats. Ordinals NFT-like `ordx:o` objects are ignored by STP ascend |
-| Runes | Runes can be carried by zero-sat L2 UTXOs. L1 still follows Bitcoin output constraints |
-| BRC20 | BRC20 can require transfer inscription packages on L1. The adapter chooses or creates transfer UTXOs internally |
+| Asset      | Rule                                                                                                            |
+| ---------- | --------------------------------------------------------------------------------------------------------------- |
+| Plain sats | Bitcoin L1 has dust and fee constraints. SatoshiNet L2 does not have the same dust limit                        |
+| ORDX       | ORDX binds to sats. Ordinals NFT-like `ordx:o` objects are ignored by STP ascend                                |
+| Runes      | Runes can be carried by zero-sat L2 UTXOs. L1 still follows Bitcoin output constraints                          |
+| BRC20      | BRC20 can require transfer inscription packages on L1. The adapter chooses or creates transfer UTXOs internally |
 
 If a UTXO carries multiple assets, only the explicitly requested asset ascends. Other assets are excluded from the expected L2 balance.
 

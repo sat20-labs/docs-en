@@ -1,4 +1,4 @@
-# Agent-Controlled Wallet and SAT20 Agent Wallet Roadmap
+# Agent-Controlled Wallet Roadmap
 
 This roadmap defines SAT20 PWA Wallet and SAT20 Agent Wallet capabilities from the shared perspective of users and AI Agents. The goal is to let an Agent safely control Bitcoin testnet/mainnet and SatoshiNet asset movement under user authorization, while explaining why STP and SatoshiNet are Bitcoin-native and safely exitable.
 
@@ -18,11 +18,11 @@ Users may not understand UTXO, commitment transactions, CSV, splicing, BRC20 com
 
 SAT20 PWA Wallet is both a user wallet and the secure execution layer for Agents.
 
-| User | PWA capability |
-| --- | --- |
-| Human user | Create/import wallet, view assets, confirm transactions, back up mnemonic, change password |
-| AI Agent | Standard JSON adapter, permission session, operation preview, risk check, transaction polling |
-| Developer | Testnet adapter, reproducible scripts, error codes, operation playbooks |
+| User       | PWA capability                                                                                |
+| ---------- | --------------------------------------------------------------------------------------------- |
+| Human user | Create/import wallet, view assets, confirm transactions, back up mnemonic, change password    |
+| AI Agent   | Standard JSON adapter, permission session, operation preview, risk check, transaction polling |
+| Developer  | Testnet adapter, reproducible scripts, error codes, operation playbooks                       |
 
 Private keys, mnemonic, password input, signing, and revocation material stay inside the PWA. The Agent sends intent, reads state, and explains results.
 
@@ -37,7 +37,7 @@ SAT20 Agent Wallet contains four logical skill areas:
 
 The installable skill is maintained in the canonical docs repository:
 
-```text
+```
 https://github.com/sat20-labs/docs/tree/main/ai/sat20-agent-wallet/skills/sat20-agent-wallet
 ```
 
@@ -58,22 +58,22 @@ The PWA exposes an Agent-friendly adapter:
 
 ## Implementation Priorities
 
-| Priority | Task | Acceptance standard |
-| --- | --- | --- |
-| P0 | Complete PWA `wallet.status` | Real address, network, unlock state, L1/L2 assets, UTXO summary, WASM ready state |
-| P0 | Complete PWA `stp.status` | Core Node, channel list, status, commit height, pending reservation |
-| P0 | Complete `wallet.transaction` / `stp.transaction` | Agent can poll txid/reservation without reading backend logs |
-| P0 | Standardize PWA authorization modal | Every value movement shows asset, amount, source, destination, fee, channel, and risk |
-| P0 | Productize `stp.safety_snapshot` | Agent reads channel point, commit height, commitments, balances, CSV, punishment coverage |
-| P0 | Unknown-result handling | Timeout or service unavailable returns `NETWORK_RESULT_UNKNOWN`, reservation, txid, and next action |
-| P1 | `stp.commitment_export` | Export read-only commitments and verification data without keys or revocation secrets |
-| P1 | `stp.force_close_plan` | Peer offline returns local commitment, CSV wait, and sweep condition |
-| P1 | `stp.punish_status` / `stp.punish_build` / `stp.punish_broadcast` | Agent can prove, build, and broadcast punishment transactions |
-| P1 | Split `stp.sweep_build` | Build / sign / verify / optional broadcast with stable schema |
-| P1 | Testnet fault API | Retain and broadcast Core Node-side old commitments only on testnet |
-| P1 | ORDX channel drill | Complete ORDX splicing, unlock, and lock with `bindingSat` rules |
-| P2 | Video capture tooling | Capture PWA, L1 explorer, L2 explorer, indexer JSON, and skill output |
-| P2 | Skill distribution | Publish installable SAT20 Agent Wallet skill with stable docs links |
+| Priority | Task                                                              | Acceptance standard                                                                                 |
+| -------- | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| P0       | Complete PWA `wallet.status`                                      | Real address, network, unlock state, L1/L2 assets, UTXO summary, WASM ready state                   |
+| P0       | Complete PWA `stp.status`                                         | Core Node, channel list, status, commit height, pending reservation                                 |
+| P0       | Complete `wallet.transaction` / `stp.transaction`                 | Agent can poll txid/reservation without reading backend logs                                        |
+| P0       | Standardize PWA authorization modal                               | Every value movement shows asset, amount, source, destination, fee, channel, and risk               |
+| P0       | Productize `stp.safety_snapshot`                                  | Agent reads channel point, commit height, commitments, balances, CSV, punishment coverage           |
+| P0       | Unknown-result handling                                           | Timeout or service unavailable returns `NETWORK_RESULT_UNKNOWN`, reservation, txid, and next action |
+| P1       | `stp.commitment_export`                                           | Export read-only commitments and verification data without keys or revocation secrets               |
+| P1       | `stp.force_close_plan`                                            | Peer offline returns local commitment, CSV wait, and sweep condition                                |
+| P1       | `stp.punish_status` / `stp.punish_build` / `stp.punish_broadcast` | Agent can prove, build, and broadcast punishment transactions                                       |
+| P1       | Split `stp.sweep_build`                                           | Build / sign / verify / optional broadcast with stable schema                                       |
+| P1       | Testnet fault API                                                 | Retain and broadcast Core Node-side old commitments only on testnet                                 |
+| P1       | ORDX channel drill                                                | Complete ORDX splicing, unlock, and lock with `bindingSat` rules                                    |
+| P2       | Video capture tooling                                             | Capture PWA, L1 explorer, L2 explorer, indexer JSON, and skill output                               |
+| P2       | Skill distribution                                                | Publish installable SAT20 Agent Wallet skill with stable docs links                                 |
 
 P0 removes reliance on backend logs. P1 makes the Agent capable of proving exit and punishment. P2 turns the real testnet drill into reproducible product material.
 
@@ -81,20 +81,20 @@ P0 removes reliance on backend logs. P1 makes the Agent capable of proving exit 
 
 The current testnet drill has verified:
 
-| Capability | Status |
-| --- | --- |
-| Normal client opens a channel with Core Node | Verified; normal users do not stake |
-| Channel recovery / rebuild / expand | Verified, including interrupted splicing-in recovery |
-| sats unlock / lock | Verified |
-| Runes splicing-in/out and unlock/lock | Verified |
-| BRC20 splicing-in/out and unlock/lock | Verified |
-| Unknown-result convergence | Verified through visible transaction and state convergence |
-| `stp.safety_snapshot` | Returns `READY_SAFE` in the validated flow |
-| Punishment coverage | Returns `COVERED` in the validated flow |
-| Real punish drill | Verified with old Core Node commitment broadcast and user-side punish package |
-| ORDX small-amount drill | Verified; `ordx:o` objects are ignored by STP ascend |
-| Full PWA transaction polling | Still pending |
-| Short video | Produced. See the [narrated demo](video/sat20-agent-wallet-one-minute-en.mp4) |
+| Capability                                   | Status                                                                                                                                              |
+| -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Normal client opens a channel with Core Node | Verified; normal users do not stake                                                                                                                 |
+| Channel recovery / rebuild / expand          | Verified, including interrupted splicing-in recovery                                                                                                |
+| sats unlock / lock                           | Verified                                                                                                                                            |
+| Runes splicing-in/out and unlock/lock        | Verified                                                                                                                                            |
+| BRC20 splicing-in/out and unlock/lock        | Verified                                                                                                                                            |
+| Unknown-result convergence                   | Verified through visible transaction and state convergence                                                                                          |
+| `stp.safety_snapshot`                        | Returns `READY_SAFE` in the validated flow                                                                                                          |
+| Punishment coverage                          | Returns `COVERED` in the validated flow                                                                                                             |
+| Real punish drill                            | Verified with old Core Node commitment broadcast and user-side punish package                                                                       |
+| ORDX small-amount drill                      | Verified; `ordx:o` objects are ignored by STP ascend                                                                                                |
+| Full PWA transaction polling                 | Still pending                                                                                                                                       |
+| Short video                                  | Produced. See the [narrated demo](https://github.com/sat20-labs/docs-en/blob/main/ai/sat20-agent-wallet/video/sat20-agent-wallet-one-minute-en.mp4) |
 
 ## User-Facing Statement
 

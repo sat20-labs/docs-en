@@ -6,108 +6,108 @@ The old ORDX indexer Swagger only covers part of early indexer APIs. It does not
 
 ## Interface Domains
 
-| Domain | Project | Audience | Current source of truth |
-| --- | --- | --- | --- |
-| Bitcoin L1 Indexer API | [`indexer`](https://github.com/sat20-labs/indexer) | Wallets, exchanges, explorers, STP clients, Agents | Gin routers, handlers, and wire models |
-| SatoshiNet Node RPC | [`satoshinet`](https://github.com/sat20-labs/satoshinet) | Node operators, miners, wallets, contract tools | JSON-RPC commands, handlers, and help registry |
-| SatoshiNet L2 Indexer API | [`satoshinet/indexer`](https://github.com/sat20-labs/satoshinet/tree/main/indexer) | Wallets, exchanges, explorers, STP clients, Agents | L2 indexer routers, handlers, and models |
-| SAT20 Wallet WASM / PWA Adapter API | [`sat20wallet`](https://github.com/sat20-labs/sat20wallet) | Wallet UI, DApps, AI Agents, PWA adapters | WASM wrappers, PWA bridge, Agent adapter contract |
-| STP Agent Adapter API | [`docs`](https://github.com/sat20-labs/docs) + [`sat20wallet`](https://github.com/sat20-labs/sat20wallet) + [`transcend`](https://github.com/sat20-labs/transcend) | AI Agents and third-party STP clients | `sat20-agent-wallet` skill contract and adapters |
+| Domain                              | Project                                                                                                                                                            | Audience                                           | Current source of truth                           |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------- | ------------------------------------------------- |
+| Bitcoin L1 Indexer API              | [`indexer`](https://github.com/sat20-labs/indexer)                                                                                                                 | Wallets, exchanges, explorers, STP clients, Agents | Gin routers, handlers, and wire models            |
+| SatoshiNet Node RPC                 | [`satoshinet`](https://github.com/sat20-labs/satoshinet)                                                                                                           | Node operators, miners, wallets, contract tools    | JSON-RPC commands, handlers, and help registry    |
+| SatoshiNet L2 Indexer API           | [`satoshinet/indexer`](https://github.com/sat20-labs/satoshinet/tree/main/indexer)                                                                                 | Wallets, exchanges, explorers, STP clients, Agents | L2 indexer routers, handlers, and models          |
+| SAT20 Wallet WASM / PWA Adapter API | [`sat20wallet`](https://github.com/sat20-labs/sat20wallet)                                                                                                         | Wallet UI, DApps, AI Agents, PWA adapters          | WASM wrappers, PWA bridge, Agent adapter contract |
+| STP Agent Adapter API               | [`docs`](https://github.com/sat20-labs/docs) + [`sat20wallet`](https://github.com/sat20-labs/sat20wallet) + [`transcend`](https://github.com/sat20-labs/transcend) | AI Agents and third-party STP clients              | `sat20-agent-wallet` skill contract and adapters  |
 
 ## Stability Levels
 
-| Level | Meaning | Integration guidance |
-| --- | --- | --- |
-| Public Stable | Externally stable API; field changes need compatibility | Suitable for production |
-| Public Experimental | Usable for testnet and early integration; fields may change | Keep a compatibility layer |
-| Internal | Internal module API with no external compatibility promise | Third parties should avoid direct dependency |
-| Testnet Only | Available only on testnet; mainnet must reject it | For drills, validation, and fault injection only |
-| Deprecated | Historical interface or outdated docs | Not a basis for new integrations |
+| Level               | Meaning                                                     | Integration guidance                             |
+| ------------------- | ----------------------------------------------------------- | ------------------------------------------------ |
+| Public Stable       | Externally stable API; field changes need compatibility     | Suitable for production                          |
+| Public Experimental | Usable for testnet and early integration; fields may change | Keep a compatibility layer                       |
+| Internal            | Internal module API with no external compatibility promise  | Third parties should avoid direct dependency     |
+| Testnet Only        | Available only on testnet; mainnet must reject it           | For drills, validation, and fault injection only |
+| Deprecated          | Historical interface or outdated docs                       | Not a basis for new integrations                 |
 
 ## Bitcoin L1 Indexer API
 
 The Bitcoin L1 indexer parses Bitcoin UTXOs, sat ranges, Ordinals, Runes, BRC20, ORDX, mempool, confirmations, and reorg state. It is the entry point for wallets, exchanges, STP, and AI Agents to judge L1 asset facts.
 
-| Content | GitHub source |
-| --- | --- |
-| Service startup and RPC initialization | [`main.go`](https://github.com/sat20-labs/indexer/blob/main/main.go) |
-| Gin root router and Swagger mount | [`rpcserver/router.go`](https://github.com/sat20-labs/indexer/blob/main/rpcserver/router.go) |
-| Base APIs | [`rpcserver/base/router.go`](https://github.com/sat20-labs/indexer/blob/main/rpcserver/base/router.go), [`rpcserver/base/handler.go`](https://github.com/sat20-labs/indexer/blob/main/rpcserver/base/handler.go) |
-| ORDX / multi-asset APIs | [`rpcserver/ordx/router.go`](https://github.com/sat20-labs/indexer/blob/main/rpcserver/ordx/router.go), [`rpcserver/ordx/handler.go`](https://github.com/sat20-labs/indexer/blob/main/rpcserver/ordx/handler.go), [`rpcserver/ordx/handler_v3.go`](https://github.com/sat20-labs/indexer/blob/main/rpcserver/ordx/handler_v3.go) |
-| Ordinals content APIs | [`rpcserver/ord/router.go`](https://github.com/sat20-labs/indexer/blob/main/rpcserver/ord/router.go), [`rpcserver/ord/handler.go`](https://github.com/sat20-labs/indexer/blob/main/rpcserver/ord/handler.go) |
-| Bitcoin node proxy APIs | [`rpcserver/bitcoind/router.go`](https://github.com/sat20-labs/indexer/blob/main/rpcserver/bitcoind/router.go), [`rpcserver/bitcoind/handler.go`](https://github.com/sat20-labs/indexer/blob/main/rpcserver/bitcoind/handler.go) |
-| Response models | [`rpcserver/wire/`](https://github.com/sat20-labs/indexer/tree/main/rpcserver/wire) |
-| Indexer manager and handling | [`indexer/indexermgr.go`](https://github.com/sat20-labs/indexer/blob/main/indexer/indexermgr.go), [`indexer/handle.go`](https://github.com/sat20-labs/indexer/blob/main/indexer/handle.go) |
-| ORDX protocol handling | [`indexer/ft/`](https://github.com/sat20-labs/indexer/tree/main/indexer/ft), [`indexer/nft/`](https://github.com/sat20-labs/indexer/tree/main/indexer/nft), [`indexer/ns/`](https://github.com/sat20-labs/indexer/tree/main/indexer/ns) |
-| Runes / BRC20 handling | [`indexer/runes/`](https://github.com/sat20-labs/indexer/tree/main/indexer/runes), [`indexer/brc20/`](https://github.com/sat20-labs/indexer/tree/main/indexer/brc20) |
+| Content                                | GitHub source                                                                                                                                                                                                                                                                                                                    |
+| -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Service startup and RPC initialization | [`main.go`](https://github.com/sat20-labs/indexer/blob/main/main.go)                                                                                                                                                                                                                                                             |
+| Gin root router and Swagger mount      | [`rpcserver/router.go`](https://github.com/sat20-labs/indexer/blob/main/rpcserver/router.go)                                                                                                                                                                                                                                     |
+| Base APIs                              | [`rpcserver/base/router.go`](https://github.com/sat20-labs/indexer/blob/main/rpcserver/base/router.go), [`rpcserver/base/handler.go`](https://github.com/sat20-labs/indexer/blob/main/rpcserver/base/handler.go)                                                                                                                 |
+| ORDX / multi-asset APIs                | [`rpcserver/ordx/router.go`](https://github.com/sat20-labs/indexer/blob/main/rpcserver/ordx/router.go), [`rpcserver/ordx/handler.go`](https://github.com/sat20-labs/indexer/blob/main/rpcserver/ordx/handler.go), [`rpcserver/ordx/handler_v3.go`](https://github.com/sat20-labs/indexer/blob/main/rpcserver/ordx/handler_v3.go) |
+| Ordinals content APIs                  | [`rpcserver/ord/router.go`](https://github.com/sat20-labs/indexer/blob/main/rpcserver/ord/router.go), [`rpcserver/ord/handler.go`](https://github.com/sat20-labs/indexer/blob/main/rpcserver/ord/handler.go)                                                                                                                     |
+| Bitcoin node proxy APIs                | [`rpcserver/bitcoind/router.go`](https://github.com/sat20-labs/indexer/blob/main/rpcserver/bitcoind/router.go), [`rpcserver/bitcoind/handler.go`](https://github.com/sat20-labs/indexer/blob/main/rpcserver/bitcoind/handler.go)                                                                                                 |
+| Response models                        | [`rpcserver/wire/`](https://github.com/sat20-labs/indexer/tree/main/rpcserver/wire)                                                                                                                                                                                                                                              |
+| Indexer manager and handling           | [`indexer/indexermgr.go`](https://github.com/sat20-labs/indexer/blob/main/indexer/indexermgr.go), [`indexer/handle.go`](https://github.com/sat20-labs/indexer/blob/main/indexer/handle.go)                                                                                                                                       |
+| ORDX protocol handling                 | [`indexer/ft/`](https://github.com/sat20-labs/indexer/tree/main/indexer/ft), [`indexer/nft/`](https://github.com/sat20-labs/indexer/tree/main/indexer/nft), [`indexer/ns/`](https://github.com/sat20-labs/indexer/tree/main/indexer/ns)                                                                                          |
+| Runes / BRC20 handling                 | [`indexer/runes/`](https://github.com/sat20-labs/indexer/tree/main/indexer/runes), [`indexer/brc20/`](https://github.com/sat20-labs/indexer/tree/main/indexer/brc20)                                                                                                                                                             |
 
 ## SatoshiNet Node RPC
 
 SatoshiNet node RPC inherits the btcd-style JSON-RPC model and extends it with SatoshiNet transactions, assets, contracts, mining, and network capabilities.
 
-| Content | GitHub source |
-| --- | --- |
-| Node startup and server startup | [`btcd.go`](https://github.com/sat20-labs/satoshinet/blob/main/btcd.go), [`server.go`](https://github.com/sat20-labs/satoshinet/blob/main/server.go) |
-| JSON-RPC server | [`rpcserver.go`](https://github.com/sat20-labs/satoshinet/blob/main/rpcserver.go) |
-| RPC adapters | [`rpcadapters.go`](https://github.com/sat20-labs/satoshinet/blob/main/rpcadapters.go) |
-| WebSocket RPC | [`rpcwebsocket.go`](https://github.com/sat20-labs/satoshinet/blob/main/rpcwebsocket.go) |
-| RPC help / result registry | [`rpcserverhelp.go`](https://github.com/sat20-labs/satoshinet/blob/main/rpcserverhelp.go) |
-| JSON-RPC command registration and parsing | [`btcjson/register.go`](https://github.com/sat20-labs/satoshinet/blob/main/btcjson/register.go), [`btcjson/cmdparse.go`](https://github.com/sat20-labs/satoshinet/blob/main/btcjson/cmdparse.go) |
-| Chain server commands and results | [`btcjson/chainsvrcmds.go`](https://github.com/sat20-labs/satoshinet/blob/main/btcjson/chainsvrcmds.go), [`btcjson/chainsvrresults.go`](https://github.com/sat20-labs/satoshinet/blob/main/btcjson/chainsvrresults.go) |
-| btcd extension commands and results | [`btcjson/btcdextcmds.go`](https://github.com/sat20-labs/satoshinet/blob/main/btcjson/btcdextcmds.go), [`btcjson/btcdextresults.go`](https://github.com/sat20-labs/satoshinet/blob/main/btcjson/btcdextresults.go) |
-| Wallet command models | [`btcjson/walletsvrcmds.go`](https://github.com/sat20-labs/satoshinet/blob/main/btcjson/walletsvrcmds.go), [`btcjson/walletsvrresults.go`](https://github.com/sat20-labs/satoshinet/blob/main/btcjson/walletsvrresults.go) |
-| Contract execution and results | [`contract/`](https://github.com/sat20-labs/satoshinet/tree/main/contract) |
-| POS mining | [`mining/posminer/`](https://github.com/sat20-labs/satoshinet/tree/main/mining/posminer) |
+| Content                                   | GitHub source                                                                                                                                                                                                              |
+| ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Node startup and server startup           | [`btcd.go`](https://github.com/sat20-labs/satoshinet/blob/main/btcd.go), [`server.go`](https://github.com/sat20-labs/satoshinet/blob/main/server.go)                                                                       |
+| JSON-RPC server                           | [`rpcserver.go`](https://github.com/sat20-labs/satoshinet/blob/main/rpcserver.go)                                                                                                                                          |
+| RPC adapters                              | [`rpcadapters.go`](https://github.com/sat20-labs/satoshinet/blob/main/rpcadapters.go)                                                                                                                                      |
+| WebSocket RPC                             | [`rpcwebsocket.go`](https://github.com/sat20-labs/satoshinet/blob/main/rpcwebsocket.go)                                                                                                                                    |
+| RPC help / result registry                | [`rpcserverhelp.go`](https://github.com/sat20-labs/satoshinet/blob/main/rpcserverhelp.go)                                                                                                                                  |
+| JSON-RPC command registration and parsing | [`btcjson/register.go`](https://github.com/sat20-labs/satoshinet/blob/main/btcjson/register.go), [`btcjson/cmdparse.go`](https://github.com/sat20-labs/satoshinet/blob/main/btcjson/cmdparse.go)                           |
+| Chain server commands and results         | [`btcjson/chainsvrcmds.go`](https://github.com/sat20-labs/satoshinet/blob/main/btcjson/chainsvrcmds.go), [`btcjson/chainsvrresults.go`](https://github.com/sat20-labs/satoshinet/blob/main/btcjson/chainsvrresults.go)     |
+| btcd extension commands and results       | [`btcjson/btcdextcmds.go`](https://github.com/sat20-labs/satoshinet/blob/main/btcjson/btcdextcmds.go), [`btcjson/btcdextresults.go`](https://github.com/sat20-labs/satoshinet/blob/main/btcjson/btcdextresults.go)         |
+| Wallet command models                     | [`btcjson/walletsvrcmds.go`](https://github.com/sat20-labs/satoshinet/blob/main/btcjson/walletsvrcmds.go), [`btcjson/walletsvrresults.go`](https://github.com/sat20-labs/satoshinet/blob/main/btcjson/walletsvrresults.go) |
+| Contract execution and results            | [`contract/`](https://github.com/sat20-labs/satoshinet/tree/main/contract)                                                                                                                                                 |
+| POS mining                                | [`mining/posminer/`](https://github.com/sat20-labs/satoshinet/tree/main/mining/posminer)                                                                                                                                   |
 
 ## SatoshiNet L2 Indexer API
 
 The SatoshiNet L2 indexer parses L2 UTXOs, ascend, descend, channels, contracts, Core Node state, and asset state. It is the entry point for verifying L2 asset facts after STP operations.
 
-| Content | GitHub source |
-| --- | --- |
-| L2 indexer startup | [`indexer/main.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/main.go) |
-| L2 root router | [`indexer/rpcserver/router.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/rpcserver/router.go) |
-| SatoshiNet query APIs | [`indexer/rpcserver/satoshinet/router.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/rpcserver/satoshinet/router.go), [`indexer/rpcserver/satoshinet/handler.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/rpcserver/satoshinet/handler.go) |
-| Indexer query APIs and models | [`indexer/rpcserver/indexer/router.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/rpcserver/indexer/router.go), [`indexer/rpcserver/indexer/handler.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/rpcserver/indexer/handler.go), [`indexer/rpcserver/indexer/model.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/rpcserver/indexer/model.go) |
-| L2 indexer manager | [`indexer/indexer/indexermgr.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/indexer/indexermgr.go) |
-| L2 transaction handling | [`indexer/indexer/handle.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/indexer/handle.go) |
-| ascend / descend / STP parsing | [`indexer/indexer/base/transcend.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/indexer/base/transcend.go), [`indexer/indexer/stp/transcend.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/indexer/stp/transcend.go) |
-| Channel state indexing | [`indexer/indexer/base/channel_state.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/indexer/base/channel_state.go) |
-| Contract indexing | [`indexer/indexer/contract_index.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/indexer/contract_index.go), [`indexer/indexer/contract/indexer.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/indexer/contract/indexer.go) |
-| L2 RPC client | [`indexer/share/satsnet_rpc/rpc.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/share/satsnet_rpc/rpc.go), [`indexer/share/satsnet_rpc/rpcclient.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/share/satsnet_rpc/rpcclient.go) |
+| Content                        | GitHub source                                                                                                                                                                                                                                                                                                                                                                                     |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| L2 indexer startup             | [`indexer/main.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/main.go)                                                                                                                                                                                                                                                                                                           |
+| L2 root router                 | [`indexer/rpcserver/router.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/rpcserver/router.go)                                                                                                                                                                                                                                                                                   |
+| SatoshiNet query APIs          | [`indexer/rpcserver/satoshinet/router.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/rpcserver/satoshinet/router.go), [`indexer/rpcserver/satoshinet/handler.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/rpcserver/satoshinet/handler.go)                                                                                                                    |
+| Indexer query APIs and models  | [`indexer/rpcserver/indexer/router.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/rpcserver/indexer/router.go), [`indexer/rpcserver/indexer/handler.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/rpcserver/indexer/handler.go), [`indexer/rpcserver/indexer/model.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/rpcserver/indexer/model.go) |
+| L2 indexer manager             | [`indexer/indexer/indexermgr.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/indexer/indexermgr.go)                                                                                                                                                                                                                                                                               |
+| L2 transaction handling        | [`indexer/indexer/handle.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/indexer/handle.go)                                                                                                                                                                                                                                                                                       |
+| ascend / descend / STP parsing | [`indexer/indexer/base/transcend.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/indexer/base/transcend.go), [`indexer/indexer/stp/transcend.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/indexer/stp/transcend.go)                                                                                                                                            |
+| Channel state indexing         | [`indexer/indexer/base/channel_state.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/indexer/base/channel_state.go)                                                                                                                                                                                                                                                               |
+| Contract indexing              | [`indexer/indexer/contract_index.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/indexer/contract_index.go), [`indexer/indexer/contract/indexer.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/indexer/contract/indexer.go)                                                                                                                                      |
+| L2 RPC client                  | [`indexer/share/satsnet_rpc/rpc.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/share/satsnet_rpc/rpc.go), [`indexer/share/satsnet_rpc/rpcclient.go`](https://github.com/sat20-labs/satoshinet/blob/main/indexer/share/satsnet_rpc/rpcclient.go)                                                                                                                                  |
 
 ## SAT20 Wallet WASM / PWA Adapter API
 
 SAT20 Wallet protects private keys, mnemonic phrases, signatures, asset sends, user authorization, PWA wallet state, and STP adapter calls. AI Agents interact through a PWA adapter or another controlled adapter.
 
-| Content | GitHub source |
-| --- | --- |
-| Go WASM entry | [`sdk/wasm/main.go`](https://github.com/sat20-labs/sat20wallet/blob/main/sdk/wasm/main.go) |
-| Wallet core management | [`sdk/wallet/manager.go`](https://github.com/sat20-labs/sat20wallet/blob/main/sdk/wallet/manager.go), [`sdk/wallet/wallet.go`](https://github.com/sat20-labs/sat20wallet/blob/main/sdk/wallet/wallet.go) |
-| Wallet base interfaces | [`sdk/wallet/interface.go`](https://github.com/sat20-labs/sat20wallet/blob/main/sdk/wallet/interface.go) |
-| Asset sending | [`sdk/wallet/interface_send.go`](https://github.com/sat20-labs/sat20wallet/blob/main/sdk/wallet/interface_send.go), [`sdk/wallet/interface_send2.go`](https://github.com/sat20-labs/sat20wallet/blob/main/sdk/wallet/interface_send2.go) |
-| PSBT / signing | [`sdk/wallet/interface_psbt.go`](https://github.com/sat20-labs/sat20wallet/blob/main/sdk/wallet/interface_psbt.go), [`sdk/wallet/sign.go`](https://github.com/sat20-labs/sat20wallet/blob/main/sdk/wallet/sign.go) |
-| Contract client interfaces | [`sdk/wallet/interface_contract_client.go`](https://github.com/sat20-labs/sat20wallet/blob/main/sdk/wallet/interface_contract_client.go), [`sdk/wallet/interface_contract_unified.go`](https://github.com/sat20-labs/sat20wallet/blob/main/sdk/wallet/interface_contract_unified.go) |
-| STP / channel wallet capabilities | [`sdk/wallet/channelwallet.go`](https://github.com/sat20-labs/sat20wallet/blob/main/sdk/wallet/channelwallet.go), [`sdk/wallet/chaininfo_satsnet.go`](https://github.com/sat20-labs/sat20wallet/blob/main/sdk/wallet/chaininfo_satsnet.go) |
-| PWA WASM wrappers | [`pwa/utils/sat20.ts`](https://github.com/sat20-labs/sat20wallet/blob/main/pwa/utils/sat20.ts), [`pwa/utils/stp.ts`](https://github.com/sat20-labs/sat20wallet/blob/main/pwa/utils/stp.ts) |
-| PWA Agent adapter | [`pwa/composables/usePwaAgentAdapter.ts`](https://github.com/sat20-labs/sat20wallet/blob/main/pwa/composables/usePwaAgentAdapter.ts) |
-| PWA DApp Connect types | [`pwa/types/sat20-dapp-connect.ts`](https://github.com/sat20-labs/sat20wallet/blob/main/pwa/types/sat20-dapp-connect.ts) |
-| PWA DApp bridge | [`pwa/composables/usePwaDappBridge.ts`](https://github.com/sat20-labs/sat20wallet/blob/main/pwa/composables/usePwaDappBridge.ts) |
-| Authorization UI and state | [`pwa/components/approve/ApproveAgentOperation.vue`](https://github.com/sat20-labs/sat20wallet/blob/main/pwa/components/approve/ApproveAgentOperation.vue), [`pwa/store/approve.ts`](https://github.com/sat20-labs/sat20wallet/blob/main/pwa/store/approve.ts) |
+| Content                           | GitHub source                                                                                                                                                                                                                                                                        |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Go WASM entry                     | [`sdk/wasm/main.go`](https://github.com/sat20-labs/sat20wallet/blob/main/sdk/wasm/main.go)                                                                                                                                                                                           |
+| Wallet core management            | [`sdk/wallet/manager.go`](https://github.com/sat20-labs/sat20wallet/blob/main/sdk/wallet/manager.go), [`sdk/wallet/wallet.go`](https://github.com/sat20-labs/sat20wallet/blob/main/sdk/wallet/wallet.go)                                                                             |
+| Wallet base interfaces            | [`sdk/wallet/interface.go`](https://github.com/sat20-labs/sat20wallet/blob/main/sdk/wallet/interface.go)                                                                                                                                                                             |
+| Asset sending                     | [`sdk/wallet/interface_send.go`](https://github.com/sat20-labs/sat20wallet/blob/main/sdk/wallet/interface_send.go), [`sdk/wallet/interface_send2.go`](https://github.com/sat20-labs/sat20wallet/blob/main/sdk/wallet/interface_send2.go)                                             |
+| PSBT / signing                    | [`sdk/wallet/interface_psbt.go`](https://github.com/sat20-labs/sat20wallet/blob/main/sdk/wallet/interface_psbt.go), [`sdk/wallet/sign.go`](https://github.com/sat20-labs/sat20wallet/blob/main/sdk/wallet/sign.go)                                                                   |
+| Contract client interfaces        | [`sdk/wallet/interface_contract_client.go`](https://github.com/sat20-labs/sat20wallet/blob/main/sdk/wallet/interface_contract_client.go), [`sdk/wallet/interface_contract_unified.go`](https://github.com/sat20-labs/sat20wallet/blob/main/sdk/wallet/interface_contract_unified.go) |
+| STP / channel wallet capabilities | [`sdk/wallet/channelwallet.go`](https://github.com/sat20-labs/sat20wallet/blob/main/sdk/wallet/channelwallet.go), [`sdk/wallet/chaininfo_satsnet.go`](https://github.com/sat20-labs/sat20wallet/blob/main/sdk/wallet/chaininfo_satsnet.go)                                           |
+| PWA WASM wrappers                 | [`pwa/utils/sat20.ts`](https://github.com/sat20-labs/sat20wallet/blob/main/pwa/utils/sat20.ts), [`pwa/utils/stp.ts`](https://github.com/sat20-labs/sat20wallet/blob/main/pwa/utils/stp.ts)                                                                                           |
+| PWA Agent adapter                 | [`pwa/composables/usePwaAgentAdapter.ts`](https://github.com/sat20-labs/sat20wallet/blob/main/pwa/composables/usePwaAgentAdapter.ts)                                                                                                                                                 |
+| PWA DApp Connect types            | [`pwa/types/sat20-dapp-connect.ts`](https://github.com/sat20-labs/sat20wallet/blob/main/pwa/types/sat20-dapp-connect.ts)                                                                                                                                                             |
+| PWA DApp bridge                   | [`pwa/composables/usePwaDappBridge.ts`](https://github.com/sat20-labs/sat20wallet/blob/main/pwa/composables/usePwaDappBridge.ts)                                                                                                                                                     |
+| Authorization UI and state        | [`pwa/components/approve/ApproveAgentOperation.vue`](https://github.com/sat20-labs/sat20wallet/blob/main/pwa/components/approve/ApproveAgentOperation.vue), [`pwa/store/approve.ts`](https://github.com/sat20-labs/sat20wallet/blob/main/pwa/store/approve.ts)                       |
 
 ## STP Agent Adapter API
 
 The STP Agent Adapter is a language-agnostic JSON contract for AI Agents. It defines how an Agent requests wallet operations, reads safety evidence, and recovers from unknown network results.
 
-The English explanation pages live under [SAT20 Agent Wallet](../ai/sat20-agent-wallet/readme.md). The canonical installable skill and reference files live in [`sat20-labs/docs`](https://github.com/sat20-labs/docs/tree/main/ai/sat20-agent-wallet/skills/sat20-agent-wallet). `docs-en` links to that source and does not copy a separate skill tree.
+The English explanation pages live under [SAT20 Agent Wallet](../ai/sat20-agent-wallet/). The canonical installable skill and reference files live in [`sat20-labs/docs`](https://github.com/sat20-labs/docs/tree/main/ai/sat20-agent-wallet/skills/sat20-agent-wallet). `docs-en` links to that source and does not copy a separate skill tree.
 
-| Content | GitHub source |
-| --- | --- |
-| Skill entrypoint | [`SKILL.md`](https://github.com/sat20-labs/docs/blob/main/ai/sat20-agent-wallet/skills/sat20-agent-wallet/SKILL.md) |
-| Adapter contract | [`adapter-contract.md`](https://github.com/sat20-labs/docs/blob/main/ai/sat20-agent-wallet/skills/sat20-agent-wallet/references/adapter-contract.md) |
-| Operation playbooks | [`operation-playbooks.md`](https://github.com/sat20-labs/docs/blob/main/ai/sat20-agent-wallet/skills/sat20-agent-wallet/references/operation-playbooks.md) |
-| PWA WASM adapter reference | [`pwa-wasm-adapter.md`](https://github.com/sat20-labs/docs/blob/main/ai/sat20-agent-wallet/skills/sat20-agent-wallet/references/pwa-wasm-adapter.md) |
-| Adapter forwarding script | [`stp_adapter.py`](https://github.com/sat20-labs/docs/blob/main/ai/sat20-agent-wallet/skills/sat20-agent-wallet/scripts/stp_adapter.py) |
+| Content                    | GitHub source                                                                                                                                              |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Skill entrypoint           | [`SKILL.md`](https://github.com/sat20-labs/docs/blob/main/ai/sat20-agent-wallet/skills/sat20-agent-wallet/SKILL.md)                                        |
+| Adapter contract           | [`adapter-contract.md`](https://github.com/sat20-labs/docs/blob/main/ai/sat20-agent-wallet/skills/sat20-agent-wallet/references/adapter-contract.md)       |
+| Operation playbooks        | [`operation-playbooks.md`](https://github.com/sat20-labs/docs/blob/main/ai/sat20-agent-wallet/skills/sat20-agent-wallet/references/operation-playbooks.md) |
+| PWA WASM adapter reference | [`pwa-wasm-adapter.md`](https://github.com/sat20-labs/docs/blob/main/ai/sat20-agent-wallet/skills/sat20-agent-wallet/references/pwa-wasm-adapter.md)       |
+| Adapter forwarding script  | [`stp_adapter.py`](https://github.com/sat20-labs/docs/blob/main/ai/sat20-agent-wallet/skills/sat20-agent-wallet/scripts/stp_adapter.py)                    |
 
 ## Documentation Evolution
 

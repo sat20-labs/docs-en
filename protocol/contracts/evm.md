@@ -2,7 +2,7 @@
 
 EVM Contracts bring an Ethereum-compatible execution environment into SatoshiNet while keeping SatoshiNet's UTXO asset settlement model.
 
-EVM Contracts follow the common [Smart Contract Protocol](readme.md). This page defines the EVM-specific boundary.
+EVM Contracts follow the common [Smart Contract Protocol](./). This page defines the EVM-specific boundary.
 
 ## Design Goal
 
@@ -14,7 +14,7 @@ The EVM executor handles bytecode execution and EVM state. SatoshiNet consensus 
 
 EVM Contracts are deployed with an EVM contract type. The contract address uses the common SatoshiNet contract address format:
 
-```text
+```
 ca/tc + version + evm-contract-type + hash
 ```
 

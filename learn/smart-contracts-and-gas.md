@@ -28,11 +28,11 @@ The public GAS narrative focuses on utility, consumption paths, risks, and limit
 
 SatoshiNet smart contracts can progress in layers:
 
-| Phase | Goal |
-| --- | --- |
-| Template contracts | Deterministic templates for AMMs, limit orders, stablecoins, and common scenarios |
-| EVM compatibility | Lower migration cost for developers |
-| Natural language contracts | Explore new interaction patterns between AI Agents and contracts |
-| Agent contracts | Let Agents trigger, explain, and verify contract actions |
+| Phase                      | Goal                                                                              |
+| -------------------------- | --------------------------------------------------------------------------------- |
+| Template contracts         | Deterministic templates for AMMs, limit orders, stablecoins, and common scenarios |
+| EVM compatibility          | Lower migration cost for developers                                               |
+| Natural language contracts | Explore new interaction patterns between AI Agents and contracts                  |
+| Agent contracts            | Let Agents trigger, explain, and verify contract actions                          |
 
-Current design docs: [Smart Contract Protocol](../protocol/contracts/readme.md).
+Current design docs: [Smart Contract Protocol](../protocol/contracts/).

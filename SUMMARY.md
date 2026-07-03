@@ -1,8 +1,7 @@
 # Table of contents
 
-* [Welcome to SAT20](readme.md)
-
-* Start Here: Choose Your Path
+* [Welcome to SAT20](README.md)
+* [Start Here: Choose Your Path](start-here-choose-your-path/README.md)
   * [Overview](start-here/readme.md)
   * [I Run a BTC Community](start-here/btc-community.md)
   * [I Am a Developer](start-here/developers.md)
@@ -10,11 +9,9 @@
   * [I Am a Wallet or Exchange](start-here/wallet-exchange.md)
   * [I Am an AI Agent Developer](start-here/ai-agent-builders.md)
   * [I Want to Provide Liquidity](start-here/liquidity.md)
-
-* Ecosystem Adoption Path: Community-Owned Infrastructure
+* [Ecosystem Adoption Path: Community-Owned Infrastructure](ecosystem-adoption-path-community-owned-infrastructure/README.md)
   * [Build Complete Infrastructure for Your BTC Community](community-stack/readme.md)
-
-* Learn: Understanding SatoshiNet
+* [Learn: Understanding SatoshiNet](learn-understanding-satoshinet/README.md)
   * [Overview](learn/readme.md)
   * [Why Bitcoin Needs a Native Extension Network](learn/bitcoin-native.md)
   * [Asset Safety Model](learn/security-model.md)
@@ -22,8 +19,7 @@
   * [STP Introduction](learn/stp.md)
   * [Smart Contracts and GAS](learn/smart-contracts-and-gas.md)
   * [AI Agents and User Asset Control](learn/ai-agent.md)
-
-* Use SatoshiNet
+* [Use SatoshiNet](use-satoshinet/README.md)
   * [Overview](use/readme.md)
   * [Wallet and Assets](use/wallet-and-assets.md)
   * [Get Test Assets and Test GAS](use/test-assets-and-gas.md)
@@ -39,8 +35,7 @@
   * [Use an AI Agent](use/ai-agent.md)
   * [Exit SatoshiNet and Recover](use/exit-and-recovery.md)
   * [FAQ](use/faq.md)
-
-* Developer Center
+* [Developer Center](developer-center/README.md)
   * [Overview](build/readme.md)
   * [Developer Quickstart](build/quickstart.md)
   * [EVM Developer Preview](build/evm-quickstart.md)
@@ -57,8 +52,7 @@
   * [API Source Map](build/api-source-map.md)
   * [Indexer Integration and Asset Fact Layer](build/indexer.md)
   * [Exchange and Wallet Integration](build/exchange-and-wallet.md)
-
-* Run the Network: Nodes and Infrastructure
+* [Run the Network: Nodes and Infrastructure](run-the-network-nodes-and-infrastructure/README.md)
   * [Overview](run/readme.md)
   * [Mining Node](run/mining-node.md)
   * [Core Node](run/core-node.md)
@@ -67,52 +61,48 @@
   * [Monitoring, Backup, and Upgrades](run/operations.md)
   * [Node Staking and Exit](run/staking-and-exit.md)
   * [Decentralization Roadmap](run/decentralization-roadmap.md)
-
-* Protocol and Security
+* [Protocol and Security](protocol-and-security/README.md)
   * [SAT20 Protocol Stack](protocol/readme.md)
-  * Indexer
+  * [Indexer](protocol-and-security/indexer/README.md)
     * [Indexer: Bitcoin Asset Fact Layer](learn/indexer.md)
     * [Indexer Integration and Asset Fact Layer](build/indexer.md)
     * [Asset Issuance Protocols](protocol/indexer/asset-issuance.md)
-  * STP
+  * [STP](protocol-and-security/stp/README.md)
     * [STP Technical Whitepaper](protocol/stp/readme.md)
     * [STP Messages and Data Model](protocol/stp/messages-and-data-model.md)
     * [STP Message Sequences](protocol/stp/message-sequences.md)
     * [Third-Party STP Client Integration Guide](protocol/stp/client-integration.md)
     * [Third-Party STP Client Implementation Checklist](protocol/stp/implementation-checklist.md)
-  * SatoshiNet
+  * [SatoshiNet](protocol-and-security/satoshinet/README.md)
     * [SatoshiNet Protocol Overview](protocol/satoshinet/readme.md)
-  * Channel Contracts
+  * [Channel Contracts](protocol-and-security/channel-contracts/README.md)
     * [Channel Contracts](protocol/channel-contracts/readme.md)
-  * Smart Contracts
+  * [Smart Contracts](protocol-and-security/smart-contracts/README.md)
     * [Smart Contract Protocol](protocol/contracts/readme.md)
     * [Template Contracts](protocol/contracts/template.md)
     * [Natural Language Contracts](protocol/contracts/agent.md)
     * [EVM Contracts](protocol/contracts/evm.md)
-  * Security
+  * [Security](protocol-and-security/security/README.md)
     * [Threat Model and Trust Assumptions](protocol/security/threat-model.md)
-
-* Network Economics
+* [Network Economics](network-economics/README.md)
   * [Overview](network-economics/readme.md)
   * [GAS: Network Fee and Security Asset](network-economics/gas.md)
   * [Fees and Node Incentives](network-economics/fees-and-incentives.md)
-  * [Mining / Core Node Staking](network-economics/node-staking.md)<!-- * [GAS Distribution Draft](network-economics/distribution-draft.md) -->
+  * [Mining / Core Node Staking](network-economics/node-staking.md)
   * [Open Design Questions](network-economics/open-questions.md)
-
-* AI Agent: Automation and Safety
+* [AI Agent: Automation and Safety](ai-agent-automation-and-safety/README.md)
   * [Overview](ai/readme.md)
   * [Bitcoin Ecosystem AI Agent Asset Safety Standard](ai/bitcoin-agent-safety-standard.md)
   * [AI Agents and User Asset Control](learn/ai-agent.md)
   * [Community Builder Agent](ai/community-builder-agent.md)
-  * SAT20 Agent Wallet
+  * [SAT20 Agent Wallet](ai-agent-automation-and-safety/sat20-agent-wallet/README.md)
     * [Install and Use](ai/sat20-agent-wallet/readme.md)
     * [Interoperability Skill Specification](ai/sat20-agent-wallet/interoperability.md)
     * [Asset Safety Control Guide](ai/sat20-agent-wallet/asset-safety.md)
     * [Verification Matrix and Data Gaps](ai/sat20-agent-wallet/verification-and-data-gaps.md)
     * [Agent-Controlled Wallet Roadmap](ai/sat20-agent-wallet/roadmap.md)
     * [Testnet Validation Record](ai/sat20-agent-wallet/testnet-validation.md)
-
-* Ecosystem
+* [Ecosystem](ecosystem/README.md)
   * [Overview](ecosystem/readme.md)
   * [SatoshiNet Today: Current Capabilities](ecosystem/satoshinet-today.md)
   * [Built on SatoshiNet](ecosystem/built-on-satoshinet.md)
@@ -120,16 +110,14 @@
   * [Builder Program](ecosystem/builder-program.md)
   * [Strategic Partners](ecosystem/strategic-partners.md)
   * [Partners and Contribution Guide](ecosystem/partners-and-contribution.md)
-
-* Governance and Support
+* [Governance and Support](governance-and-support/README.md)
   * [Overview](governance-support/readme.md)
   * [SAT20 Labs](governance-support/sat20-labs.md)
   * [Future Foundation](governance-support/future-foundation.md)
   * [SIP Improvement Process](governance-support/sip.md)
   * [Support Protocol Development](governance-support/support-development.md)
   * [Security Disclosure](governance-support/security-disclosure.md)
-
-* Resources
+* [Resources](resources/README.md)
   * [Background](why.md)
   * [Roadmap](roadmap.md)
   * [API Source Map](build/api-source-map.md)

@@ -8,16 +8,16 @@ STP must be understood together with indexers. The indexer explains Bitcoin L1 a
 
 ## What STP Does
 
-| Action | Meaning |
-| --- | --- |
-| open | Open a channel between a user and a Core Node |
-| splicing-in | Add Bitcoin L1 assets into an existing channel |
-| unlock | Release channel assets to a personal SatoshiNet address |
-| lock | Bring personal SatoshiNet assets back into the channel |
+| Action           | Meaning                                                          |
+| ---------------- | ---------------------------------------------------------------- |
+| open             | Open a channel between a user and a Core Node                    |
+| splicing-in      | Add Bitcoin L1 assets into an existing channel                   |
+| unlock           | Release channel assets to a personal SatoshiNet address          |
+| lock             | Bring personal SatoshiNet assets back into the channel           |
 | lock-with-expand | Restore channel protection when channel capacity is insufficient |
-| splicing-out | Exit channel assets back to Bitcoin L1 |
-| close | Close the channel |
-| punish | Punish an old commitment transaction |
+| splicing-out     | Exit channel assets back to Bitcoin L1                           |
+| close            | Close the channel                                                |
+| punish           | Punish an old commitment transaction                             |
 
 These actions are not isolated transactions. They are protocol state machines involving Bitcoin L1 transactions, SatoshiNet transactions, commitment-state updates, signature exchange, and confirmations. Every cross-layer action needs L1/L2 indexer evidence to prove that asset facts and channel state are consistent.
 
@@ -37,4 +37,4 @@ STP is well suited for AI Agents because it has clear states, transactions, evid
 4. Poll L1/L2 transactions and asset states through indexers.
 5. Enter recovery when a result is unknown.
 
-The full protocol whitepaper is [STP Technical Whitepaper](../protocol/stp/readme.md).
+The full protocol whitepaper is [STP Technical Whitepaper](../protocol/stp/).

@@ -42,4 +42,4 @@ curl -fsSL https://raw.githubusercontent.com/sat20-labs/docs/main/ai/sat20-agent
 
 The canonical skill source lives in the Chinese `sat20-labs/docs` repository. English documentation links to that source instead of copying a separate skill tree.
 
-More details: [SAT20 Agent Wallet: Install and Use](../ai/sat20-agent-wallet/readme.md).
+More details: [SAT20 Agent Wallet: Install and Use](../ai/sat20-agent-wallet/).

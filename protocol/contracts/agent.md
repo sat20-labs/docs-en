@@ -2,7 +2,7 @@
 
 Natural Language Contracts are SatoshiNet smart contracts assisted by AI Agents. Contract content is expressed as natural-language protocol text and interpreted into structured, verifiable, executable results by the protocol Agent.
 
-Natural Language Contracts follow the common [Smart Contract Protocol](readme.md). This document defines their boundary and first-stage requirements.
+Natural Language Contracts follow the common [Smart Contract Protocol](./). This document defines their boundary and first-stage requirements.
 
 ## Naming
 
@@ -56,7 +56,7 @@ Structured helper fields can include asset lists, participant addresses, time or
 
 Deployment creates a pending contract. It does not make the contract executable by itself. Every Natural Language Contract must provide a fixed Core Node activation action:
 
-```text
+```
 ready
 ```
 

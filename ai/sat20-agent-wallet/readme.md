@@ -1,4 +1,4 @@
-# SAT20 Agent Wallet
+# Install and Use
 
 SAT20 Agent Wallet is a general skill and adapter specification that lets AI Agents operate SAT20 Wallet, STP channels, Bitcoin L1 assets, and SatoshiNet assets through a user-controlled wallet boundary.
 
@@ -6,8 +6,8 @@ Codex can install the skill directly. Other Agents can read the same `SKILL.md`,
 
 ## Short Video
 
-- [One-minute English narrated demo](demo-video.md)
-- [Video notes](video/README.md)
+* [One-minute English narrated demo](https://github.com/sat20-labs/docs-en/blob/main/ai/sat20-agent-wallet/demo-video.md)
+* [Video notes](https://github.com/sat20-labs/docs-en/blob/main/ai/sat20-agent-wallet/video/README.md)
 
 ## Design Goal
 
@@ -41,7 +41,7 @@ Recommended order:
 
 The SAT20 Agent Wallet skill is maintained only in the Chinese `sat20-labs/docs` repository:
 
-```text
+```
 docs/ai/sat20-agent-wallet/skills/sat20-agent-wallet/
 ```
 
@@ -49,7 +49,7 @@ English documentation links to that canonical directory instead of carrying a co
 
 Canonical GitHub directory:
 
-```text
+```
 https://github.com/sat20-labs/docs/tree/main/ai/sat20-agent-wallet/skills/sat20-agent-wallet
 ```
 
@@ -59,7 +59,7 @@ Official documentation entry: [docs.sat20.org](https://docs.sat20.org).
 
 If you have not installed SAT20 PWA Wallet yet, start here:
 
-```text
+```
 https://sat20.org/pwa/?install=1
 ```
 
@@ -83,7 +83,7 @@ curl -fsSL https://raw.githubusercontent.com/sat20-labs/docs/main/ai/sat20-agent
 
 Codex can invoke it as `$sat20-agent-wallet` after installation. Other Agents that support `SKILL.md` can read:
 
-```text
+```
 https://github.com/sat20-labs/docs/blob/main/ai/sat20-agent-wallet/skills/sat20-agent-wallet/SKILL.md
 ```
 
@@ -124,47 +124,47 @@ The skill defines workflows and safety gates. It does not custody keys.
 
 ### Wallet Management
 
-| Operation | Purpose |
-| --- | --- |
-| `wallet.create` | Create a testnet wallet or ask PWA to create one |
-| `wallet.import` | Import mnemonic into PWA wallet |
-| `wallet.export_mnemonic` | Export mnemonic only after PWA authorization |
-| `wallet.change_password` | Change wallet password after PWA authorization |
-| `wallet.status` | Query wallet, network, WASM, and asset state |
-| `wallet.send_assets` | Send Bitcoin L1 or SatoshiNet assets directly |
-| `wallet.transaction` | Track wallet transaction state |
+| Operation                | Purpose                                          |
+| ------------------------ | ------------------------------------------------ |
+| `wallet.create`          | Create a testnet wallet or ask PWA to create one |
+| `wallet.import`          | Import mnemonic into PWA wallet                  |
+| `wallet.export_mnemonic` | Export mnemonic only after PWA authorization     |
+| `wallet.change_password` | Change wallet password after PWA authorization   |
+| `wallet.status`          | Query wallet, network, WASM, and asset state     |
+| `wallet.send_assets`     | Send Bitcoin L1 or SatoshiNet assets directly    |
+| `wallet.transaction`     | Track wallet transaction state                   |
 
 ### Channel Management
 
-| Operation | Purpose |
-| --- | --- |
-| `stp.status` | Query Core Node, channel, commitment height, and pending operations |
-| `stp.open` | Open a private channel |
-| `stp.reopen` | Reopen a closed client-Core channel when ledger evidence supports it |
-| `stp.rebuild` | Rebuild channel state from L1/L2 ledger evidence without duplicate anchor |
-| `stp.restore` | Restore state from peer, backup, or local persistence |
-| `stp.expand` / `stp.expand_all` | Bring existing channel-address assets under commitment management |
-| `stp.unlock` | Release channel assets to the user's SatoshiNet address |
-| `stp.lock` | Lock SatoshiNet personal assets back into the channel |
-| `stp.lock_with_expand` | Restore channel control when capacity is insufficient |
-| `stp.splicing_in` | Bring Bitcoin L1 assets into the channel |
-| `stp.splicing_out` | Exit channel assets to Bitcoin L1 |
-| `stp.close` | Cooperative or force close |
-| `stp.transaction` | Track STP operation state |
+| Operation                       | Purpose                                                                   |
+| ------------------------------- | ------------------------------------------------------------------------- |
+| `stp.status`                    | Query Core Node, channel, commitment height, and pending operations       |
+| `stp.open`                      | Open a private channel                                                    |
+| `stp.reopen`                    | Reopen a closed client-Core channel when ledger evidence supports it      |
+| `stp.rebuild`                   | Rebuild channel state from L1/L2 ledger evidence without duplicate anchor |
+| `stp.restore`                   | Restore state from peer, backup, or local persistence                     |
+| `stp.expand` / `stp.expand_all` | Bring existing channel-address assets under commitment management         |
+| `stp.unlock`                    | Release channel assets to the user's SatoshiNet address                   |
+| `stp.lock`                      | Lock SatoshiNet personal assets back into the channel                     |
+| `stp.lock_with_expand`          | Restore channel control when capacity is insufficient                     |
+| `stp.splicing_in`               | Bring Bitcoin L1 assets into the channel                                  |
+| `stp.splicing_out`              | Exit channel assets to Bitcoin L1                                         |
+| `stp.close`                     | Cooperative or force close                                                |
+| `stp.transaction`               | Track STP operation state                                                 |
 
 ### Asset Safety
 
-| Operation | Purpose |
-| --- | --- |
-| `stp.safety_snapshot` | Read channel point, commitment height, balances, CSV, and punishment coverage |
-| `stp.commitment_export` | Export read-only commitment verification data |
-| `stp.punish_status` | Query revoked-state punishment coverage |
-| `stp.punish_build` | Build and dry-run a punishment transaction |
-| `stp.punish_broadcast` | Broadcast a verified punishment transaction |
-| `stp.force_close_plan` | Produce a unilateral exit plan |
-| `stp.sweep_build` | Build, sign, verify, and optionally broadcast a CSV sweep |
-| `stp.test_retain_server_commitment` | Testnet-only old-commitment retention |
-| `stp.test_broadcast_retained_server_commitment` | Testnet-only old-commitment broadcast |
+| Operation                                       | Purpose                                                                       |
+| ----------------------------------------------- | ----------------------------------------------------------------------------- |
+| `stp.safety_snapshot`                           | Read channel point, commitment height, balances, CSV, and punishment coverage |
+| `stp.commitment_export`                         | Export read-only commitment verification data                                 |
+| `stp.punish_status`                             | Query revoked-state punishment coverage                                       |
+| `stp.punish_build`                              | Build and dry-run a punishment transaction                                    |
+| `stp.punish_broadcast`                          | Broadcast a verified punishment transaction                                   |
+| `stp.force_close_plan`                          | Produce a unilateral exit plan                                                |
+| `stp.sweep_build`                               | Build, sign, verify, and optionally broadcast a CSV sweep                     |
+| `stp.test_retain_server_commitment`             | Testnet-only old-commitment retention                                         |
+| `stp.test_broadcast_retained_server_commitment` | Testnet-only old-commitment broadcast                                         |
 
 ## Operating Rule
 

@@ -4,13 +4,13 @@ SAT20 is not a single protocol. It is a protocol, indexing, channel, and executi
 
 ## Foundation Layers
 
-| Layer | Role |
-| --- | --- |
-| Indexer | Parses Bitcoin L1 and SatoshiNet L2 transactions into queryable and auditable asset facts |
-| STP | Uses RSMC channels, commitment transactions, revocation, and punishment to let assets enter, circulate, and exit SatoshiNet |
-| SatoshiNet | Carries SatoshiNet transactions, enUTXO, channel contracts, smart contracts, and GAS economics |
-| Channel Contracts | Manage public asset pools and coordinate user-triggered L1/L2 cross-layer actions |
-| Asset Issuance Protocols | BTC, Ordinals, Runes, BRC20, ORDX, and other asset protocols unified by indexers |
+| Layer                    | Role                                                                                                                        |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------- |
+| Indexer                  | Parses Bitcoin L1 and SatoshiNet L2 transactions into queryable and auditable asset facts                                   |
+| STP                      | Uses RSMC channels, commitment transactions, revocation, and punishment to let assets enter, circulate, and exit SatoshiNet |
+| SatoshiNet               | Carries SatoshiNet transactions, enUTXO, channel contracts, smart contracts, and GAS economics                              |
+| Channel Contracts        | Manage public asset pools and coordinate user-triggered L1/L2 cross-layer actions                                           |
+| Asset Issuance Protocols | BTC, Ordinals, Runes, BRC20, ORDX, and other asset protocols unified by indexers                                            |
 
 The relationship can be summarized as:
 
@@ -33,10 +33,10 @@ The relationship can be summarized as:
 For protocol implementers:
 
 1. [Indexer: Bitcoin Asset Fact Layer](../learn/indexer.md)
-2. [STP Technical Whitepaper](stp/readme.md)
-3. [SatoshiNet Protocol Overview](satoshinet/readme.md)
-4. [Channel Contracts](channel-contracts/readme.md)
+2. [STP Technical Whitepaper](stp/)
+3. [SatoshiNet Protocol Overview](satoshinet/)
+4. [Channel Contracts](channel-contracts/)
 5. [Asset Issuance Protocols](indexer/asset-issuance.md)
-6. [Smart Contract Protocol](contracts/readme.md)
+6. [Smart Contract Protocol](contracts/)
 
-Wallet, exchange, or AI Agent developers should start with the [Developer Center](../build/readme.md).
+Wallet, exchange, or AI Agent developers should start with the [Developer Center](../build/).

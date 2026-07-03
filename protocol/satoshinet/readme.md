@@ -27,12 +27,12 @@ Key differences:
 
 ## Node Roles
 
-| Node | Responsibility |
-| --- | --- |
-| Bootstrap Node | Helps Core Node discovery and admission |
-| Core Node | Includes all Mining Node capabilities and provides STP service, opens private channels with wallets, co-signs channel transactions, maintains channel state, and runs or configures an L1 indexer |
-| Mining Node | Participates in SatoshiNet block production but does not provide STP service |
-| Wallet Client | Ordinary user wallet or light client; connects to Core Nodes and holds private keys, channel state, and safety material |
+| Node           | Responsibility                                                                                                                                                                                    |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Bootstrap Node | Helps Core Node discovery and admission                                                                                                                                                           |
+| Core Node      | Includes all Mining Node capabilities and provides STP service, opens private channels with wallets, co-signs channel transactions, maintains channel state, and runs or configures an L1 indexer |
+| Mining Node    | Participates in SatoshiNet block production but does not provide STP service                                                                                                                      |
+| Wallet Client  | Ordinary user wallet or light client; connects to Core Nodes and holds private keys, channel state, and safety material                                                                           |
 
 Ordinary users do not need to stake assets when connecting to a Core Node and opening a private channel. Staking applies only when a node prepares to become a Core Node and connects to a Bootstrap Node for network service admission.
 
@@ -75,7 +75,7 @@ Smart contracts run in the global SatoshiNet execution environment and rely on c
 
 GAS is the economic entry point for contract execution, transaction processing, and ecosystem incentives.
 
-See [Channel Contracts](../channel-contracts/readme.md), [Smart Contract Protocol](../contracts/readme.md), and [Network Economics](../../network-economics/readme.md).
+See [Channel Contracts](../channel-contracts/), [Smart Contract Protocol](../contracts/), and [Network Economics](../../network-economics/).
 
 ## Safety Model
 

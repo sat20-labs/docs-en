@@ -1,6 +1,6 @@
-# Smart Contracts
+# Smart Contract Protocol
 
-This document defines the common SatoshiNet smart-contract protocol. Smart contracts are different from [channel contracts](../channel-contracts/readme.md): channel contracts manage public asset pools and coordinate user-initiated L1/L2 cross-layer actions, while smart contracts run in SatoshiNet's global execution environment.
+This document defines the common SatoshiNet smart-contract protocol. Smart contracts are different from [channel contracts](../channel-contracts/): channel contracts manage public asset pools and coordinate user-initiated L1/L2 cross-layer actions, while smart contracts run in SatoshiNet's global execution environment.
 
 Contract-type details:
 
@@ -18,10 +18,10 @@ Channel contracts coordinate public asset pools and L1/L2 actions. Smart contrac
 
 The first stage contains three contract families:
 
-| Type | Execution model |
-| --- | --- |
-| Template Contract | Native Go runtime embedded in SatoshiNet nodes |
-| EVM Contract | EVM executor |
+| Type                      | Execution model                                                                                                                      |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| Template Contract         | Native Go runtime embedded in SatoshiNet nodes                                                                                       |
+| EVM Contract              | EVM executor                                                                                                                         |
 | Natural Language Contract | AI Agent-assisted protocol contract. The first stage focuses on prediction-style Agent contracts using a single Core Node Agent path |
 
 ## Core Model
@@ -39,13 +39,13 @@ The first stage contains three contract families:
 
 Mainnet contract address format:
 
-```text
+```
 ca + version + type + hash
 ```
 
 Testnet contract address format:
 
-```text
+```
 tc + version + type + hash
 ```
 
@@ -53,9 +53,9 @@ tc + version + type + hash
 
 ## Transaction Types
 
-Contract transactions use OP_RETURN envelopes:
+Contract transactions use OP\_RETURN envelopes:
 
-```text
+```
 OP_RETURN | SAT20_MAGIC_NUMBER | CONTENT_TYPE | CONTENT
 ```
 
@@ -66,9 +66,9 @@ The contract transaction families are:
 3. `CONTRACT_RESULT`
 4. `COINBASE_CONTRACT_STATE_ROOT`
 
-`CONTRACT_INVOKE` OP_RETURN should carry only action, nonce, gas limit, and non-economic parameters that cannot be derived from outputs. Asset name, asset amount, sat amount, and gas/funding outputs come from the Call TX outputs to the contract address and should not be duplicated in OP_RETURN.
+`CONTRACT_INVOKE` OP\_RETURN should carry only action, nonce, gas limit, and non-economic parameters that cannot be derived from outputs. Asset name, asset amount, sat amount, and gas/funding outputs come from the Call TX outputs to the contract address and should not be duplicated in OP\_RETURN.
 
-If a transaction has no contract OP_RETURN but contains an output to a valid contract address, that output can be interpreted as a default invocation. Its business meaning is defined by the specific contract type and instance.
+If a transaction has no contract OP\_RETURN but contains an output to a valid contract address, that output can be interpreted as a default invocation. Its business meaning is defined by the specific contract type and instance.
 
 ## Contract Close and Profit Distribution
 
@@ -88,7 +88,7 @@ Every valid deployment must be recorded by a canonical `CONTRACT_RESULT` in the 
 
 `CONTRACT_INVOKE` calls a contract. The call transaction must include at least one output to the called contract address. That output binds the Call TX to the Result TX, carries assets sent to the contract, prepays the contract call fee, and can be spent by `CONTRACT_RESULT`.
 
-The called contract address is determined from outputs, not from OP_RETURN. A transaction with explicit `CONTRACT_INVOKE` should call one contract. If multiple contract-address outputs exist, they must belong to the same contract address. Default invocations may trigger per-output behavior.
+The called contract address is determined from outputs, not from OP\_RETURN. A transaction with explicit `CONTRACT_INVOKE` should call one contract. If multiple contract-address outputs exist, they must belong to the same contract address. Default invocations may trigger per-output behavior.
 
 Caller identity is derived from the address of the previous output spent by the last input of the call transaction. Consensus does not use witness public keys or replaceable signature fields as caller identity.
 
@@ -106,7 +106,7 @@ Rules:
 6. Result TX can batch multiple execution items, and the batch order must match the protocol execution order.
 7. Expired triggers may produce `CONTRACT_RESULT` without ordinary contract calls in the same block, but validators must be able to prove the trigger exists, is due, and remains valid.
 
-The Result TX OP_RETURN stores execution summary and result count. Call id, contract address, inputs, outputs, trace, and asset-transfer details are derived from block transactions, local replay, and node indexers.
+The Result TX OP\_RETURN stores execution summary and result count. Call id, contract address, inputs, outputs, trace, and asset-transfer details are derived from block transactions, local replay, and node indexers.
 
 ## State Root
 

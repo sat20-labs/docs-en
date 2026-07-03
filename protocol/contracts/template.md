@@ -2,7 +2,7 @@
 
 Template contracts are SatoshiNet-native smart contracts. Their execution logic is implemented by Go runtimes embedded in SatoshiNet nodes.
 
-Template contracts follow the common [Smart Contract Protocol](readme.md). This page defines only template-specific rules.
+Template contracts follow the common [Smart Contract Protocol](./). This page defines only template-specific rules.
 
 ## Contract Type
 
@@ -14,7 +14,7 @@ Their asset-control boundary comes from contract VM state and canonical `CONTRAC
 
 Template contract addresses use the common format:
 
-```text
+```
 ca/tc + version + template-contract-type + hash
 ```
 
@@ -32,7 +32,7 @@ Nodes derive the contract address, initialize runtime state, and record deployme
 
 Caller identity is derived from the last input's previous-output address. Runtime user state, LP ownership, refund permissions, and history all use that identity.
 
-Template contracts may define default invocations. A transaction with no contract OP_RETURN but with an output to a template contract address can trigger contract-defined default behavior.
+Template contracts may define default invocations. A transaction with no contract OP\_RETURN but with an output to a template contract address can trigger contract-defined default behavior.
 
 ## Fee and Result Rules
 

@@ -8,11 +8,11 @@ Supporting protocol development does not equal buying GAS, and does not represen
 
 Donation address:
 
-```text
+```
 bc1ppejz29yxpz66yzkaxh6dek8pzsm8aajne6p4qak0xhxphkwzqnmsw45sur
 ```
 
-![Donation address](assets/donate.jpg)
+![Donation address](.gitbook/assets/donate.jpg)
 
 Donations will support project maintenance, open-source development, testnet infrastructure, documentation and content, developer support, demo environments, hosting costs for sat20.org and docs.sat20.org, and ecosystem public goods when resources allow.
 
