@@ -11,7 +11,7 @@
   * [I Am an AI Agent Developer](start-here/ai-agent-builders.md)
   * [I Want to Provide Liquidity](start-here/liquidity.md)
 
-* Community Stack: Community-Owned Infrastructure
+* Ecosystem Adoption Path: Community-Owned Infrastructure
   * [Build Complete Infrastructure for Your BTC Community](community-stack/readme.md)
 
 * Learn: Understanding SatoshiNet
