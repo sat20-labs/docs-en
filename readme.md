@@ -133,7 +133,7 @@ The website and docs use the same status language to express capability boundari
 | Smart Contracts / EVM Runtime | Testnet / Iterating | EVM Runtime has been implemented and deployed to testnet. Contract templates and developer experience continue to iterate |
 | DKVS / D-Indexer | In Development | DKVS and distributed L1 indexing are in development for a more open node, indexing, and Agent coordination network |
 | SAT20 Wallet / AI Agent Wallet | Implemented · Iterating | SAT20 Wallet already exists as browser extension and PWA. AI Agent Wallet continues evolving from that base |
-| VSN / Long-Term Governance | Design / R&D | These areas remain under design, experimentation, and validation, and should not be presented as finished production capabilities |
+| VSN / Long-Term Governance | Design / R&D | These areas remain under design, experimentation, and validation, and are not presented as finished production capabilities |
 
 ## Status and Evidence
 
@@ -142,7 +142,7 @@ Docs use consistent status labels:
 | Status | Meaning |
 | --- | --- |
 | Implemented | Code and core flow exist, but this does not automatically imply full production maturity |
-| Mainnet | The capability is deployed to a mainnet environment, but production maturity should still be read together with documentation and risk boundaries |
+| Mainnet | The capability is deployed to a mainnet environment. Production maturity is read together with documentation and risk boundaries |
 | Testnet | Reproducible testnet flow exists |
 | In Development | Code is being developed; full availability is not promised |
 | Iterating | The capability exists, but product experience, interfaces, or safety boundaries continue to improve |
@@ -150,7 +150,7 @@ Docs use consistent status labels:
 | R&D | Research infrastructure direction that may continue to change |
 | Experimental | Research feature that may change or be removed |
 
-Every status should eventually link to code, documentation, demo, Explorer, contract address, test transaction, or validation record.
+Every status links to code, documentation, demo, Explorer, contract address, test transaction, or validation record as evidence becomes available.
 
 ## Official Links
 
