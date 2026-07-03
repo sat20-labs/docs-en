@@ -24,9 +24,10 @@ AI Agents, DKVS, and distributed L1 indexing serve the future open value network
 | --- | --- |
 | SAT20 | Protocol and open-source technology stack around Bitcoin-native assets |
 | SatoshiNet | Native execution layer for Bitcoin’s future value network |
-| Indexer | Asset fact layer for Bitcoin L1 and SatoshiNet |
-| STP / Transcend | Cross-layer asset control, exit, and punishment protocol between Bitcoin L1 and SatoshiNet |
-| Smart Contracts | Application logic, trading logic, and automation framework on SatoshiNet |
+| Indexer | Mainnet asset fact layer for Bitcoin L1 and SatoshiNet |
+| STP / Transcend | Mainnet cross-layer asset control, exit, and punishment protocol between Bitcoin L1 and SatoshiNet |
+| SatoshiNet Core | Mainnet execution network for transactions, contracts, applications, and services |
+| EVM Runtime | EVM execution environment implemented and deployed to testnet |
 | DKVS | Distributed key-value infrastructure direction in development |
 | Distributed L1 Indexer | Lightweight, distributed L1 asset-fact verification network in development |
 | ORDX | Satoshi-denominated asset protocol in the SAT20 stack |
@@ -50,11 +51,13 @@ SatoshiNet explores an open Bitcoin-native extension path:
 ```text
 Bitcoin L1
    ↓
-Indexer: Asset Fact Layer
+Indexer: Mainnet Asset Fact Layer
    ↓
-STP: Cross-Layer Control, Exit, and Punishment
+STP: Mainnet Cross-Layer Control, Exit, and Punishment
    ↓
-SatoshiNet: Transaction, Contract, and Application Execution
+SatoshiNet Core: Mainnet Transaction, Contract, and Application Execution
+   ↓
+EVM Runtime: Testnet EVM Execution Environment
    ↓
 DEX · DAO · Wallet · Explorer · Prediction · VSN · AI Agent
    ↓
@@ -67,9 +70,9 @@ DKVS · Distributed L1 Indexer · More Open Service Networks
 | --- | --- | --- |
 | Understand SatoshiNet | Understand why Bitcoin needs native extension, the asset safety model, Indexer, STP, contracts, GAS, and AI Agents | [Learn: Understanding SatoshiNet](learn/readme.md) |
 | Community infrastructure | Plan nodes, indexers, explorers, wallets, DEX, DAO, Launchpad, and operations backend for BTC communities | [Community Stack](community-stack/readme.md) |
-| Bring assets into SatoshiNet | Use Indexer to identify Bitcoin L1 asset facts and STP to place assets into a user-exitable channel safety boundary | [STP Introduction](learn/stp.md) |
+| Bring assets into SatoshiNet | Use mainnet Indexer to identify Bitcoin L1 asset facts and mainnet STP to place assets into a user-exitable channel safety boundary | [STP Introduction](learn/stp.md) |
 | User flows | Install wallet, enter SatoshiNet, complete first swap, and verify with Explorer | [Use SatoshiNet](use/readme.md) |
-| Developer integration | Integrate Indexer, wallet, STP, contracts, and community DEX / DAO | [Developer Center](build/readme.md) |
+| Developer integration | Integrate Indexer, wallet, STP, SatoshiNet Core, contracts, and community DEX / DAO | [Developer Center](build/readme.md) |
 | Network operation | Run Mining Node, Core Node, Indexer, Explorer, RPC, and monitoring | [Run the Network](run/readme.md) |
 | Network economics | Understand GAS, fee flows, node staking, incentives, and open design questions | [Network Economics](network-economics/readme.md) |
 | AI Agent operations | Let Agents perform asset safety checks and actions without holding private keys or bypassing wallet authorization | [AI Agent](ai/readme.md) |
@@ -105,8 +108,9 @@ The website and docs use the same status language to express capability boundari
 
 | Capability | Current Status | Notes |
 | --- | --- | --- |
-| SatoshiNet Core / Indexer / Wallet / Explorer | Implemented | Core flow, wallet entry, explorer, and base applications have demonstrable foundations |
+| Indexer | Implemented · Mainnet | Mainnet asset fact layer for Bitcoin L1 and SatoshiNet assets, transactions, confirmations, and protocol events |
 | STP | Implemented · Mainnet | STP has been implemented and deployed to mainnet for cross-layer asset control, exit paths, and punishment coverage |
+| SatoshiNet Core / Wallet / Explorer | Implemented · Mainnet | Core network, wallet entry, explorer, and base applications have mainnet foundations |
 | EVM Runtime | Testnet | The EVM Runtime has been implemented and deployed to testnet for Solidity / ABI, UTXO asset-interface, and developer-experience validation |
 | DKVS | In Development | Distributed key-value infrastructure is in development |
 | Distributed L1 Indexer | In Development | Distributed L1 indexing is in development to reduce storage and compute requirements for indexer operators |
@@ -119,6 +123,7 @@ Docs use consistent status labels:
 | Status | Meaning |
 | --- | --- |
 | Implemented | Code and core flow exist, but this does not automatically imply full production maturity |
+| Mainnet | The capability is deployed to a mainnet environment, but production maturity should still be read together with documentation and risk boundaries |
 | Testnet | Reproducible testnet flow exists |
 | In Development | Code is being developed; full availability is not promised |
 | Design in Progress | Rules, parameters, or governance are not finalized |
