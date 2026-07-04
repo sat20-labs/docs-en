@@ -10,6 +10,7 @@ This page summarizes SatoshiNet smart contract templates, runtimes, and testnet 
 | Template Contract: AMM | Implemented / Testnet Iterating | PWA `Tools -> Smart Contracts`, [Deploy AMM Pool](amm-pool-quickstart.md) | Smart contract template test capability, not market AMM |
 | Template Contract: LimitOrder | Implemented / Testnet Iterating | PWA `Tools -> Smart Contracts`, [Deploy Limit Order Module](limit-order-quickstart.md) | Smart contract template test capability, not market limit order |
 | Template Contract: Asset Exchange | Implemented / Testnet Iterating | To be added | Fixed-rule asset exchange scenario |
+| Template Contract: Autopay | Implemented / Testnet Iterating | To be added | `autopay.tc`, pays a fixed or linear fee to one configured recipient by block height |
 | EVM Runtime | Implemented / Testnet Iterating | [EVM Developer Preview](evm-quickstart.md) | Reuses Solidity / EVM ecosystem; invocation uses ABI calldata, and asset settlement still follows SatoshiNet UTXO model |
 | EVM Sample: ConstantProductAMM | Implemented / Testing | PWA `Tools -> Smart Contracts`, [EVM Sample Contracts](evm-sample-contracts.md) | Solidity AMM standard sample, not market AMM |
 | EVM Sample: LimitOrderBook | Implemented / Testing | PWA `Tools -> Smart Contracts`, [EVM Sample Contracts](evm-sample-contracts.md) | Solidity limit order standard sample, not market limit order |
@@ -34,7 +35,8 @@ Each template contract should eventually include:
 1. Prediction contract: complete user testing, deployer quickstart, and testnet evidence.
 2. AMM template contract: complete deployment, swap, add liquidity, remove liquidity, and verification flow.
 3. LimitOrder template contract: complete order creation, filling, cancellation, and Result TX verification flow.
-4. EVM sample contracts: add testnet addresses, txids, calldata generation records, and Explorer evidence for `ConstantProductAMM` and `LimitOrderBook`.
-5. EVM Runtime: add RPC, Chain ID, example repo, Solidity deployment flow, estimate flow, and ABI calldata invocation flow.
+4. Autopay template contract: complete deployment, funding, per-block payment, close, and Result TX verification flow.
+5. EVM sample contracts: add testnet addresses, txids, calldata generation records, and Explorer evidence for `ConstantProductAMM` and `LimitOrderBook`.
+6. EVM Runtime: add RPC, Chain ID, example repo, Solidity deployment flow, estimate flow, and ABI calldata invocation flow.
 
 **Page Status: Planning**
