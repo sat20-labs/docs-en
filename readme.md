@@ -45,7 +45,7 @@ Smart Contracts, DKVS / D-Indexer, and AI Agent Wallet move SatoshiNet toward a 
 | Indexer | Mainnet asset fact layer for Bitcoin L1 and SatoshiNet |
 | STP / Transcend | Mainnet cross-layer asset control, exit, and punishment protocol between Bitcoin L1 and SatoshiNet |
 | SatoshiNet | Mainnet execution network for transactions, assets, blocks, contracts, applications, and services |
-| Smart Contracts | Programmability layer on SatoshiNet, including contract templates, EVM Runtime testnet, and future Agent-contract direction |
+| Smart Contracts | Programmability layer on SatoshiNet. The framework has been implemented and entered public testnet; current testing includes Agent / Prediction contracts and, under PWA `Tools -> Smart Contracts`, template AMM / limit order plus EVM `ConstantProductAMM` / `LimitOrderBook` samples |
 | DKVS / D-Indexer | Distributed key-value infrastructure and distributed L1 Indexer in development; DKVS is one of the base layers for D-Indexer |
 | SAT20 Wallet | Wallet entry with existing browser extension and PWA forms, continuously iterating |
 | AI Agent Wallet | Agent authorization and operation entry evolving from SAT20 Wallet |
@@ -76,7 +76,7 @@ STP: Mainnet cross-layer control, exit, and punishment
    ↓
 SatoshiNet: Mainnet transactions, assets, blocks, and service execution
    ↓
-Smart Contracts: contract templates, EVM Runtime testnet, Agent-contract direction
+Smart Contracts: Agent / Prediction contracts on public testnet, plus template AMM / limit order and EVM ConstantProductAMM / LimitOrderBook in PWA tools
    ↓
 DKVS / D-Indexer: distributed data, state coordination, and L1 asset-fact network
    ↓
@@ -91,6 +91,7 @@ AI Agent Wallet: authorization entry based on SAT20 Wallet
 | Community infrastructure | Plan nodes, indexers, explorers, wallets, DEX, DAO, Launchpad, and operations backend for BTC communities | [Community Stack](community-stack/readme.md) |
 | Bring assets into SatoshiNet | Use mainnet Indexer to identify Bitcoin L1 asset facts and mainnet STP to place assets into a user-exitable channel safety boundary | [STP Introduction](learn/stp.md) |
 | User flows | Use SAT20 Wallet extension or PWA to enter SatoshiNet, complete swaps, and verify transactions with Explorer | [Use SatoshiNet](use/readme.md) |
+| Test smart contracts | Use PWA Wallet to claim test GAS, deploy or participate in Prediction contract testing | [Prediction Contract Test](use/prediction-contract.md) |
 | Developer integration | Integrate Indexer, STP, SatoshiNet, Smart Contracts, Wallet SDK, and community DEX / DAO | [Developer Center](build/readme.md) |
 | Network operation | Run Mining Node, Core Node, Indexer, Explorer, RPC, and monitoring | [Run the Network](run/readme.md) |
 | Network economics | Understand GAS, fee flows, node staking, incentives, and open design questions | [Network Economics](network-economics/readme.md) |
@@ -130,7 +131,7 @@ The website and docs use the same status language to express capability boundari
 | Indexer | Implemented · Mainnet | Mainnet asset fact layer for Bitcoin L1 and SatoshiNet assets, transactions, confirmations, and protocol events |
 | STP | Implemented · Mainnet | STP has been implemented and deployed to mainnet for cross-layer asset control, exit paths, and punishment coverage |
 | SatoshiNet | Implemented · Mainnet | Mainnet execution network carrying transactions, asset representation, base applications, and services |
-| Smart Contracts / EVM Runtime | Testnet / Iterating | EVM Runtime has been implemented and deployed to testnet. Contract templates and developer experience continue to iterate |
+| Smart Contracts / EVM Runtime / Agent Contracts | Testnet / Iterating | The smart contract framework has been implemented and entered public testnet; current validation includes Agent / Prediction contracts and, under PWA `Tools -> Smart Contracts`, template AMM / limit order plus EVM `ConstantProductAMM` / `LimitOrderBook` samples |
 | DKVS / D-Indexer | In Development | DKVS and distributed L1 indexing are in development for a more open node, indexing, and Agent coordination network |
 | SAT20 Wallet / AI Agent Wallet | Implemented · Iterating | SAT20 Wallet already exists as browser extension and PWA. AI Agent Wallet continues evolving from that base |
 | VSN / Long-Term Governance | Design / R&D | These areas remain under design, experimentation, and validation, and are not presented as finished production capabilities |

@@ -70,7 +70,7 @@ Asset amounts in the precompile interface are string-first. A Solidity contract 
 
 ## Contract Metadata and State View
 
-To let wallets, markets, and explorers show useful information without knowing the full Solidity source, EVM contracts should implement a small read-only base interface:
+To let wallets, application frontends, and explorers show useful information without knowing the full Solidity source, EVM contracts should implement a small read-only base interface:
 
 ```solidity
 function contractName() external view returns (string memory);
@@ -101,7 +101,7 @@ Wallets may provide a Solidity source compilation flow. Compiler parameters are 
 4. metadata `bytecodeHash=none`.
 5. single-file source only; imports are not allowed.
 
-After deployment confirms, wallets or deployment tools can submit contract address, Solidity source, ABI, compiler config, constructor arguments, and init/runtime code hashes to the L2 indexer metadata API. This metadata helps wallets, markets, and explorers display and encode calls. It is not consensus state and does not replace the on-chain deployment transaction, code hash, or state root.
+After deployment confirms, wallets or deployment tools can submit contract address, Solidity source, ABI, compiler config, constructor arguments, and init/runtime code hashes to the L2 indexer metadata API. This metadata helps wallets, application frontends, and explorers display and encode calls. It is not consensus state and does not replace the on-chain deployment transaction, code hash, or state root.
 
 ## GAS
 

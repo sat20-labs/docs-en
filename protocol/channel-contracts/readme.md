@@ -38,6 +38,10 @@ Therefore, Channel Contracts should not be described as a business layer where u
 | Asset control | Public pool assets and user deposits processed by contract rules | Contract address assets spent by VM-authorized results |
 | Suitable scenarios | Asset transcendence, launches, public cross-layer facilities | AMM, limit order, prediction, EVM, natural language contracts |
 
+The core evolution is the verification scope: Channel Contracts are mainly advanced by the two channel peers around channel state, co-signing, and L1/L2 actions; SatoshiNet smart contracts enter whole-network consensus, where the whole SatoshiNet validates contract invocation, canonical Result TX, and contract state root.
+
+The current AMM and limit order features in PWA Market are still L2 market Channel Contract capabilities, not SatoshiNet smart contracts. The testnet also has smart contract template AMM / LimitOrder and EVM `ConstantProductAMM` / `LimitOrderBook` samples. They can only be accessed through PWA `Tools -> Smart Contracts` and are used to validate the whole-network consensus contract path.
+
 As SatoshiNet smart contracts mature, AMM, limit order, swap, and similar application logic should move toward smart contract templates. Channel Contracts should converge on core L1/L2 coordination facilities such as `transcend.tc` and `launchpool.tc`.
 
 ## Core Channel Contracts

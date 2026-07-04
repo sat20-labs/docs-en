@@ -8,6 +8,7 @@ This section is for ordinary users, asset users, and community members. Its goal
 | --- | --- |
 | Install wallet, connect SatoshiNet, understand asset location | [Wallet and Assets](wallet-and-assets.md) |
 | Get test assets and test GAS | [Get Test Assets and Test GAS](test-assets-and-gas.md) |
+| Test Prediction / Agent contract | [Prediction Contract Test](prediction-contract.md) |
 | Complete first DEX swap | [Complete Your First Swap](first-swap.md) |
 | Provide AMM liquidity | [Provide AMM Liquidity](amm-liquidity.md) |
 | Use limit orders | [Use Limit Orders](limit-order.md) |
@@ -33,5 +34,17 @@ Pages with status labels are still planning or depend on systems that are still 
 6. Use unlock to release assets to the SatoshiNet user address.
 7. Transfer, trade, or use contracts on SatoshiNet.
 8. When returning to Bitcoin L1, use lock, splicing-out, or close.
+
+## Quick Entry by Goal
+
+| Goal | Start Here |
+| --- | --- |
+| I want to install the wallet | [Wallet and Assets](wallet-and-assets.md) |
+| I want to claim test GAS | [Get Test Assets and Test GAS](test-assets-and-gas.md) |
+| I want to test smart contract betting | [Prediction Contract Test](prediction-contract.md) |
+| I want to complete a swap | [Complete Your First Swap](first-swap.md) |
+| I want to provide liquidity | [Provide AMM Liquidity](amm-liquidity.md) |
+| I want to place a limit order | [Use Limit Orders](limit-order.md) |
+| I want to verify transactions | [Verify Transactions with Explorer](explorer-verification.md) |
 
 **Page Status: Planning**

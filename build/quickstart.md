@@ -7,11 +7,12 @@ This page gives the shortest path into SAT20 / SatoshiNet development.
 | Target | Guide |
 | --- | --- |
 | Understand EVM Developer Preview | [EVM Developer Preview](evm-quickstart.md) |
+| View EVM sample contracts | [EVM Sample Contracts](evm-sample-contracts.md) |
 | Build a community DEX / DAO | [Community DEX / DAO Quickstart](community-dex-quickstart.md) |
 | Deploy a community DAO | [DAO Quickstart](dao-quickstart.md) |
-| Deploy an AMM pool | [AMM Pool Quickstart](amm-pool-quickstart.md) |
+| Deploy a smart contract template AMM pool | [AMM Pool Quickstart](amm-pool-quickstart.md) |
 | Deploy Launchpad | [Launchpad Quickstart](launchpad-quickstart.md) |
-| Deploy limit order module | [Limit Order Quickstart](limit-order-quickstart.md) |
+| Deploy a smart contract template limit order module | [Limit Order Quickstart](limit-order-quickstart.md) |
 | Run Core Node, Indexer, Explorer | [Infrastructure Quickstart](infrastructure-quickstart.md) |
 | Integrate Wallet SDK | [Wallet SDK Quickstart](wallet-sdk-quickstart.md) |
 | Build a white-label DEX | [White-Label DEX](white-label-dex.md) |
@@ -33,6 +34,7 @@ Developers should eventually verify at least:
 6. Verify punish coverage.
 7. Handle unknown network results.
 8. Use indexers to verify L1/L2 asset evidence.
+9. Deploy or invoke at least one testnet smart contract, such as Prediction, or test template AMM, template limit order, EVM `ConstantProductAMM`, or EVM `LimitOrderBook` from PWA `Tools -> Smart Contracts`.
 
 See [Third-Party STP Client Implementation Checklist](../protocol/stp/implementation-checklist.md).
 

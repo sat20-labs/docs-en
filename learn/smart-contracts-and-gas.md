@@ -1,6 +1,6 @@
 # Smart Contracts and GAS
 
-SatoshiNet's next major phase is smart contracts. STP + indexers solve how assets are identified, verified, safely entered, and safely exited. Smart contracts solve what assets can do after entering SatoshiNet.
+The SatoshiNet smart contract framework has been implemented and entered public testnet testing. STP + indexers solve how assets are identified, verified, safely entered, and safely exited. Smart contracts solve what assets can do after entering SatoshiNet.
 
 With smart contracts, SatoshiNet can evolve from an asset circulation network into an application network.
 
@@ -26,13 +26,13 @@ The public GAS narrative focuses on utility, consumption paths, risks, and limit
 
 ## Contract Roadmap
 
-SatoshiNet smart contracts can progress in layers:
+SatoshiNet smart contracts are progressing along several paths:
 
-| Phase                      | Goal                                                                              |
-| -------------------------- | --------------------------------------------------------------------------------- |
-| Template contracts         | Deterministic templates for AMMs, limit orders, stablecoins, and common scenarios |
-| EVM compatibility          | Lower migration cost for developers                                               |
-| Natural language contracts | Explore new interaction patterns between AI Agents and contracts                  |
-| Agent contracts            | Let Agents trigger, explain, and verify contract actions                          |
+| Phase | Goal |
+| --- | --- |
+| Template contracts | Currently testing AMM and limit order in PWA `Tools -> Smart Contracts`, using deterministic templates for common trading scenarios |
+| EVM compatibility | Currently testing `ConstantProductAMM` and `LimitOrderBook` samples in PWA `Tools -> Smart Contracts`, reusing the Solidity / EVM developer ecosystem |
+| Agent / Prediction contracts | First Agent contract scenario prioritized on public testnet |
+| Natural language contracts | Explore new interaction patterns between AI Agents and contracts |
 
-Current design docs: [Smart Contract Protocol](../protocol/contracts/).
+Ordinary users can start from [Prediction Contract Test](../use/prediction-contract.md). Template contracts and EVM samples are accessed through PWA `Tools -> Smart Contracts`. Protocol design docs: [Smart Contract Protocol](../protocol/contracts/readme.md).

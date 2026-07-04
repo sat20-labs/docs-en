@@ -21,12 +21,30 @@ This page shows capabilities that SatoshiNet already has or is building. It is n
 | SAT20 PWA Wallet        | Implemented            | Testnet            | Partial       | [Install PWA Wallet](https://sat20.org/pwa/?install=1)                 |
 | Wallet SDK              | Implemented            | Available          | Partial       | See [Exchange and Wallet Integration](../build/exchange-and-wallet.md) |
 | STP / Transcend         | Implemented            | Public Testnet     | Partial       | See [STP Technical Whitepaper](../protocol/stp/)                       |
-| AMM                     | Implemented            | Testnet            | Partial       | Add demo, contract address, deployment guide                           |
-| Limit Order             | Implemented            | Testnet            | Partial       | Add demo, contract address, deployment guide                           |
+| L2 market AMM Channel Contract | Implemented | Testnet | User guide | See [Provide AMM Liquidity](../use/amm-liquidity.md) |
+| L2 market limit order Channel Contract | Implemented | Testnet | User guide | See [Use Limit Orders](../use/limit-order.md) |
 | Launchpad               | Implemented            | Testnet            | Partial       | Add manual and case                                                    |
 | DAO / Community Fund    | Implemented            | Limited Testnet    | Partial       | Add templates, UID, donations, airdrops, governance flow               |
-| EVM Runtime             | In Development         | Internal / Testnet | Protocol Spec | See [EVM Contracts](../protocol/contracts/evm.md)                      |
+| Smart contract framework | Implemented | Public Testnet | Partial | See [Smart Contract Protocol](../protocol/contracts/readme.md) |
+| EVM Runtime | Implemented / Iterating | Public Testnet | Protocol Spec | See [EVM Contracts](../protocol/contracts/evm.md) |
+| Template AMM smart contract | Implemented / Testing | Public Testnet | Deployment guide | Only through PWA `Tools -> Smart Contracts`; see [Deploy AMM Pool](../build/amm-pool-quickstart.md) |
+| Template limit order smart contract | Implemented / Testing | Public Testnet | Deployment guide | Only through PWA `Tools -> Smart Contracts`; see [Deploy Limit Order Module](../build/limit-order-quickstart.md) |
+| EVM ConstantProductAMM sample | Implemented / Testing | Public Testnet | Partial | See [EVM Sample Contracts](../build/evm-sample-contracts.md) |
+| EVM LimitOrderBook sample | Implemented / Testing | Public Testnet | Partial | See [EVM Sample Contracts](../build/evm-sample-contracts.md) |
+| Agent / Prediction Contract | Implemented / Testing | Public Testnet | User guide / Protocol Spec | See [Prediction Contract Test](../use/prediction-contract.md) and [Natural Language Contracts](../protocol/contracts/agent.md) |
 | Community Builder Agent | Planned / Experimental | Not Deployed       | Missing       | See [Community Builder Agent](../ai/community-builder-agent.md)        |
+| Mining Node | In Development | Testnet | Missing | See [Mining Node](../run/mining-node.md) |
+| Core Node | In Development | Testnet | Missing | See [Core Node](../run/core-node.md) |
 | GAS Economics           | Design in Progress     | Not Deployed       | Draft         | See [Network Economics](../network-economics/)                         |
 
-**Page Status: Planning**
+## Evidence to Add for Each Capability
+
+1. GitHub repo / commit / release.
+2. Demo or testnet entry.
+3. Contract address or txid.
+4. Explorer / Indexer evidence.
+5. Test records.
+6. Known limitations.
+7. Last verification date.
+
+**Page Status: In Development**
