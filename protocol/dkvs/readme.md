@@ -39,6 +39,8 @@ Segments are restricted to `[a-z0-9._-]` and length limits. DKVS-safe names are 
 
 Each key stores one active candidate, not version history.
 
+DKVS records are kept compact. A record has one payload field, `Value`; there is no separate `Data` field. The maximum encoded record size is 16KB. `FeeProof`, pubkey, signature, and metadata all count toward that limit, so applications should reserve most of the space for `Value`.
+
 If the same key already exists and the pubkey is unchanged, DKVS treats that pubkey as the established owner and avoids an unnecessary resolver call. If the local indexer marks the name as transferred, or if the new record uses a different pubkey, the next write must resolve current ownership again.
 
 Selection rules:
@@ -65,29 +67,18 @@ Without a configured resolver, `/name` and `/svc` remain unwritable by default.
 
 Each DKVS record may carry a `fee_proof` proving that its storage cost is covered by a payment or authorization mechanism. Fee proof does not change transaction consensus semantics. It is part of DKVS write validation, and nodes re-validate it for local REST writes, incoming P2P `dkvsdata`, and startup sync imports.
 
-The current fee proof is a JSON structure. Core fields include:
+The current fee proof is a compact binary structure stored in the record's `FeeProof` bytes field. The record signature covers `FeeProof`, so the proof no longer carries its own signature, record hash, key hash, record size, expiry height, or namespace fields. Those values are derived from the record or supplied by the verifier context.
 
-| Field | Meaning |
+Current proof modes and encoded content:
+
+| Mode | Encoded Content | Current Use |
 | --- | --- |
-| `mode` | Payment mode. Current modes are `AUTOPAY`, `FREE_LOCAL`, `ONESHOT`, and `LEASE` |
-| `pool_contract` | DKVS Pool or AUTOPAY contract address |
-| `payer` | Payer address; in AUTOPAY it must match the p2tr address derived from the record pubkey |
-| `payer_pubkey` | Optional payer pubkey; when present, it must derive to `payer` |
-| `key_hash` | `sha256(key)` / DKVS key hash, binding the proof to the key |
-| `record_hash` | `FeeAnchorHash(record)`, binding the proof to record content; it excludes record signature and the proof's own `record_hash` / `proof_signature` to avoid self-reference |
-| `record_size` | Record size covered by the proof; AUTOPAY charges by full-size records |
-| `expiry_height` | Expiry height covered by the proof |
-| `namespace` | Key namespace; it must match the actual key namespace |
-| `proof_signature` | Optional payer signature over canonical fee proof fields; mainnet defaults require it |
+| `AUTOPAY` | `pool_contract` | Recommended current mode. The node reads the `autopay.tc` template contract state to calculate the record signer's capacity. |
+| `FREE_LOCAL` | No extra fields | Local testing, development, or explicit whitelist policy. |
+| `ONESHOT` | `pool_contract`, `payer`, `payment_txid`, `paid_amount` | Reserved one-time payment proof format. |
+| `LEASE` | `pool_contract`, `lease_contract`, `plan_id` | Reserved lease/plan proof format. |
 
-Current modes:
-
-| Mode | Current Use | Mainnet Boundary |
-| --- | --- | --- |
-| `AUTOPAY` | Recommended current mode. The writer provides an `autopay.tc` template contract address, and the node reads contract state to calculate this payer's record capacity. | Not accepted by default on mainnet until production parameters are finalized. |
-| `FREE_LOCAL` | Local testing, development, or explicit whitelist policy. | Not accepted by default on mainnet; expired records may be physically deleted. |
-| `ONESHOT` | Reserved one-time payment format with `payment_txid` and `paid_amount`. | Current code only performs JSON field validation; real DKVS Pool payment verification is later work. |
-| `LEASE` | Reserved lease/plan payment format with `lease_contract` and `plan_id`. | Current code only performs JSON field validation; real lease contract verification is later work. |
+Mainnet does not accept `FREE_LOCAL` by default. `ONESHOT` and `LEASE` currently provide compact encoding and basic field validation only; real DKVS Pool payment verification is later work.
 
 ### AUTOPAY Verification
 
@@ -95,11 +86,9 @@ AUTOPAY is the currently practical fee proof path. A writer submits the `autopay
 
 1. The contract is the `autopay.tc` template.
 2. The contract is active and not closed.
-3. The deployer is the record writer payer.
-4. If `payer_pubkey` is present, it must derive to the `payer` p2tr address.
-5. The record pubkey must equal `payer_pubkey`, and its derived p2tr address must equal `payer`.
-6. Recipient, fee asset, and end height match DKVS policy.
-7. The per-block payment covers the active full-size record count currently assigned to that AUTOPAY contract.
+3. The node derives a p2tr address from `record.PubKey` and requires it to equal the contract deployer.
+4. Recipient, fee asset, and end height match DKVS policy.
+5. The per-block payment covers the active full-size record count currently assigned to that AUTOPAY contract.
 
 Capacity is calculated as:
 
