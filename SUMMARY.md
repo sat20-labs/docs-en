@@ -78,6 +78,7 @@
     * [Third-Party STP Client Implementation Checklist](protocol/stp/implementation-checklist.md)
   * [SatoshiNet](protocol-and-security/satoshinet/README.md)
     * [SatoshiNet Protocol Overview](protocol/satoshinet/readme.md)
+  * [DKVS](protocol/dkvs/readme.md)
   * [Channel Contracts](protocol-and-security/channel-contracts/README.md)
     * [Channel Contracts](protocol/channel-contracts/readme.md)
   * [Smart Contracts](protocol-and-security/smart-contracts/README.md)
