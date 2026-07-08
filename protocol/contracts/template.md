@@ -57,7 +57,7 @@ The first-stage templates are:
 
 Limit order and AMM templates migrate business logic from earlier channel-contract workflows, but do not keep channel peer signatures, RSMC channel state, L1 deposit/withdraw, L1 commit/reveal or BRC20 transfer inscription flows, or legacy channel-contract state migration.
 
-The Autopay contract is not migrated from channel contracts. It is a first-stage native template for forwarding a fixed or height-dependent fee from the deployer's funded contract balance to one configured recipient across a block range.
+The Autopay contract is not migrated from channel contracts. It is a first-stage native template for pooling delegated continuous-payment balances from multiple addresses and emitting one unified payment per block.
 
 ## Limit Order Contract
 
@@ -87,7 +87,7 @@ The exchange template follows the same principles as other templates: assets ent
 
 ## Autopay Contract
 
-The Autopay template pays one configured recipient according to block height. Its template name is:
+The Autopay template pools delegated continuous-payment balances from multiple addresses and pays one configured recipient, or the current block producer, on each block. Its template name is:
 
 ```
 autopay.tc
@@ -95,31 +95,51 @@ autopay.tc
 
 Deployment content includes:
 
-1. Recipient address.
-2. Fee asset name, which can be sats or any SatoshiNet asset.
-3. Payment mode. The first stage supports fixed amount and linear amount.
-4. Base payment amount.
-5. Per-block step amount for linear mode.
-6. Optional end height.
+1. Service name.
+2. Recipient address. If empty, the per-block payment is paid as miner fee to the current block producer.
+3. Fee asset name, which can be sats or any SatoshiNet asset.
+4. Minimum per-address amount per block.
+
+Deployment content does not include a user list, payment interval, end height, or height-dependent payment curve. Each delegate's amount and balance are written into runtime state by later calls.
+
+Invocation APIs:
+
+1. `config`: a delegate sets its own per-block amount. The amount must not be lower than the contract minimum.
+2. `default invoke`: a delegate funds the contract address and increases its own payable balance. If the delegate has not configured an amount, the contract minimum is used.
+3. `cancel`: a delegate cancels its own payment configuration and receives its remaining payment balance back.
+4. `close`: only the deployer can close the contract and batch-refund remaining balances to all delegates.
+
+The payment asset can be sats or any SatoshiNet asset. If the payment asset is also the GAS asset, runtime must distinguish business payment balance from contract trigger/result gas balance within the same physical asset.
+
+Delegate state:
+
+1. Runtime maintains independent state for each delegate address, including amount per block, funding balance, total paid amount, paid block count, last paid height, and delegate status.
+2. Delegate status can be active, funding, or closed.
+3. The contract's aggregate payable balance is the sum of all delegate balances.
+4. Contract state can expose aggregate balances and per-delegate auditable state.
 
 Activation and funding rules:
 
 1. Deployment and default invocation can both fund the contract address.
-2. The active height is the first post-deployment block where the funding requirement is satisfied. Actual payments start from the next block after activation.
-3. If an end height is set, the contract must have enough payment asset and trigger result gas for the whole remaining range before it becomes active.
-4. If no end height is set, the contract only needs enough payment asset and trigger result gas for the next block. When the balance cannot cover the next block, the contract enters funding status.
-5. If the payment asset is also the GAS asset, runtime separates business payment balance from trigger-gas balance within the same physical asset.
+2. Funding in the deploy transaction belongs to the deployer.
+3. Funding in a default invocation belongs to that invocation's invoker.
+4. The contract is active when at least one delegate has enough balance for the next block and the contract has enough trigger/result gas.
+5. If a delegate lacks balance for one block, that delegate enters funding status and does not participate in that block's payment. Other sufficiently funded delegates can continue paying.
+6. If no delegate can pay, or if the contract lacks required trigger/result gas, the contract enters funding status and waits for more funding.
 
 Payment rules:
 
-1. At each block settlement, runtime checks whether the block has reached `NextPayHeight`.
-2. When the condition is satisfied, the block producer creates a canonical `CONTRACT_RESULT` that transfers the block's payable amount to the recipient.
-3. Fixed mode pays the same amount for every paid block.
-4. Linear mode uses `base + step * offset`, where `offset` starts from the first paid block.
-5. Failed payment is not retried by an external transaction. If the balance is insufficient, the contract moves to funding status and waits for more funding.
+1. At each block settlement, runtime scans all active delegates.
+2. For each delegate with enough balance, runtime deducts that delegate's per-block amount.
+3. The block producer creates one canonical `CONTRACT_RESULT` that aggregates all delegate payments for the block into one payment output.
+4. If the recipient address is not empty, the payment output goes to that recipient.
+5. If the recipient address is empty, the payment output is treated as miner fee and enters the block reward.
+6. One Autopay contract should emit only one payment Result per block, preventing many delegates from producing too many automatic trigger transactions in the block.
 
 Close rules:
 
 1. Only the deployer can close an Autopay contract.
-2. On close, remaining managed payment balance and remaining managed gas balance are returned to the deployer.
-3. Assets at the contract address that are not part of the managed balances continue to follow the common framework rule for residual contract-address assets.
+2. On close, the contract refunds each delegate's remaining payment balance to that delegate.
+3. Each close Result can contain at most 1000 refund outputs. If the number of delegates exceeds that per-transaction limit, unrefunded balances remain at the contract address and are processed by later Results.
+4. After close completes, remaining managed gas balance is returned to the deployer.
+5. Assets at the contract address that are not part of the managed balances continue to follow the common framework rule for residual contract-address assets.

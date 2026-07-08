@@ -78,7 +78,7 @@ Current proof modes and encoded content:
 | `ONESHOT` | `pool_contract`, `payer`, `payment_txid`, `paid_amount` | Reserved one-time payment proof format. |
 | `LEASE` | `pool_contract`, `lease_contract`, `plan_id` | Reserved lease/plan proof format. |
 
-Mainnet does not accept `FREE_LOCAL` by default. `ONESHOT` and `LEASE` currently provide compact encoding and basic field validation only; real DKVS Pool payment verification is later work.
+Mainnet does not accept `FREE_LOCAL` by default. `ONESHOT` and `LEASE` currently provide compact encoding and basic field validation only; real one-shot payment and lease-payment verification are later work.
 
 ### AUTOPAY Verification
 
@@ -86,25 +86,27 @@ AUTOPAY is the currently practical fee proof path. A writer submits the `autopay
 
 1. The contract is the `autopay.tc` template.
 2. The contract is active and not closed.
-3. The node derives a p2tr address from `record.PubKey` and requires it to equal the contract deployer.
-4. Recipient, fee asset, and end height match DKVS policy.
-5. The per-block payment covers the active full-size record count currently assigned to that AUTOPAY contract.
+3. The node derives a p2tr address from `record.PubKey` and treats that address as the delegate payment address for the current record.
+4. The contract service name, recipient, fee asset, and minimum payment amount match DKVS policy.
+5. That delegate address has an active delegate configuration in contract state.
+6. That delegate address's per-block amount covers the full-size active records it has written.
+7. That delegate address's funding balance is sufficient for the next block.
 
 Capacity is calculated as:
 
 ```text
-max_records = floor(amount_per_block / full_record_fee_per_block)
+max_records = floor(delegate_amount_per_block / full_record_fee_per_block)
 ```
 
-For fixed schedules, `amount_per_block = base_amount`. For linear schedules, `amount_per_block = base_amount + step_amount * max(0, current_block - active_height - 1)`.
+`delegate_amount_per_block` comes from the independent configuration for that delegate address in `autopay.tc` runtime state. If the delegate has not configured an amount explicitly, runtime uses the minimum amount set at deployment.
 
-Testnet may hard-code a default DKVS AUTOPAY policy with a fixed deployer, recipient, fee asset, base amount, and full-record fee to derive the default contract address. These defaults do not by themselves authorize writes; the node must still read a live active contract state. Mainnet does not allow free writes and does not accept records from a default contract until production contract parameters, recipient, and settlement rules are finalized.
+Testnet may hard-code a default DKVS AUTOPAY policy with a fixed service name, recipient, fee asset, minimum amount, and full-record fee to locate the default contract and calculate capacity. These defaults do not by themselves authorize writes; the node must still read a live active contract state, and the delegate address derived from the record signer must have a valid payment configuration and balance. Mainnet does not allow free writes and does not accept records from a default contract until production contract parameters, recipient, and settlement rules are finalized.
 
-### DKVS Pool and Mining Revenue
+### AUTOPAY Payment Pool and Mining Revenue
 
-DKVS storage fees are intended to be merged into mining rewards. The target design is that the DKVS Pool contract automatically emits one result tx in each block, and the fee of that result tx represents all record-storage fees owed to the miner for that block. With this model, DKVS core only verifies that a record is covered by a valid fee proof; it does not calculate or distribute rewards in the P2P synchronization layer.
+DKVS storage fees are intended to flow into mining rewards or into a configured service recipient. In the first stage, `autopay.tc` acts as the DKVS payment pool: multiple delegate addresses fund payment assets into one contract, and each block the contract aggregates all active delegates' payable amounts into one result tx.
 
-The DKVS Pool contract is not implemented yet. The current AUTOPAY verifier only checks contract state and record capacity coverage; it does not mean final revenue distribution is live. Mainnet fee policy should remain disabled until the Pool contract, result tx format, and settlement rules are finalized.
+If the `autopay.tc` recipient is empty, the aggregated payment is treated as miner fee and enters the block reward. If the recipient is not empty, the aggregated payment output goes to the configured service recipient. DKVS core only verifies that a record is covered by a valid fee proof; it does not calculate or distribute rewards in the P2P synchronization layer.
 
 ## Retention and Expiration Pruning
 
@@ -142,4 +144,4 @@ Checkpoint signing and chain anchoring have been removed from the current design
 
 ## Current Boundary
 
-The current stage does not include ordinary-node subscription markets, mailbox quota, large blob SDK, DKVS Pool contract/result-tx revenue settlement, chain checkpoint anchoring, or DHT storage groups. These remain later protocol stages.
+The current stage does not include ordinary-node subscription markets, mailbox quota, large blob SDK, complete one-shot or lease-payment settlement, chain checkpoint anchoring, or DHT storage groups. These remain later protocol stages.
