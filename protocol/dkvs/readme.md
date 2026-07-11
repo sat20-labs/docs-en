@@ -29,11 +29,13 @@ Current namespaces:
 | `/svc/<service>/...` | Service config and discovery | Current service signing key or owner address |
 | `/mail/<mailbox>/msg/<msg_id>` | Offline messages | Any valid signer may deliver; quota is later work |
 | `/mail/<mailbox>/share/<package>/<share>` | Guardian/share data | Mailbox owner only |
-| `/blob/<object>/manifest` and `/blob/<object>/chunk/<n>` | Small blob chunks | Signer owns the record; SDK verifies manifest/chunks |
+| `/blob/<account_id>/<object_id>/manifest` and `/blob/<account_id>/<object_id>/chunk/<n>` | User-named small blob chunks | Only the owner satisfying `sha256(pubkey)==account_id` may write |
 | `/tmp/...` | Temporary data | TTL-limited |
 | `/sys/...` | System parameters, miner/pool metadata, and other system data | Configured system signer only |
 
 Segments are restricted to `[a-z0-9._-]` and length limits. DKVS-safe names are used directly as `name_id`; unsafe canonical names use `hex(sha256(canonical_name))`.
+
+`object_id` is a stable name chosen by the owner, such as a familiar filename or object name. It is not a content hash. The same `account_id + object_id` may be updated with a newer record generation. Writers submit the manifest before chunks. The manifest and all chunks must use the same pubkey, seq, and expiry. Nodes verify each chunk hash and verify the final content hash during assembly. Content hashes provide integrity only; they do not determine object addressing or write permission.
 
 ## Records and Selection
 
@@ -132,7 +134,7 @@ DKVS uses six native SatoshiNet wire commands:
 | `dkvssyncreq` | Paged startup sync request |
 | `dkvssyncres` | Paged sync response |
 
-Miners perform paged sync when peers connect. After notify, receivers fetch missing records through get/data. The receiver always re-validates the record.
+Miners perform paged sync with a random session id when peers connect. Ordinary nodes sync only their configured key, prefix, mailbox, and service subscriptions. After notify, receivers fetch missing records through get/data, fully re-validate them, and relay accepted updates to other peers. Nodes also run periodic anti-entropy sync against miners to recover from lost notifications, temporary disconnections, and concurrent updates during pagination. A peer runs at most one sync session at a time, and response pages are bounded by both record count and wire payload size.
 
 ## Checkpoint
 
