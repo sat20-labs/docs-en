@@ -187,6 +187,10 @@ If there are no winners, or if the result is `cancelled`, `invalid`, or `unverif
 
 Only valid `bet_asset` amounts recorded by the runtime participate in prediction settlement. Invalid calls, non-betting assets, and assets held at the contract address beyond the runtime-managed record are handled by the common framework rules and do not participate in the prize pool.
 
+### Deployer Close Boundary
+
+The deployer may call `close` while the current time or block height is less than or equal to `bet_deadline`. Closing refunds every runtime-recorded valid bet at its original amount and charges no fee. Once the current time or block height exceeds `bet_deadline`, deployer close is disabled. From `ClosedForBet` onward, result confirmation belongs to the Agent; cancellation, invalid, or unverifiable outcomes must be submitted through `confirm` and follow the deterministic full-refund path.
+
 ### Runtime States
 
 Prediction runtime states include:

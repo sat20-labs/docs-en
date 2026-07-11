@@ -77,7 +77,7 @@ Deployment includes asset name, initial asset amount, initial sat amount, and co
 
 AMM buy uses sats as input and outputs assets. AMM sell uses assets as input and outputs sats. Slippage and minimum output are non-economic invocation parameters; actual input assets are derived from the Call TX output to the contract address.
 
-Multiple AMM swaps in the same block are priced from the pool state and `K` at the start of that block's settlement. Swaps with the same direction and same input amount should receive the same quoted output. Actual settlement is still bounded by the pool assets available in that block. Within a block, swaps are processed before add/remove liquidity, matching the earlier channel-contract behavior.
+Multiple AMM swaps in the same block are processed sequentially in canonical transaction order. Each swap is priced from the pool and `K` left by the preceding swap. The input amount after the 0.8% service fee participates in the constant-product calculation, while the full input is added to the pool so that the fee remains in the pool. For buys, `Amt` is only the minimum acceptable output; once slippage protection passes, the full input is swapped rather than truncating execution at `Amt` and refunding the remainder. Swaps are processed before add/remove liquidity, matching the channel-contract behavior.
 
 ## Asset Exchange Contract
 
