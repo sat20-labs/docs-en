@@ -7,7 +7,7 @@ DKVS does not replace Bitcoin L1 and does not turn arbitrary off-chain data into
 ## Goals
 
 1. Provide one record model for user data, names, services, mailbox data, blob manifests, temporary data, and system data.
-2. Require each record to carry pubkey, signature, TTL, expiry height, seq, fee proof, and optional tombstone flag.
+2. Require each record to carry pubkey, signature, TTL, expiry height, seq, and fee proof. Deletion uses a signed command retained only for a bounded relay window, not a permanent record.
 3. Re-validate key shape, signature, TTL, permission, fee proof, hash, and selector rules on both local REST writes and remote P2P data.
 4. Synchronize miners through SatoshiNet-native wire messages only.
 5. First guarantee convergence among nodes that store a record; later phases may move from miner/core full storage to ordinary-node subscriptions and eventually DHT-style storage groups.
@@ -49,8 +49,9 @@ Selection rules:
 
 1. A stale record whose current permission is invalid cannot block the new owner.
 2. If the existing record is still valid, compare by `seq -> expiry_height -> hash/bytes`.
-3. Tombstone is a delete record for the same key and still requires owner permission.
-4. Get/List/Sync/Checkpoint return only unexpired active records whose current permission remains valid.
+3. `seq` is the key's own revision and is independent of block height. After external resolver or AUTOPAY checks, a write must re-check the existing record's pubkey, seq, and hash before committing atomically.
+4. A delete command is signed by the same key owner and advances seq. Once verified, it physically removes the record, hash index, and associated blob data. The command exists only during a bounded relay window and is never part of the active view, snapshots, or a permanent sequence floor.
+5. Get/List/Sync/Checkpoint return only unexpired active records whose current permission remains valid.
 
 ## DID / Name Resolver
 
@@ -121,6 +122,8 @@ DKVS separates the active view from physical retention:
 
 Nodes must provide a DKVS-side timer that periodically scans and deletes expired free records. The current implementation also triggers the same cleanup path periodically from block processing. This does not change the wire protocol and does not physically prune paid records.
 
+Explicit user deletion is different from expiry pruning. After permission and revision validation, a delete command physically removes the target record. Deleting a blob manifest removes its manifest, chunks, and hash indexes for the same `account_id + object_id` in one batch. Path-level `PathMeta` is updated in the same DB batch as records and tracks active count, maximum seq, and active root for validating a Mirror range; it is not a permanent tombstone set.
+
 ## P2P Synchronization
 
 DKVS uses six native SatoshiNet wire commands:
@@ -134,13 +137,20 @@ DKVS uses six native SatoshiNet wire commands:
 | `dkvssyncreq` | Paged startup sync request |
 | `dkvssyncres` | Paged sync response |
 
-Miners perform paged sync with a random session id when peers connect. Ordinary nodes sync only their configured key, prefix, mailbox, and service subscriptions. After notify, receivers fetch missing records through get/data, fully re-validate them, and relay accepted updates to other peers. Nodes also run periodic anti-entropy sync against miners to recover from lost notifications, temporary disconnections, and concurrent updates during pagination. A peer runs at most one sync session at a time, and response pages are bounded by both record count and wire payload size.
+Synchronization has two distinct semantics:
+
+- Miner-to-miner uses Merge Sync. A receiver merges records present in the response and never deletes a local record because the remote peer omitted it.
+- Ordinary nodes and miners without a trusted baseline use Mirror Sync. A Mirror source must be an authenticated core or bootstrap node. Each response is signed by the node identity over network, session, filter, request and response cursors, done, root, and ordered record hashes.
+
+A Mirror session stages all pages in memory with `DKVSReady=false`. It validates page boundaries, signatures, record and byte limits, permissions, fee proofs, blob completeness, and the covered-range root, then atomically replaces the target key or prefix in one DB batch. A key omitted from Mirror is physically deleted without creating a delete command or sequence floor. Failed sessions and changing roots discard staging and retry. A node serves DKVS data only after establishing a trusted baseline.
+
+After notify, receivers fetch missing records through get/data, fully re-validate them, and relay accepted updates. Signed delete commands use the same notify/get/data and anti-entropy paths and remain available only for a bounded relay window, allowing briefly disconnected nodes to catch up; long-stale ordinary nodes recover through trusted Mirror. Response pages are bounded by record count and wire payload size, while Mirror staging also has total record and byte limits. A blob generation must include every chunk declared by its manifest and is replaced atomically as a group, so a partial generation never becomes visible.
 
 ## Checkpoint
 
 A DKVS checkpoint is a Merkle root over the local active record view. It helps nodes compare views and export snapshots. It is not a consensus root.
 
-It answers one narrow question: whether two nodes currently see the same DKVS active record set. A sync response can carry a checkpoint root; after applying the page, the receiver recomputes its local root, and a mismatch means it should continue syncing, retry, or alert. A checkpoint does not hold private keys, does not require a signature, does not prove that all historical data exists forever, and does not automatically create chain transactions. The current design does not publish checkpoints as DKVS records; the SatoshiNet indexer itself does not hold checkpoint signing private keys.
+It answers one narrow question: whether two nodes currently see the same DKVS active record set. A sync response can carry the active root for its filter, and the receiver verifies that root against staged data before atomic application. A checkpoint/root is only a computed result and is not signed separately. P2P Mirror responses are signed by the server/miner node identity, binding the root to the complete synchronization context. The SatoshiNet indexer holds no private key and produces no signature. A checkpoint does not prove permanent availability of all historical data and does not automatically create chain transactions.
 
 Checkpoint signing and chain anchoring have been removed from the current design. Long term, not every node will store all DKVS data: core nodes may store all records, ordinary nodes may store subscribed records, and very large deployments may store records by DHT-style groups. A mandatory global anchor would be expensive and may provide misleading assurance. The more useful guarantee is that every node responsible for a given record eventually receives its updates.
 
