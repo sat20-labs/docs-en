@@ -130,7 +130,7 @@ DKVS uses six native SatoshiNet wire commands:
 
 | Command | Purpose |
 | --- | --- |
-| `dkvsnotify` | Notify key/hash updates |
+| `dkvsnotify` | Directly propagate one complete record |
 | `dkvsinv` | Broadcast record inventory |
 | `dkvsget` | Fetch by key/hash |
 | `dkvsdata` | Return record data |
@@ -144,7 +144,9 @@ Synchronization has two distinct semantics:
 
 A Mirror session stages all pages in memory with `DKVSReady=false`. It validates page boundaries, signatures, record and byte limits, permissions, fee proofs, blob completeness, and the covered-range root, then atomically replaces the target key or prefix in one DB batch. A key omitted from Mirror is physically deleted without creating a delete command or sequence floor. Failed sessions and changing roots discard staging and retry. A node serves DKVS data only after establishing a trusted baseline.
 
-After notify, receivers fetch missing records through get/data, fully re-validate them, and relay accepted updates. Signed delete commands use the same notify/get/data and anti-entropy paths and remain available only for a bounded relay window, allowing briefly disconnected nodes to catch up; long-stale ordinary nodes recover through trusted Mirror. Response pages are bounded by record count and wire payload size, while Mirror staging also has total record and byte limits. A blob generation must include every chunk declared by its manifest and is replaced atomically as a group, so a partial generation never becomes visible.
+The `dkvsnotify` wire payload contains only a one-byte `EventType` and bounded `Data`. For record events, `Data` is the compact binary encoding of a complete DKVSRecord and is limited to 16 KiB. The key, record hash, sequence, expiry, size, and flags are derived from the record, so neither a redundant `KeyHash` nor a self-reported `SourceNode` is encoded. A receiver decodes according to EventType, recomputes the record hash, and fully verifies the signature, authorization, TTL, fee proof, and sequence floor. Only an update that was accepted into local storage is relayed. Ordinary nodes receive only records covered by subscriptions for which they completed Mirror Sync; miners receive all updates.
+
+Normal updates and signed delete commands therefore propagate in one direction through notify without a preliminary get/data round trip. `dkvsget` and `dkvsdata` remain available for inventory retrieval, explicit requests, anti-entropy repair, and catching up within the bounded delete relay window. Each `dkvsinv` item carries the key, record hash, and sequence without a redundant key hash. Expiry pruning is not signed delete authorization, so `EXPIRED` is not propagated through P2P notify. Long-stale ordinary nodes still recover through trusted Mirror. Response pages are bounded by record count and wire payload size, while Mirror staging also has total record and byte limits. A blob generation must include every chunk declared by its manifest and is replaced atomically as a group, so a partial generation never becomes visible.
 
 ## Checkpoint
 
