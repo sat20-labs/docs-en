@@ -1,18 +1,20 @@
-# DKVS Technical Whitepaper
+# DKVS: SatoshiNet Distributed Key-Value Storage
 
-DKVS, the Distributed Key-Value Store, is the small-data storage layer embedded in SatoshiNet. It is designed for wallets, dApps, local Agents, D-Indexer workflows, and node coordination, with signed records, key-level permissions, and native node synchronization.
+DKVS, the Distributed Key-Value Store, is SatoshiNet's owner-controlled small-data storage and synchronization layer. It gives wallets, account recovery, RGB11 state backup, mailbox delivery, service discovery, and application configuration a common signed-record model.
 
-DKVS does not replace Bitcoin L1 and does not turn arbitrary off-chain data into consensus state. Its purpose is to let SatoshiNet nodes synchronize small verifiable records through native P2P messages, without libp2p, Kademlia, or the legacy L1 DKVS network layer.
+DKVS is not a general-purpose multi-primary database and is not Bitcoin or SatoshiNet consensus state. It addresses a narrower problem: **how nodes responsible for a record validate its writer, accept updates atomically, and eventually converge on the same effective state.**
 
-## Goals
+## Core principles
 
-1. Provide one record model for user data, names, services, mailbox data, blob manifests, temporary data, and system data.
-2. Require each record to carry pubkey, signature, TTL, expiry height, seq, and fee proof. Deletion uses a signed command retained only for a bounded relay window, not a permanent record.
-3. Re-validate key shape, signature, TTL, permission, fee proof, hash, and selector rules on both local REST writes and remote P2P data.
-4. Synchronize miners through SatoshiNet-native wire messages only.
-5. First guarantee convergence among nodes that store a record; later phases may move from miner/core full storage to ordinary-node subscriptions and eventually DHT-style storage groups.
+1. An ordinary logical path has one owner or authority.
+2. `Seq` orders revisions of one key; `PathGeneration` orders mutations of the logical path.
+3. Writes use CAS or batch-CAS. A failed precondition never produces a partial commit.
+4. The signature covers the key, value, fee proof, time, sequence, and path generation.
+5. Relayable data propagates through SatoshiNet-native P2P messages; `FREE_LOCAL` data belongs only to the receiving endpoint.
+6. Wallet SDK domain modules access DKVS only through `dkvsManager`, which owns transport, replica, synchronization, generation, and outbox state.
+7. DKVS does not understand or merge account-management, RGB11, or other domain objects. A domain must define its own conflict policy.
 
-## Key Namespace
+## Keys and logical paths
 
 DKVS keys use path syntax:
 
@@ -20,142 +22,291 @@ DKVS keys use path syntax:
 /<namespace>/<segments...>
 ```
 
-Current namespaces:
+Primary namespaces:
 
-| Namespace | Purpose | Write Permission |
+| Namespace | Purpose | Logical path / permission |
 | --- | --- | --- |
-| `/personal/<account_id>/...` | Personal user data | `sha256(pubkey)==account_id` |
-| `/name/<name_id>` | Name-level profile | Current L1 Ordinals DID/NS signing key or owner address |
-| `/svc/<service>/...` | Service config and discovery | Current service signing key or owner address |
-| `/mail/<mailbox>/msg/<msg_id>` | Offline messages | Any valid signer may deliver; quota is later work |
-| `/mail/<mailbox>/share/<package>/<share>` | Guardian/share data | Mailbox owner only |
-| `/blob/<account_id>/<object_id>/manifest` and `/blob/<account_id>/<object_id>/chunk/<n>` | User-named small blob chunks | Only the owner satisfying `sha256(pubkey)==account_id` may write |
-| `/tmp/...` | Temporary data | TTL-limited |
-| `/sys/...` | System parameters, miner/pool metadata, and other system data | Configured system signer only |
+| `/personal/<account_id>/<module>/...` | Personal data, account management, RGB11 heads | Owner-exclusive path per module; only the account owner may write |
+| `/blob/<account_id>/<blob_key>` | Encrypted snapshots or larger objects | Each complete blob key is an owner-exclusive path |
+| `/mail/<receiver>/msg/<sender>/<msg_id>` | Offline messages | Shared append by sender subpath; receiver may delete |
+| `/mail/<receiver>/share/...` | Guardian/share data | Receiver owner-exclusive |
+| `/name/<name>` | Name profile | Current DID/NS authority |
+| `/svc/<service>/...` | Service configuration and discovery | Current service authority |
+| `/tmp/...` | Short-lived relay and ACK data | Local-only with bounded TTL |
+| `/sys/...` | System parameters | Configured system signer |
 
-Segments are restricted to `[a-z0-9._-]` and length limits. DKVS-safe names are used directly as `name_id`; unsafe canonical names use `hex(sha256(canonical_name))`.
+Modules under `/personal/<account_id>` use separate logical paths. Account management and RGB11 therefore do not share one generation counter or one write lock.
 
-`object_id` is a stable name chosen by the owner, such as a familiar filename or object name. It is not a content hash. The same `account_id + object_id` may be updated with a newer record generation. Writers submit the manifest before chunks. The manifest and all chunks must use the same pubkey, seq, and expiry. Nodes verify each chunk hash and verify the final content hash during assembly. Content hashes provide integrity only; they do not determine object addressing or write permission.
+### Path modes
 
-## Records and Selection
+| Mode | Semantics |
+| --- | --- |
+| `owner_exclusive` | The owner is derived from an account identifier; normally one active writer |
+| `authority_exclusive` | The writer is selected by DID, service, or system authority |
+| `shared_append` | Multiple writers create independent unique keys and do not share one mutable value |
+| `local_only` | Stored only by the current endpoint and excluded from network PathMeta |
 
-Each key stores one active candidate, not version history.
+## DKVSRecord v1
 
-DKVS records are kept compact. A record has one payload field, `Value`; there is no separate `Data` field. The maximum encoded record size is 16KB. `FeeProof`, pubkey, signature, and metadata all count toward that limit, so applications should reserve most of the space for `Value`.
-
-If the same key already exists and the pubkey is unchanged, DKVS treats that pubkey as the established owner and avoids an unnecessary resolver call. If the local indexer marks the name as transferred, or if the new record uses a different pubkey, the next write must resolve current ownership again.
-
-Selection rules:
-
-1. A stale record whose current permission is invalid cannot block the new owner.
-2. If the existing record is still valid, compare by `seq -> expiry_height -> hash/bytes`.
-3. `seq` is the key's own revision and is independent of block height. After external resolver or AUTOPAY checks, a write must re-check the existing record's pubkey, seq, and hash before committing atomically.
-4. A delete command is signed by the same key owner and advances seq. Once verified, it physically removes the record, hash index, and associated blob data. The command exists only during a bounded relay window and is never part of the active view, snapshots, or a permanent sequence floor.
-5. Get/List/Sync/Checkpoint return only unexpired active records whose current permission remains valid.
-
-## DID / Name Resolver
-
-DKVS core uses the `DIDResolver` interface for real DID/NS ownership. The recommended production path is the L1 indexer NS API:
+A record contains:
 
 ```text
-GET /ns/name/:name
-GET /ns/address/:address
+Version
+Key
+Value
+PubKey
+Signature
+Seq
+PathGeneration
+IssueTime
+TTL
+ExpiryHeight
+FeeProof
+Flags
 ```
 
-`/ns/name/:name` returns the current owner address. DKVS derives a p2tr address from the record pubkey and requires it to match the current owner. When a name moves with its UTXO, the L1 indexer can call the local SatoshiNet indexer method `NotifyDKVSNameTransfers(names)`, marking those names so the next write must resolve again.
+### Size limits
 
-Without a configured resolver, `/name` and `/svc` remain unwritable by default.
+- An ordinary value is limited to 16 KiB.
+- A `/blob` value is limited to 1 MiB.
+- A blob is one complete record. The obsolete manifest/chunk protocol is not used.
+- One batch may contain at most 64 mutations and at most 8 MiB of encoded records.
+- A key is limited to 256 bytes and a segment to 64 bytes.
 
-## Fee Proof and Storage Fees
+DKVS is not a generic file store. Large files should use a dedicated distribution system; DKVS should hold small objects, encrypted snapshots, or references.
 
-Each DKVS record may carry a `fee_proof` proving that its storage cost is covered by a payment or authorization mechanism. Fee proof does not change transaction consensus semantics. It is part of DKVS write validation, and nodes re-validate it for local REST writes, incoming P2P `dkvsdata`, and startup sync imports.
+### Seq and PathGeneration
 
-The current fee proof is a compact binary structure stored in the record's `FeeProof` bytes field. The record signature covers `FeeProof`, so the proof no longer carries its own signature, record hash, key hash, record size, expiry height, or namespace fields. Those values are derived from the record or supplied by the verifier context.
-
-Current proof modes and encoded content:
-
-| Mode | Encoded Content | Current Use |
-| --- | --- |
-| `AUTOPAY` | `pool_contract` | Recommended current mode. The node reads the `autopay.tc` template contract state to calculate the record signer's capacity. |
-| `FREE_LOCAL` | No extra fields | Local testing, development, or explicit whitelist policy. |
-| `ONESHOT` | `pool_contract`, `payer`, `payment_txid`, `paid_amount` | Reserved one-time payment proof format. |
-| `LEASE` | `pool_contract`, `lease_contract`, `plan_id` | Reserved lease/plan proof format. |
-
-Mainnet does not accept `FREE_LOCAL` by default. `ONESHOT` and `LEASE` currently provide compact encoding and basic field validation only; real one-shot payment and lease-payment verification are later work.
-
-### AUTOPAY Verification
-
-AUTOPAY is the currently practical fee proof path. A writer submits the `autopay.tc` template contract address with the record. The node reads contract state and verifies:
-
-1. The contract is the `autopay.tc` template.
-2. The contract is active and not closed.
-3. The node derives a p2tr address from `record.PubKey` and treats that address as the delegate payment address for the current record.
-4. The contract service name, recipient, fee asset, and minimum payment amount match DKVS policy.
-5. That delegate address has an active delegate configuration in contract state.
-6. That delegate address's per-block amount covers the full-size active records it has written.
-7. That delegate address's funding balance is sufficient for the next block.
-
-Capacity is calculated as:
+A normal key update must satisfy:
 
 ```text
-max_records = floor(delegate_amount_per_block / full_record_fee_per_block)
+new.Seq = current.Seq + 1
 ```
 
-`delegate_amount_per_block` comes from the independent configuration for that delegate address in `autopay.tc` runtime state. If the delegate has not configured an amount explicitly, runtime uses the minimum amount set at deployment.
+Each effective mutation of a logical path uses:
 
-Testnet may hard-code a default DKVS AUTOPAY policy with a fixed service name, recipient, fee asset, minimum amount, and full-record fee to locate the default contract and calculate capacity. These defaults do not by themselves authorize writes; the node must still read a live active contract state, and the delegate address derived from the record signer must have a valid payment configuration and balance. Mainnet does not allow free writes and does not accept records from a default contract until production contract parameters, recipient, and settlement rules are finalized.
+```text
+new.PathGeneration = current_path_generation + 1
+```
 
-### AUTOPAY Payment Pool and Mining Revenue
+Within one batch, records are assigned consecutive `PathGeneration` values in canonical key order. Remote nodes read the owner-signed generation from the record; they do not derive it from local arrival count.
 
-DKVS storage fees are intended to flow into mining rewards or into a configured service recipient. In the first stage, `autopay.tc` acts as the DKVS payment pool: multiple delegate addresses fund payment assets into one contract, and each block the contract aggregates all active delegates' payable amounts into one result tx.
+### IssueTime and deterministic selection
 
-If the `autopay.tc` recipient is empty, the aggregated payment is treated as miner fee and enters the block reward. If the recipient is not empty, the aggregated payment output goes to the configured service recipient. DKVS core only verifies that a record is covered by a valid fee proof; it does not calculate or distribute rewards in the P2P synchronization layer.
+Wallet SDK uses the endpoint's `server_time_ms` to produce monotonic issue time:
 
-## Retention and Expiration Pruning
+```text
+IssueTime = max(server_time_ms, previous_issue_time + 1)
+```
 
-DKVS separates the active view from physical retention:
+If abnormal concurrency produces multiple candidates for one key, the selector is:
 
-- only active records are returned by `GET`, prefix list, sync, checkpoint, and snapshot;
-- after TTL or `expiry_height` expires, the record leaves the active view;
-- records that have previously paid storage fees are physically retained for now, so they can later support renewal, audit, or recovery flows;
-- free records, including local `FREE_LOCAL` records or records accepted without a fee proof by local policy, may be physically deleted after expiration.
+1. greater `Seq`;
+2. retention renewal when the business content is identical;
+3. greater `IssueTime`;
+4. byte order of `RecordHash`.
 
-Nodes must provide a DKVS-side timer that periodically scans and deletes expired free records. The current implementation also triggers the same cleanup path periodically from block processing. This does not change the wire protocol and does not physically prune paid records.
+This makes convergence deterministic. It does not guarantee that every business edit survives unsupported concurrent writers.
 
-Explicit user deletion is different from expiry pruning. After permission and revision validation, a delete command physically removes the target record. Deleting a blob manifest removes its manifest, chunks, and hash indexes for the same `account_id + object_id` in one batch. Path-level `PathMeta` is updated in the same DB batch as records and tracks active count, maximum seq, and active root for validating a Mirror range; it is not a permanent tombstone set.
+## PathMeta and synchronization
 
-## P2P Synchronization
+Network-comparable PathMeta contains:
 
-DKVS uses six native SatoshiNet wire commands:
+```text
+Path
+Generation
+StateRoot
+ActiveRecords
+ActiveTotalSize
+MinExpiryHeight
+ViewHeight
+```
 
-| Command | Purpose |
-| --- | --- |
-| `dkvsnotify` | Directly propagate one complete record |
-| `dkvsinv` | Broadcast record inventory |
-| `dkvsget` | Fetch by key/hash |
-| `dkvsdata` | Return record data |
-| `dkvssyncreq` | Paged startup sync request |
-| `dkvssyncres` | Paged sync response |
+`StateRoot` is a deterministic digest of effective records and delete floors in the path. It is a synchronization signal, not an on-chain commitment and not a Merkle membership proof.
 
-Synchronization has two distinct semantics:
+Comparison rules:
 
-- Miner-to-miner uses Merge Sync. A receiver merges records present in the response and never deletes a local record because the remote peer omitted it.
-- Ordinary nodes and miners without a trusted baseline use Mirror Sync. A Mirror source must be an authenticated core or bootstrap node. Each response is signed by the node identity over network, session, filter, request and response cursors, done, root, and ordered record hashes.
+1. the endpoint with lower generation needs synchronization;
+2. equal generation and root means the path is converged;
+3. equal generation with a different root requires full reconciliation;
+4. an endpoint below the client's confirmed generation is stale and cannot accept another write for that path.
 
-A Mirror session stages all pages in memory with `DKVSReady=false`. It validates page boundaries, signatures, record and byte limits, permissions, fee proofs, blob completeness, and the covered-range root, then atomically replaces the target key or prefix in one DB batch. A key omitted from Mirror is physically deleted without creating a delete command or sequence floor. Failed sessions and changing roots discard staging and retry. A node serves DKVS data only after establishing a trusted baseline.
+A full path snapshot includes PathMeta, effective records, delete floors, and `server_time_ms`. The receiver validates the entire snapshot and atomically replaces its confirmed replica.
 
-The `dkvsnotify` wire payload contains only a one-byte `EventType` and bounded `Data`. For record events, `Data` is the compact binary encoding of a complete DKVSRecord and is limited to 16 KiB. The key, record hash, sequence, expiry, size, and flags are derived from the record, so neither a redundant `KeyHash` nor a self-reported `SourceNode` is encoded. A receiver decodes according to EventType, recomputes the record hash, and fully verifies the signature, authorization, TTL, fee proof, and sequence floor. Only an update that was accepted into local storage is relayed. Ordinary nodes receive only records covered by subscriptions for which they completed Mirror Sync; miners receive all updates.
+## CAS and batch-CAS
 
-Normal updates and signed delete commands therefore propagate in one direction through notify without a preliminary get/data round trip. `dkvsget` and `dkvsdata` remain available for inventory retrieval, explicit requests, anti-entropy repair, and catching up within the bounded delete relay window. Each `dkvsinv` item carries the key, record hash, and sequence without a redundant key hash. Expiry pruning is not signed delete authorization, so `EXPIRED` is not propagated through P2P notify. Long-stale ordinary nodes still recover through trusted Mirror. Response pages are bounded by record count and wire payload size, while Mirror staging also has total record and byte limits. A blob generation must include every chunk declared by its manifest and is replaced atomically as a group, so a partial generation never becomes visible.
+A single-key CAS binds at least:
 
-## Checkpoint
+```text
+signed_record
+expected_path_generation
+expected_record_hash or expect_absent
+```
 
-A DKVS checkpoint is a Merkle root over the local active record view. It helps nodes compare views and export snapshots. It is not a consensus root.
+Batch-CAS provides local atomic submission for related keys owned by the same authority, including:
 
-It answers one narrow question: whether two nodes currently see the same DKVS active record set. A sync response can carry the active root for its filter, and the receiver verifies that root against staged data before atomic application. A checkpoint/root is only a computed result and is not signed separately. P2P Mirror responses are signed by the server/miner node identity, binding the root to the complete synchronization context. The SatoshiNet indexer holds no private key and produces no signature. A checkpoint does not prove permanent availability of all historical data and does not automatically create chain transactions.
+- the account recovery envelope, shares, questions, and manifest;
+- an RGB11 encrypted snapshot and wallet head;
+- application records that must change together.
 
-Checkpoint signing and chain anchoring have been removed from the current design. Long term, not every node will store all DKVS data: core nodes may store all records, ordinary nodes may store subscribed records, and very large deployments may store records by DHT-style groups. A mandatory global anchor would be expensive and may provide misleading assurance. The more useful guarantee is that every node responsible for a given record eventually receives its updates.
+Batch-CAS guarantees at the receiving RPC node:
 
-## Current Boundary
+- all validations succeed before one database commit;
+- any failed mutation returns `applied=0`;
+- multiple paths are locked in canonical order;
+- an exact record or batch retry is idempotent;
+- a partially pre-existing batch returns conflict instead of filling the missing subset.
 
-The current stage does not include ordinary-node subscription markets, mailbox quota, large blob SDK, complete one-shot or lease-payment settlement, chain checkpoint anchoring, or DHT storage groups. These remain later protocol stages.
+It is not a cross-node linearizable transaction and does not support cross-owner transactions.
+
+## Fees and retention
+
+### AUTOPAY
+
+`AUTOPAY` is the primary relayable storage mode. A node reads `autopay.tc` contract state and verifies:
+
+- template, service name, fee asset, and recipient;
+- the delegate address derived from the signer;
+- active delegate status;
+- per-block amount and balance;
+- whether active record usage exceeds capacity.
+
+Capacity is calculated using the full-record rate:
+
+```text
+max_records = floor(amount_per_block / full_record_fee_per_block)
+```
+
+### FREE_LOCAL
+
+`FREE_LOCAL` supports development, temporary caching, and explicit endpoint-local backup:
+
+- the record carries a valid FREE_LOCAL fee proof;
+- it is stored only by the current endpoint;
+- it is never P2P-relayed;
+- it is excluded from network PathMeta, checkpoints, and path snapshots;
+- TTL, record count, bytes, and blob-key count are bounded by endpoint policy;
+- another device can recover it only through the same endpoint;
+- after endpoint switching, UI must not describe it as a network backup.
+
+Whether a production node enables FREE_LOCAL is a node policy decision.
+
+### Other proof modes
+
+Compact encodings exist for `ONESHOT` and `LEASE`, but their complete settlement verification remains later work.
+
+## P2P and the endpoint-local overlay
+
+Relayable records propagate through native SatoshiNet DKVS messages. Every receiving node re-validates:
+
+- key and namespace;
+- owner or authority;
+- signature and fee proof;
+- sequence, PathGeneration, and delete floor;
+- size, TTL, expiry, and quota.
+
+A generation gap cannot be guessed or locally filled. The node marks the path stale and performs full path synchronization.
+
+FREE_LOCAL records do not appear in the network snapshot. After validating the network path snapshot, Wallet SDK separately reads local-only records from the same endpoint and merges them into an endpoint-scoped overlay. That overlay never affects the network `StateRoot`.
+
+## Wallet SDK dkvsManager
+
+Domain modules do not own a DKVS transport client. `dkvsManager` coordinates:
+
+- endpoint clients and endpoint identity;
+- per-path locks and readiness;
+- confirmed replicas and local-only overlays;
+- sequence, PathGeneration, and monotonic IssueTime;
+- CAS and batch-CAS;
+- exact signed-batch outbox entries;
+- refresh, watch, and change notification;
+- typed error mapping.
+
+Write flow:
+
+```text
+wait for path readiness
+→ acquire per-path lock
+→ read confirmed replica and PathMeta
+→ allocate Seq and PathGeneration
+→ sign the exact record or batch
+→ persist exact outbox bytes
+→ submit CAS or batch-CAS
+→ apply the write response to replica, PathMeta, and outbox
+→ notify the domain module
+```
+
+Retries reuse the exact signed bytes. They must not regenerate sequence, generation, time, or signature.
+
+Stable error codes include:
+
+```text
+DKVS_WRITE_CONFLICT
+DKVS_STALE_GENERATION
+DKVS_STALE_ENDPOINT
+DKVS_PERMISSION_DENIED
+DKVS_INVALID_SEQUENCE
+DKVS_PATH_DIVERGED
+DKVS_LOCAL_ONLY_ENDPOINT_MISMATCH
+DKVS_QUOTA_EXCEEDED
+DKVS_RECORD_NOT_FOUND
+```
+
+Applications should branch on typed errors or stable codes, never human-readable error strings.
+
+## Account management
+
+Account management uses `/personal/<account_id>/account/...`:
+
+- a recovery package is published as one atomic four-record batch;
+- managed wallet state uses an encrypted envelope and monotonic revision;
+- explicit synchronization refreshes the remote path first;
+- write conflict, stale generation, path divergence, and invalid sequence use bounded retries;
+- wallet names, account metadata, and newly enabled accounts are replayed as field-level domain mutations;
+- wallet deletion is an inventory mutation and collapses earlier metadata mutations for that wallet;
+- the root wallet cannot be deleted;
+- a wrong secret or wrong root mnemonic cannot restore the state.
+
+This field-level merge is account-management logic, not a general DKVS multi-primary guarantee.
+
+## RGB11
+
+RGB11 uses separate `/personal/<account_id>/rgb11/...` and `/blob/<account_id>/...` paths:
+
+- encrypted snapshot and wallet head are committed in one batch-CAS;
+- the head is a monotonic revision binding the snapshot state hash and operation ID;
+- endpoint-local FREE_LOCAL backup can be restored by another device using the same endpoint;
+- active AUTOPAY upgrades storage to a relayable backup;
+- if AUTOPAY lookup fails but FREE_LOCAL policy is available, the wallet falls back to temporary backup;
+- a stale writer returns head conflict and cannot overwrite a newer remote state;
+- RGB asset validity remains a client-validation and Bitcoin-evidence decision. DKVS stores encrypted state and transport data only.
+
+See [RGB11 Assets and Wallet SDK](../rgb11/readme.md) for the asset-specific model.
+
+## E2E acceptance coverage
+
+Wallet SDK E2E tests start local bootstrap, core, and miner nodes and cover:
+
+- AUTOPAY name-owner rotation, mailbox append/tombstone, and three-node convergence;
+- same-endpoint FREE_LOCAL recovery and cross-endpoint isolation;
+- atomic account recovery publication;
+- account-management activation, recovery, boundaries, and two-device field-level convergence;
+- fixed-address RGB11 invoices, encrypted backup, same-endpoint restore, and stale-writer rejection;
+- CAS, PathGeneration, PathMeta, typed errors, and P2P convergence.
+
+Tests that connect to an existing public testnet, spend shared test assets, or mutate public network state use separate build tags and are excluded from the default suite.
+
+## Explicit boundaries
+
+DKVS v1 does not provide:
+
+- arbitrary multi-primary CRDT semantics;
+- cross-account transactions;
+- cross-node linearizable commits;
+- quorum, BFT, or an on-chain commit certificate;
+- FREE_LOCAL recovery across endpoints;
+- general large-file storage;
+- complete ONESHOT or LEASE settlement;
+- automatic merging of arbitrary business objects.
+
+Applications should treat DKVS as a verifiable, owner-controlled, eventually consistent small-data layer, not as a relational database or a global consensus database.
