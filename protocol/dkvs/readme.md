@@ -32,7 +32,7 @@ Primary namespaces:
 | `/mail/<receiver>/share/...` | Guardian/share data | Receiver owner-exclusive |
 | `/name/<name>` | Name profile | Current DID/NS authority |
 | `/svc/<service>/...` | Service configuration and discovery | Current service authority |
-| `/tmp/...` | Short-lived relay and ACK data | Local-only with bounded TTL |
+| `/tmp/...` | Generic temporary application data | Local-only with bounded TTL |
 | `/sys/...` | System parameters | Configured system signer |
 
 Modules under `/personal/<account_id>` use separate logical paths. Account management and RGB11 therefore do not share one generation counter or one write lock.

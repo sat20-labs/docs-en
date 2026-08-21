@@ -173,7 +173,7 @@ An application may publish an RGB11 receive capability/profile for a Bitcoin add
 
 An address profile describes capability and delivery location only. It does not mean the receiver has accepted the asset. Acceptance still requires local consignment validation and an ACK.
 
-## 6. Send, Relay, and ACK
+## 6. Send, Delivery, and ACK
 
 The standard send sequence is:
 
@@ -181,20 +181,20 @@ The standard send sequence is:
 2. Check asset identity, balance, UTXO locks, and minimum confirmations;
 3. Build the transition, consignment, PSBT, and change seals;
 4. Persist a pending transfer;
-5. Deliver the consignment to the receiver;
-6. Receive an ACK or NACK after receiver validation;
-7. Broadcast the Bitcoin transaction when the ACK policy is satisfied;
+5. Deliver the consignment through the selected transport;
+6. Broadcast the Bitcoin transaction according to that transport's durability and ACK policy;
+7. Record an ACK or NACK after receiver validation;
 8. Track confirmations and update allocations, balance, and UTXO locks.
 
 The SDK supports three transport families:
 
-- SAT20/DKVS relay and mailbox;
-- configured-address delivery;
+- configured SAT20 addresses with encrypted DKVS mailbox delivery;
 - standard RGB JSON-RPC proxy.
+- application-carried out-of-band consignments.
 
-A public relay record contains only transfer location and validation metadata. Private seal disclosures, complete local consignments, signed transactions, and change seals never enter a public relay record or wallet head.
+RGB11 no longer uses DKVS `/tmp` relay/ACK records or SAT20-private invoice query parameters. Mailbox records carry encrypted delivery data only; private seal disclosures, complete local consignments, signed transactions, and change seals never enter account backup or the wallet head.
 
-An ACK is not an asset-validity proof. A receiver may issue an ACK only after successful local client validation. The sender must also verify that the ACK is bound to the expected transfer, recipient, and relay record.
+An ACK is not an asset-validity proof. A receiver may issue an ACK only after successful local client validation. The sender must also verify that the ACK is bound to the expected transfer, recipient, and selected transport record.
 
 ## 7. UTXO and Balance Model
 
