@@ -12,10 +12,12 @@ The roadmap is not a price promise and not a fixed-date schedule. Every complete
 | Prediction / Agent contract testing        | Testing            | Users can bet in Market, deployers can deploy matches from Tools, and result confirmation and settlement paths are reviewable | [Prediction Contract Test](use/prediction-contract.md) |
 | Template AMM / limit order smart contract testing | Testing | Deploy and invoke from PWA `Tools -> Smart Contracts`, and verify asset settlement through Result TX; do not confuse with market AMM / limit order Channel Contracts | [Contract Template Catalog](build/contract-template-catalog.md) |
 | EVM sample contract testing                | Testing            | Verify `ConstantProductAMM` and `LimitOrderBook` samples from PWA `Tools -> Smart Contracts`, plus Solidity apps and SatoshiNet asset interfaces | [EVM Sample Contracts](build/evm-sample-contracts.md) |
+| PWA wallet primary flows | Implemented / Converging | Mainnet/testnet switch, L1/L2 assets, account management, channels, Market, Tools, operation logs, and offline cache pass the release checklist | [Wallet and Assets](use/wallet-and-assets.md) |
+| DKVS account data and RGB11 recovery | Testnet Iterating | FREE_LOCAL/AUTOPAY boundaries, create/update/delete/recreate, cross-node sync, account recovery, and RGB11 encrypted snapshots have reproducible E2E evidence | [DKVS](protocol/dkvs/readme.md) |
 | Real Community Stack deployment docs       | Planning           | At least one reproducible community DEX / DAO testnet flow                                  | [Community Stack](community-stack/)                                       |
 | First DEX / DAO pilots                     | Planning           | Testnet entry, contract or transaction evidence, and user guide                             | [Builder Program](ecosystem/builder-program.md)                           |
 | EVM Developer Preview                      | Testnet Iterating  | RPC, Chain ID, Faucet, sample repository, and Explorer verification are defined             | [EVM Developer Preview](build/evm-quickstart.md)                          |
-| Testnet user loop                          | Planning           | Wallet, test assets, first swap, Explorer verification, exit, and recovery are reproducible | [Use](use/)                                                               |
+| Testnet user loop | Implemented / Continuous Acceptance | Wallet, test assets, AMM/limit order, Explorer, channel lifecycle, cross-layer flow, and recovery are continuously accepted against each candidate | [Use](use/) |
 | Mining / Core Node and GAS economics draft | Design in Progress | Staking, fees, penalties, exit, and open questions are public                               | [Network Economics](network-economics/)                                   |
 | Builder Program application entry          | Planning           | A submittable form or GitHub Issue Template exists                                          | [Builder Program](ecosystem/builder-program.md)                           |
 | Sustainable protocol development support   | Planning           | Support methods, fund usage, deliverables, and responsible entity are clear                 | [Support Protocol Development](governance-support/support-development.md) |
@@ -29,7 +31,7 @@ The roadmap is not a price promise and not a fixed-date schedule. Every complete
 | EVM SDK / RPC                        | Testnet Iterating | Minimal contract deploy, invoke, event, and Result TX are verifiable                               | [EVM Contracts](protocol/contracts/evm.md)               |
 | Community Builder Agent              | In Development | Requirement intake, config draft, human confirmation, testnet deployment plan, and evidence report | [Community Builder Agent](ai/community-builder-agent.md) |
 | First external ecosystem cases       | Planning       | Built on SatoshiNet includes at least one external project                                         | [Built on SatoshiNet](ecosystem/built-on-satoshinet.md)  |
-| Core English docs                    | Planning       | Homepage, Community Stack, Today, Security, Nodes, GAS, and Builder Program are synced in English  | docs-en                                                  |
+| Core English docs | Continuously Synced | Chinese fact updates retain equivalent English structure, status, and risk boundaries | docs-en |
 
 ## Later
 

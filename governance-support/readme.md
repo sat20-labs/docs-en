@@ -12,4 +12,4 @@ This section clarifies:
 
 Supporting protocol development and GAS network economics are separate matters. Donations, sponsorships, service contracts, and future foundation arrangements do not equal buying GAS or receiving yield promises.
 
-**Page Status: Planning**
+**Page Status: Current Boundary Defined / Governance Planned**

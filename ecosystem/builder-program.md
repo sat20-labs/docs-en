@@ -33,4 +33,6 @@ Current Builder Program mainly provides open-source code, testnet, technical rev
 
 Application material should include project goal, team background, target users or community, required modules, current status, first testnet milestone, existing code or evidence, risk boundaries, and questions requiring SAT20 Labs review.
 
-**Page Status: Planning**
+The participation and evaluation framework is available, but no formal grant program or guaranteed funding channel has been opened.
+
+**Page Status: Framework Defined / Formal Grant Program Unavailable**

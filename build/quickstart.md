@@ -20,7 +20,7 @@ This page gives the shortest path into SAT20 / SatoshiNet development.
 | Check contract template status | [Contract Template Catalog](contract-template-catalog.md) |
 | Integrate wallet or exchange | [Exchange and Wallet Integration](exchange-and-wallet.md) |
 
-Pages with status labels are still planning or depend on systems that are in development.
+Status labels define the actual release boundary. `Runtime Exists / Public Flow Unavailable` means lower-level code exists but must not be presented as a public deployable product.
 
 ## Testnet Acceptance
 
@@ -38,4 +38,4 @@ Developers should eventually verify at least:
 
 See [Third-Party STP Client Implementation Checklist](../protocol/stp/implementation-checklist.md).
 
-**Page Status: Planning**
+**Page Status: Maintained Index; use each child page's status**

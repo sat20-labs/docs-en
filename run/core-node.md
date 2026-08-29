@@ -12,11 +12,13 @@ A Core Node includes all Mining Node capabilities and additionally provides STP 
 | L1 Indexer dependency | Needs to understand chain facts | Needs more stable L1 Indexer access for STP cross-layer verification |
 | Staking requirement | Planned GAS staking | Planned higher requirement; parameters remain under design |
 
-## To Be Completed
+Core Node and STP services run on mainnet and testnet. What remains incomplete is third-party operation and open admission, not the existence of the core implementation.
+
+## Still to Be Completed
 
 1. Boundary between STP service fees and network fees.
 2. Recovery boundary when user channels fail.
 3. Public testnet admission flow.
 4. Handling node offline, refusal of service, or state abnormalities.
 
-**Page Status: Design in Progress**
+**Page Status: Implemented / Third-Party Admission Design**

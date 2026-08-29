@@ -9,8 +9,8 @@ This page summarizes SatoshiNet smart contract templates, runtimes, and testnet 
 | Agent / Prediction Contract | Implemented / Testing | [Prediction Contract Test](../use/prediction-contract.md) | First public testnet validation scenario |
 | Template Contract: AMM | Implemented / Testnet Iterating | PWA `Tools -> Smart Contracts`, [Deploy AMM Pool](amm-pool-quickstart.md) | Smart contract template test capability, not market AMM |
 | Template Contract: LimitOrder | Implemented / Testnet Iterating | PWA `Tools -> Smart Contracts`, [Deploy Limit Order Module](limit-order-quickstart.md) | Smart contract template test capability, not market limit order |
-| Template Contract: Asset Exchange | Implemented / Testnet Iterating | To be added | Fixed-rule asset exchange scenario |
-| Template Contract: Autopay | Implemented / Testnet Iterating | To be added | `autopay.tc`, pays a fixed or linear fee to one configured recipient by block height |
+| Template Contract: Asset Exchange | Implemented / No Current Market Acceptance Entry | Source and E2E | Fixed-rule asset exchange; current PWA market acceptance excludes Exchange |
+| Template Contract: Autopay | Implemented / Used by Node Services | Node config and E2E | Native template pays DKVS and other service fees by block height; not a normal user market action |
 | EVM Runtime | Implemented / Testnet Iterating | [EVM Developer Preview](evm-quickstart.md) | Reuses Solidity / EVM ecosystem; invocation uses ABI calldata, and asset settlement still follows SatoshiNet UTXO model |
 | EVM Sample: ConstantProductAMM | Implemented / Testing | PWA `Tools -> Smart Contracts`, [EVM Sample Contracts](evm-sample-contracts.md) | Solidity AMM standard sample, not market AMM |
 | EVM Sample: LimitOrderBook | Implemented / Testing | PWA `Tools -> Smart Contracts`, [EVM Sample Contracts](evm-sample-contracts.md) | Solidity limit order standard sample, not market limit order |
@@ -39,4 +39,4 @@ Each template contract should eventually include:
 5. EVM sample contracts: add testnet addresses, txids, calldata generation records, and Explorer evidence for `ConstantProductAMM` and `LimitOrderBook`.
 6. EVM Runtime: add RPC, Chain ID, example repo, Solidity deployment flow, estimate flow, and ABI calldata invocation flow.
 
-**Page Status: Planning**
+**Page Status: Maintained Catalog; use the matrix for each template's release status**

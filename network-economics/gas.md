@@ -19,6 +19,6 @@ GAS is SatoshiNet's network fee and security staking asset. It connects network 
 
 ## Current Status
 
-The complete GAS issuance, transcending, staking, penalties, node admission, initial distribution, and foundation governance rules still require technical simulation, public discussion, and legal review.
+Runtime gas metering and fee deduction are implemented. Testnet SGAS covers transaction, contract, Faucet, and Autopay flows. Formal L1 GAS issuance, cross-layer supply reconciliation, staking, penalties, node admission, initial distribution, and foundation governance still require technical simulation, public discussion, and legal review.
 
-**Page Status: Design in Progress**
+**Page Status: Fee Mechanism Implemented / Economics Design in Progress**

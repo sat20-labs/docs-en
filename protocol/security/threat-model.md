@@ -30,4 +30,6 @@ SatoshiNet safety is not a balance number. It is a set of verifiable exit eviden
 4. Contract assets and private channel assets have different safety boundaries.
 5. Testnet validation does not mean mainnet has no risk.
 
-**Page Status: Planning**
+This model covers the current major boundaries and must be updated whenever protocol, wallet, contract, DKVS, or node-admission behavior changes. Implementation evidence calibrates risk; it does not mean the system is risk-free.
+
+**Page Status: Maintained**

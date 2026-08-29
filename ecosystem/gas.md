@@ -1,5 +1,7 @@
 # Network Fees and GAS
 
-This page is kept for compatibility. The current GAS and node-economics documentation has moved to [Network Economics](../network-economics/readme.md).
+GAS prices contract execution, transaction processing, and network resources. Its value proposition depends on real applications, transactions, resource use, and clearly disclosed fee behavior—not on fixed-yield claims.
 
-**Page Status: Planning**
+Runtime gas metering and fee deductions are implemented, while testnet SGAS validates transaction, contract, Faucet, and Autopay flows. Formal GAS issuance, staking, penalties, allocation, and governance remain under design. See [Network Economics](../network-economics/README.md) for the full boundary.
+
+**Page Status: Fee Mechanism Implemented / Economics Design in Progress**

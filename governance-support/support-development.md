@@ -20,4 +20,4 @@ Long-term protocol development needs transparent and sustainable support. Suppor
 3. Before a future foundation is established, funds are not received or managed under a foundation name.
 4. A formal funding page should list the receiving entity, use of funds, budget, responsible person, and deliverables.
 
-**Page Status: Planning**
+**Page Status: Support Framework Defined / Formal Funding Programs Published Individually**

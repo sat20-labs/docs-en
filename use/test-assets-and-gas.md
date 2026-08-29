@@ -6,7 +6,7 @@ Test assets and test GAS are only for public testnet validation. They have no ma
 
 ## Claim Test GAS
 
-1. Install or open [SAT20 PWA Wallet](https://sat20.org/pwa/?install=1).
+1. Install or open [SAT20 PWA Wallet](https://sat20.org/pwa/).
 2. Switch to SatoshiNet testnet.
 3. Open `Tools`.
 4. Click the faucet entry on the tools home page.
@@ -56,4 +56,4 @@ After claiming or using test assets, check:
 
 If wallet display and Explorer / Indexer evidence disagree, treat Explorer / Indexer evidence and txid as the priority for debugging, and avoid repeating value-moving operations until the state is clear.
 
-**Page Status: In Development**
+**Page Status: Implemented / Faucet and test-contract configuration changes with each testnet reset**

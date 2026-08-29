@@ -22,11 +22,11 @@ This section is for ordinary users, asset users, and community members. Its goal
 | Exit and recover | [Exit SatoshiNet and Recover](exit-and-recovery.md) |
 | FAQ | [FAQ](faq.md) |
 
-Pages with status labels are still planning or depend on systems that are still in development. The entries are kept so they can be completed one by one.
+Status labels distinguish an existing protocol/runtime from a currently published PWA entry. DAO, Launchpad, and airdrop runtimes or historical models do not automatically mean that a public wallet flow is available; check each page before acting.
 
 ## Basic Asset Path
 
-1. Install [SAT20 PWA Wallet](https://sat20.org/pwa/?install=1), create or import a wallet, and complete backup.
+1. Open or install [SAT20 PWA Wallet](https://sat20.org/pwa/), create or import a wallet, and complete backup.
 2. Connect to the default Core Node.
 3. Open an STP channel.
 4. Use Indexer to verify Bitcoin L1 asset UTXO, confirmations, and protocol state.
@@ -47,4 +47,4 @@ Pages with status labels are still planning or depend on systems that are still 
 | I want to place a limit order | [Use Limit Orders](limit-order.md) |
 | I want to verify transactions | [Verify Transactions with Explorer](explorer-verification.md) |
 
-**Page Status: Planning**
+**Page Status: Implemented / Iterating; availability follows each child page**

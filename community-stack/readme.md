@@ -1,6 +1,6 @@
 # Community Stack: Build Complete Infrastructure for Your BTC Community
 
-Community Stack is SatoshiNet's complete infrastructure package for BTC communities. Its goal is not only to let communities "bridge" assets to another network, but to help them gradually own their DEX, DAO, wallet entry, Indexer, Explorer, Launchpad, AMM, limit order system, and operations backend.
+Community Stack is the target architecture for BTC communities, not a released one-click package. Nodes, Indexers, PWA, reference markets, AMM, and limit-order components are reusable today; DAO, Launchpad, white-label packaging, and managed operations require separate review and release.
 
 > Let every BTC community own its own financial infrastructure.
 
@@ -46,4 +46,4 @@ When submitting a community cooperation request, include:
 9. Budget or resource capacity.
 10. What support is expected from SAT20 Labs.
 
-**Page Status: Planning**
+**Page Status: Blueprint / Components Partially Available / Packaged Flow Planned**

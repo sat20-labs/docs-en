@@ -2,6 +2,8 @@
 
 This document plans the V3 content structure for `docs.sat20.org`. It is not a protocol whitepaper; it is the product design document for Docs itself.
 
+> Historical note: the V3 directory skeleton has been established. This page remains as a restructuring decision record; its P0/P1/P2 labels are not current project status. See [SatoshiNet Today](ecosystem/satoshinet-today.md) and the [Roadmap](roadmap.md) for live status.
+
 ## New Positioning
 
 `docs.sat20.org` is the authoritative source for SatoshiNet protocol facts, developer integration, safety verification, and implementation details. The website explains outcomes, opportunities, and action paths. Docs provide implementation, evidence, and risk boundaries.
@@ -39,4 +41,4 @@ Resources
 6. Change SatoshiNet Today to three dimensions: implementation status, available environment, docs evidence.
 7. Simplify roadmap to Now / Next / Later.
 
-**Page Status: Planning**
+**Page Status: Historical Record**

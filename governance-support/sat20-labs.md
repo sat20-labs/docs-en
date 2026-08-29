@@ -10,4 +10,4 @@ SAT20 Labs is the development team for SAT20 and SatoshiNet core protocols and o
 4. Provide reference implementations, deployment support, and technical review.
 5. Publish risks, limitations, and protocol questions still under design.
 
-**Page Status: Planning**
+**Page Status: Current Responsibility Statement**

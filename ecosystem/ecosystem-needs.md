@@ -13,4 +13,4 @@ This page lists what SatoshiNet currently needs from external builders.
 | AI Agent developers | Agent Wallet and Community Builder Agent |
 | English and regional communities | Content, docs, support, local ecosystem building |
 
-**Page Status: Planning**
+**Page Status: Participation Areas Defined / Public Programs Open Individually**

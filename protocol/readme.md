@@ -2,7 +2,7 @@
 
 SAT20 is not a single protocol. It is a protocol, indexing, channel, and execution stack built around Bitcoin-native assets. Its goal is to let BTC, Ordinals, Runes, BRC20, ORDX, and other assets enter a network that is better suited for circulation, contracts, and AI Agent automation while preserving user control.
 
-## Foundation Layers
+## Five Foundation Layers
 
 | Layer                    | Role                                                                                                                        |
 | ------------------------ | --------------------------------------------------------------------------------------------------------------------------- |
@@ -12,7 +12,7 @@ SAT20 is not a single protocol. It is a protocol, indexing, channel, and executi
 | Channel Contracts        | Manage public asset pools and coordinate user-triggered L1/L2 cross-layer actions                                           |
 | Asset Issuance Protocols | BTC, Ordinals, Runes, BRC20, ORDX, and other asset protocols unified by indexers                                            |
 
-The relationship can be summarized as:
+The relationship among these five layers can be summarized as:
 
 1. BTC, Ordinals, Runes, BRC20, ORDX, and other protocols define or carry assets.
 2. Indexers parse these assets from on-chain transactions into unified asset facts.

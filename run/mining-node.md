@@ -2,7 +2,9 @@
 
 Mining Nodes are responsible for SatoshiNet block production, transaction ordering, and contract execution. They are the base role for network execution capability and fee flow.
 
-## Questions This Page Must Answer
+The node software and block-production path are implemented and running. Open participation rules remain separate from implementation capability.
+
+## Questions Still Requiring Public Answers
 
 1. What a Mining Node does.
 2. How it participates in block production.
@@ -16,6 +18,6 @@ Mining Nodes are responsible for SatoshiNet block production, transaction orderi
 
 ## Current Boundary
 
-Node fees come from actual network service, not from fixed-yield products. Full staking thresholds, penalty rules, unstaking time, and admission flows remain under design.
+Node fees come from actual network service, not from fixed-yield products. Existing mainnet/testnet nodes do not mean that third parties can join block production without admission. Staking thresholds, penalties, unstaking time, and open admission remain under design.
 
-**Page Status: Design in Progress**
+**Page Status: Implemented / Admission and Economics Design in Progress**
