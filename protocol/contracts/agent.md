@@ -189,7 +189,7 @@ Only valid `bet_asset` amounts recorded by the runtime participate in prediction
 
 ### Deployer Close Boundary
 
-The deployer may call `close` while the current time or block height is less than or equal to `bet_deadline`. Closing refunds every runtime-recorded valid bet at its original amount and charges no fee. Once the current time or block height exceeds `bet_deadline`, deployer close is disabled. From `ClosedForBet` onward, result confirmation belongs to the Agent; cancellation, invalid, or unverifiable outcomes must be submitted through `confirm` and follow the deterministic full-refund path.
+The deployer may call `close` while the current time or block height is less than or equal to `bet_deadline`. Such an early close refunds every runtime-recorded valid bet at its original amount without a settlement fee; the invocation still pays contract gas. Once the current time or block height exceeds `bet_deadline`, the deployer cannot close an unsettled prediction to refund its bets. A prediction that has already completed settlement or been rejected may still close to release its remaining operating balance. From `ClosedForBet` onward, result confirmation belongs to the Agent; cancellation, invalid, or unverifiable outcomes must be submitted through `confirm` and follow the deterministic full-refund path.
 
 ### Runtime States
 

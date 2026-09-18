@@ -76,7 +76,9 @@ Deploy transactions may split large contract content across multiple contract OP
 
 Smart contracts use a common close rule. A `close` invocation can be made only by the contract deployer. Before closing, each contract type may return assets with clear ownership according to its own state rules, such as open orders, LP shares, or other user-owned positions.
 
-After close processing, remaining contract-managed assets without clear user ownership are treated as contract profit and distributed 60% to the deployer and 40% to the bootstrap recipient. Assets held at the contract address that exceed the runtime-managed asset records are not used for contract business settlement; on close they are sent to the bootstrap recipient for later handling.
+After close processing, remaining contract-managed assets without clear user ownership are treated as contract profit and distributed 70% to the deployer and 30% to the bootstrap recipient. Shares are calculated in the asset's smallest units: the deployer's share is rounded down, and the bootstrap recipient receives the remainder. Assets held at the contract address that exceed the runtime-managed asset records are not used for contract business settlement; on close they are sent to the bootstrap recipient for later handling.
+
+Managed and unmanaged balances are tracked as asset quantities at the contract address, without assigning ownership to individual UTXOs. A Result TX selects only enough UTXOs to cover its business outputs, refunds, and fees, returning input change to the contract address and leaving unselected UTXOs untouched. While the contract remains active, unmanaged balances are excluded from business spending and retained until close.
 
 This rule applies to Template, EVM, and Natural Language contracts. A contract family may define which assets have clear user ownership before close, but it cannot change the common handling of unowned profit and unmanaged assets.
 
