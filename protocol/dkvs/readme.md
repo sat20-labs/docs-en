@@ -1,379 +1,148 @@
 # DKVS: SatoshiNet Distributed Key-Value Storage
 
-DKVS, the Distributed Key-Value Store, is SatoshiNet's owner-controlled small-data storage and synchronization layer. It provides a common signed-record model for wallets, account recovery, encrypted RGB11 backup, mailbox delivery, service discovery, and application configuration.
+> Updated 2026-10-05. This page describes the DKVS data model, write authorization, synchronization protocol, and SDK integration boundaries.
 
-DKVS is not a general-purpose multi-primary database and is not Bitcoin or SatoshiNet consensus state. It addresses a narrower problem: **how a service node validates writers, accepts updates atomically, and lets relayable data converge through the node protocol, while Wallet maintains a confirmed local replica of the current service endpoint.**
+DKVS is an owner-controlled small-data storage and synchronization layer for account management, encrypted backups, and application configuration. It provides atomic writes at one service node and eventual convergence of network-visible data, without cross-node linearizability or arbitrary multi-primary merging.
 
 ## Core Principles
 
-1. A key expresses stable business identity, not an implementation or schema version.
-2. `Seq` orders updates to one key, and `ETag = RecordHash(record)` controls per-key concurrency.
-3. Wallet writes use only `ExpectAbsent` or `ExpectedETag`; they do not use path roots, path generations, or endpoint epochs.
-4. Batch CAS commits atomically at one service node. A failed mutation never leaves a partial batch.
-5. `FREE_LOCAL` is a fee and endpoint-local retention mode, not a second application protocol.
-6. A Wallet keeps one aggregated prefix long-poll per service endpoint and reads subscribed data from its local confirmed replica.
-7. `PathMeta`, `StateRoot`, network delete floors, and path snapshots belong only to canonical node-to-node synchronization.
-8. Wallet SDK `dkvsManager` is the single owner of transport, prefix registry, replica, cursor, outbox, and background synchronization.
-9. DKVS does not understand or automatically merge account-management, RGB11, or other domain objects. Each domain defines its own conflict policy.
-10. The first release switches directly to the final protocol and local schema. It keeps no dual reads, dual writes, legacy decoder, or versioned-key fallback.
+1. Keys express stable business identity; schema upgrades do not create versioned keys.
+2. `Seq` orders updates within one key's current lifetime; `ETag = RecordHash(record)` supports exact CAS.
+3. Deletion physically removes current records. There are no persistent tombstones, delete floors, or mutation logs.
+4. Generation belongs to the current endpoint and collection, supporting Wallet sync and write authorization; P2P does not propagate generation.
+5. New Wallet writes validate CAS, current binding, request signatures, and this endpoint's prefix generations together.
+6. `FREE_LOCAL` is an endpoint-local fee and retention policy, without cross-node backup guarantees.
+7. SDK `dkvsManager` owns clients, subscriptions, replicas, outbox, and background synchronization; the PWA uses domain-level WASM APIs.
+8. Unreleased functionality retains no legacy protocol compatibility, dual writes, or migration paths.
 
-## Stable Keys and Namespaces
+## Stable Keys and Authority
 
-DKVS keys use path syntax:
-
-```text
-/<namespace>/<segments...>
-```
-
-Primary namespaces:
-
-| Namespace | Purpose | Write authority |
+| Namespace | Purpose and authority | Placement / replication boundary |
 | --- | --- | --- |
-| `/account/...` | Public account mappings and profiles | Corresponding account identity |
-| `/personal/<account_id>/<application>/...` | Wallet, account-management, RGB11, and other private domain data | Account owner |
-| `/blob/<account_id>/<blob_name>` | Encrypted snapshots or bounded larger objects | Account owner |
-| `/mail/<receiver>/msg/<sender>/<msg_id>` | Offline messages | Sender creates; receiver may delete |
-| `/mail/<receiver>/share/...` | Guardian/share data | Receiver or protocol-selected writer |
-| `/name/<name>` | Name profile | Current DID/NS authority |
-| `/svc/<service>/...` | Service configuration and discovery | Current service authority |
-| `/tmp/...` | Temporary application data | Bounded TTL and policy-defined local-only storage |
-| `/sys/...` | System parameters | Configured system signer |
+| `/account/<network>/<root-address>` | Root-signed account service binding | Network-replicated control record |
+| `/personal/<account>/<module>/...` | Private domain data owned by the account | FREE_LOCAL or network storage |
+| `/blob/<account>/<blob-key>` | Owner's encrypted larger objects | FREE_LOCAL or network storage |
+| `/name/<did>` | Profile controlled by the current DID owner | Network storage |
+| `/svc/<did>/...` | Service configuration controlled by the current DID owner | Network storage |
+| `/mail/<account>/...` | Mailbox managed by MessageManager / owner | Currently bound CoreNode, AccountBound |
+| `/topic/...` | Topic service state | Service policy / protocol-defined |
+| `/sys/...` | System records authorized by SystemVerifier | Network storage |
+| `/tmp/...` | Temporary data constrained by signer and local policy | LocalOnly |
 
-Correct keys directly name business objects:
+The current root-signed AccountServiceDescriptor binding record is the binding fact, containing AccountID, CoreNodeID, and capabilities. Ordinary Wallet writes must be accepted by the currently bound CoreNode; standalone binding creation is a validated bootstrap exception.
 
-```text
-/personal/<account_id>/wallet/catalog
-/personal/<account_id>/wallet/settings
-/mail/<account_id>/msg/<sender_id>/<msg_id>
-/blob/<account_id>/<blob_name>
-```
+A collection defines the scope of synchronization, endpoint-local generation, and current-set roots. Comparing Seq across keys or generation across endpoints does not establish network-wide freshness.
 
-A data-structure upgrade for the same object uses the same key and a higher `Seq`. A version may appear in a key only when an external protocol version is itself part of business identity and multiple generations must remain selectable at the same time. Every exception requires explicit approval, a minimal allowlist entry, and dedicated tests.
+## Records, Deletion, and Recreation
 
-## Signed Records and ETags
+A signed record contains `Version / Key / Value / Seq / IssueHeight / TTL / FeeProof / Flags / PubKey or account identity / Signature`.
 
-DKVS keeps one signed-record format:
+- Initial creation uses `Seq = 1`; updates use current Seq + 1 and match the current ETag.
+- A deletion command uses `FlagTombstone`, current Seq + 1, and a Value that signs the target record's RecordHash, satisfying exact CAS.
+- Successful deletion removes the record, hash index, and the key's latest change-generation index. Snapshots contain no deletion commands.
+- A deleted key is absent and recreation starts at `Seq = 1`; historical high sequences are not lifetime floors.
+- With `TTL > 0`, expiry height is IssueHeight + TTL. Retention with `TTL = 0` is determined by paid policies and other applicable rules.
+- New Wallet RPC writes require `currentHeight - 2 <= IssueHeight <= currentHeight`; this short window does not reject old but still valid current records in P2P.
 
-```text
-Version
-Key
-Value
-Seq
-IssueHeight
-TTL
-FeeProof
-Flags
-PubKey / account identity
-Signature
-```
+Ordinary values, blobs, batches, pages, and complete replicas have separate capacity limits. DKVS stores bounded objects and references without promising general-purpose large-file storage.
 
-`ExpiryHeight` is derived from record-height and TTL semantics. The ETag is:
+The SDK Blob codec uses one format: `DKB1 + uint32(metadata length) + metadata + data`. The length field is big-endian, metadata may be empty, and data must be nonempty. The fixed eight-byte envelope counts toward the Blob value limit. Data bytes remain unchanged, without implicit compression. Decoding does not infer an unframed format or automatically migrate or rewrite existing raw values; the direct record API still returns the stored bytes.
+
+## Wallet APIs and Write Authorization
+
+Current application endpoints:
 
 ```text
-ETag = RecordHash(record)
+GET  /v3/dkvs/config
+GET  /v3/dkvs/record?key=...
+GET  /v3/dkvs/key-state?key=...
+POST /v3/dkvs/records/batch-cas
+POST /v3/dkvs/active/sync
+POST /v3/dkvs/active/watch
+POST /v3/dkvs/prefixes/read
 ```
 
-For a deleted key, its ETag is the hash of the latest signed tombstone or the service node's effective delete floor.
+`/checkpoint`, `/snapshot`, and node `/subscriptions` are node-local administration endpoints, not a compatibility protocol for PWA managed replicas. There is no separate `/write-context` endpoint; the SDK obtains write context from completed synchronization metadata.
 
-Primary size boundaries are:
+A write request includes RequestID, EndpointID, ordered mutations, each key's `ExpectAbsent` or `ExpectedETag`, and a wallet request signature over the endpoint, prefix generations, RequestID, record hashes, and CAS predicates. The record signature proves authorship; the request signature authorizes this specific write and cannot be replaced by copying a historical record.
 
-- ordinary values are limited to 16 KiB;
-- `/blob` values are limited to 1 MiB;
-- one batch contains at most 64 mutations and 8 MiB of encoded records;
-- a key is limited to 256 bytes and one segment to 64 bytes;
-- subscription snapshots have separate record-count and total-byte limits.
+The server verifies current binding, generation, exact CAS, Seq, signatures, permissions, fees, and quotas. Before committing, it confirms that payment and capacity validation still applies at the current local height and policy. Changed conditions require revalidation of the original authorized request. Failure of any mutation prevents partial submission; all changes commit atomically under one commit lock and DB batch.
 
-DKVS is not a generic file store. Large files should use a dedicated distribution system. DKVS should primarily store small objects, encrypted snapshots, manifests, metadata, or stable references.
+After `STALE_GENERATION / WRITE_CONFLICT / INVALID_SEQUENCE`, the domain must synchronize current state and build a new business request. When the network outcome is unknown, the outbox may only replay the original complete signed request; it cannot change its generation, renew authorization, or replace CAS predicates. Definite record TTL expiry returns `DKVS_EXPIRED_RECORD`; the SDK discards the rejected expired outbox without changing the original TTL, signing height, or authorization.
 
-## Four Consistency Boundaries
+## Active Sync / Watch and Confirmed Replicas
 
-| Problem | Mechanism | Layer |
-| --- | --- | --- |
-| Per-key concurrency | `Seq` + `ETag` | Wallet and service node |
-| Wallet delta position | Endpoint-scoped opaque cursor | Wallet subscription |
-| FREE_LOCAL ownership | Stable `EndpointID` | Current service node |
-| Canonical node convergence | `PathMeta` + `StateRoot` | Internal SatoshiNet P2P |
+The SDK explicitly registers managed prefixes, persists them, and restores them on restart. Ordinary Get does not establish a permanent subscription. Subscribed data comes from the confirmed replica; unsubscribed data is fetched online on each read without a short-term read cache. On-demand and explicit authoritative reads share one five-second deadline covering the configuration, key-state, record, directory pages, and verification-height queries needed by that operation; steps do not reset it. Active sync likewise uses the caller's context for configuration and pages, and cancellation prevents result installation. Managed persistent replicas support offline reads of the last confirmed state.
 
-Each mechanism solves one problem. Wallet requests never carry `ExpectedPathRoot`, `ExpectedPathGeneration`, a `ViewHeight` CAS condition, or endpoint generation.
+An ActiveScope identifies a collection, optionally restricted to specific keys. Metadata contains `EndpointID / scope / generation / root / ViewHeight`.
 
-## Fees and Storage Modes
+- Full sync returns the current set, with pages pinned to one generation, root, and validation height. Changes to the server's current set invalidate the cursor and require a new read.
+- Incremental sync returns records changed after the completed generation that still currently exist; it is not event history.
+- Deletion returns no historical tombstone. The SDK verifies the current root after merging candidates and falls back to full sync when incremental results cannot explain a deletion.
+- Only validated complete results atomically install records and synchronization metadata. Write ACKs do not directly advance completed sync positions.
+- Local Wallet installation checks a concurrent-update baseline; outbox entries remain separate from confirmed records.
+- One terminal uses one aggregated long-poll. Current defaults allow 16 prefixes, 256 records per page, and a 20-second Watch timeout. A response contains at most one changed scope's current page.
+- The server maintains no persistent terminal session, offline event queue, or mutation log. Slow consumers read current state again.
 
-The service node derives `FREE_LOCAL`, `AUTOPAY`, or another paid mode from `FeeProof`. APIs may return the derived `storage_mode`, but it is not a second persistent source of truth.
+The SDK stores confirmed records, managed prefixes, endpoint-local sync metadata, per-prefix ACK high watermarks, and original-request outbox entries. It stores no P2P source ownership, deletion history, or cross-node version table.
 
-### AUTOPAY and Other Paid Modes
+Sending and receiving return separate results. Send conflicts, expired original signing heights, funding pauses, and transient network failures do not block receiving sync / Watch that passes same-endpoint validation. Conflicting requests retain their original authorization and error while automatic submission stops. Transient network failures retry the original authorization at the existing five-second interval while Watch continues receiving. Receiving must still pass its own source and baseline checks. Definite storage downgrades, quota refusals, and structured request rejections return business errors, retaining the original request and rejection details while stopping automatic submission. Transient failures such as HTTP 429 retain original-request retries. The transport coordinator releases its slot and wakes waiters on return or panic; unrecoverable local errors retain fail-fast behavior.
 
-`AUTOPAY` is the primary relayable storage mode. The node validates the contract, service name, fee asset, recipient, signer-linked delegation, active-delegate state, per-block amount, balance, and capacity. A valid canonical record may enter node-to-node replication.
+Errors from account background tasks and mailbox maintenance remain visible and are returned to callers independently; they do not block managed receiving that passes its own validation. Failed tasks remain pending while other tasks continue, so a business refusal cannot block confirmed-change notifications. If a completed Watch page falls behind a concurrent foreground write ACK, the SDK discards the old page and reads current state through the existing bounded synchronization flow. The fresh response must still pass endpoint, ACK lower-bound, root, and installation-baseline checks.
 
-### FREE_LOCAL
+Offline replicas represent only the last confirmed state and cannot prove current network freshness. Wall-clock time cannot fabricate a trusted chain height. Connecting to a different EndpointID does not automatically authorize replacement of an old replica. The current SDK blocks direct switching: active FREE_LOCAL records or their pending outbox cause a local-only endpoint mismatch; otherwise an explicit source / baseline decision is still required.
 
-`FREE_LOCAL` has strict semantics:
+Refreshing the same fully synchronized directory set on the same endpoint preserves confirmed-read eligibility. After a network refresh failure, the OFFLINE_READY replica remains readable; a successful refresh restores READY. Initial synchronization, incomplete synchronization, and newly registered directories cannot gain offline-read eligibility through this path. Writes retain online authorization and CAS checks. A directory ViewHeight from full sync or Watch only advances the known endpoint verification height, so a delayed page cannot lower expiry checks for another directory. An explicit best-height query can still confirm an actual chain rollback.
 
-- it belongs only to the storage instance identified by the current `EndpointID`;
-- it is a single-endpoint, single-writer mode;
-- it carries a valid FREE_LOCAL fee proof;
-- TTL, per-signer quota, total endpoint quota, and blob limits are enforced by endpoint policy;
-- it never enters P2P relay, canonical snapshots, checkpoints, or anti-entropy;
-- it does not support lossless endpoint switching;
-- UI must not describe it as network-wide backup or cross-node persistence.
+Reads from an explicitly selected recovery node or another on-demand source validate that result at the source's current height without changing the managed replica's verification height. Before refreshing the shared verification height, a known EndpointID must match the persisted replica source. Reads such as storage estimates cannot combine another source's policy with the local replica height. A temporary online refresh failure on the same source may retain its known trusted height; network failure cannot waive source consistency. A source mismatch returns an endpoint mismatch while preserving the original replica and its height.
 
-Allowed transitions are:
+Get, directory listing, readiness checks, and write builders using local state share one confirmation boundary: every registered or pending directory has completed synchronization, and the client's known EndpointID matches the replica source. A known different source returns an endpoint mismatch while preserving the old replica. URL aliases with the same EndpointID may share the replica. Before a client confirms its source, it may read the last confirmed offline view, which remains attributed to the replica's persisted EndpointID rather than an unknown endpoint.
+
+After the DKVS Manager is recreated, an eligible confirmed replica restores an unknown verification height from its persisted ViewHeight; zero is also a known height. An already observed online height takes precedence. Get and directory listing apply consistent signature and TTL checks. This offline boundary describes only the last confirmed view, not the latest chain height.
+
+The account managed-data confirmation wait observes only locally confirmed state/blob records, checking signatures, TTL, profile content, and data revision/hash relationships. When not ready, it wakes the existing DKVS synchronization worker. The wait itself neither starts nor waits for synchronization HTTP. The caller's context bounds the whole wait, including temporary root-wallet unavailability. Without a caller deadline, one default 30-second deadline covers the entire call. Cancelling the wait does not cancel the shared receiving worker; the existing lifecycle must start that worker.
+
+## Fees and Placement
+
+`FREE_LOCAL` requires a valid fee proof and finite TTL, subject to signer / node quotas. It is available only at the current endpoint and does not enter P2P or network snapshots. An ordinary Seq + 1 write with CAS, a new AUTOPAY proof, and a new signature can upgrade it to paid storage; paid records cannot downgrade to FREE_LOCAL.
+
+`AUTOPAY / PAID` availability and retention depend on FeeVerifier and contract state. Network-visible records participate in P2P. Grace after stopped payments is local retention behavior, without deletion history. Missing funds must not silently convert paid data to FREE_LOCAL. The SDK retains the original funding-paused outbox and prompt while continuing to receive subscription updates.
+
+Omissions from a network snapshot do not remove local AUTOPAY grace data early. Retained data remains outside the network root and relay. A valid current record for the same key can still replace the cached copy; the existing retention cleanup deletes it when grace expires.
+
+After payment resumes, an old expiry decision cannot delete the record. Successfully written or recreated current records publish their payment verification together. Concurrent maintenance updates only results matching current records and cannot remove a new record's valid network synchronization eligibility.
+
+AccountBound mailboxes reside at the account's currently bound CoreNode. Message append / delete uses MessageManager; ordinary DKVS PUT cannot bypass the message protocol.
+
+## Node P2P Synchronization
+
+P2P transmits signed operations and current-set snapshots, without Wallet generations. Source eligibility derives from valid CoreNode / Bootstrap identity and configuration. A source is pinned only within one sync session, never persisted as collection ownership.
+
+Current flow:
 
 ```text
-absent            -> FREE_LOCAL
-absent            -> AUTOPAY/PAID
-FREE_LOCAL        -> FREE_LOCAL
-FREE_LOCAL        -> AUTOPAY/PAID
-AUTOPAY/PAID      -> AUTOPAY/PAID
+Connect to an eligible source → extract directory hints from signed pages without retaining complete records
+→ merge local directories → node-wide deduplicated queue
+→ one source/session downloads directory snapshots at a time
+→ Notify from eligible sources enters a node memory queue during synchronization
+→ install all directories → replay cached Notify in arrival order
+→ check the empty queue and set node READY under the same ingress lock
 ```
 
-The following transition is forbidden:
+READY belongs to the entire node. Completion of one peer or directory cannot open notification processing early. Failure or disconnection retains unfinished directories. The Notify cache has count / byte limits and overflow requires resynchronization.
 
-```text
-AUTOPAY/PAID -> FREE_LOCAL
-```
+Ongoing Notify subscriptions for non-mining connections come from completed directory discovery/subscription declarations. One directory snapshot controls only its serving scope and does not change ongoing subscriptions; an initial standalone directory request does not establish an ongoing subscription either. During serving, the temporary scope can receive Notify. Completion, cancellation, or expiry retains only declared ongoing subscriptions. Mining connections and `/account` binding notifications follow their routing exemptions. Failed discovery-response validation rejects the page, retains unfinished work, and enters existing synchronization scheduling and source handoff.
 
-`FREE_LOCAL -> AUTOPAY/PAID` does not use a promote API. Wallet reads the current `Seq/ETag`, creates a `Seq+1` record with a new fee proof and signature, and sends an ordinary `Put(ExpectedETag)`. The service node switches that key to canonical storage in one database batch and relays it only after commit.
+The source captures one independent snapshot on the directory session's first request, then serves every page from it. Height advances or new writes cannot change that snapshot; the receiver replays cached Notify after installation. ViewHeight remains the capture-time record validation height, without a per-page comparison to current chain height. The receiver separately verifies payment eligibility at its current local height and confirms that validation still applies before installation, without changing the source snapshot boundary. Each connection retains at most one directory snapshot, capped at 64 MiB of records, released on completion, cancellation, disconnect, or two minutes of inactivity.
 
-## CRUD and Per-Key CAS
+A repeated first-page request with the same active session and filters reuses the captured snapshot; a retry cannot change its subscription scope. The receiver ignores a response whose contents and signature exactly match the previously authenticated page in that session, without installing it twice or cancelling the next-page timeout. Different contents, invalid signatures, and other sessions retain existing validation rules. Connections process and send messages in order, so the receiver retains only the previous accepted response digest, without page history.
 
-The final Wallet application API, relative to the existing DKVS base path, is:
+Complete installation validates roots, source signatures, scope, record permissions / fees, and the receiver's concurrent-update baseline. Each outstanding page is attempted twice against the same source, with a ten-second timeout per attempt. After both time out, existing connection selection prefers another eligible source, falling back to the original if none is available. Unfinished directories remain queued, and a DKVS timeout does not close the connection. Discovery supplies path hints without requiring one global root across its pages; it never directly installs or deletes KV. Complete directory validation remains unchanged. Notify or later anti-entropy can discover new directories. Discovery messages carry records, but the receiver only extracts directory paths and does not install records directly from discovery pages.
 
-```text
-GET  /config
-GET  /record?key=...
-GET  /key-state?key=...
-POST /records/batch-cas
-POST /subscriptions/snapshot
-POST /subscriptions/watch
-```
+## Domain Integration Boundaries
 
-### Read
+Account management defines recovery packages, root protection, multi-device conflict handling, and wallet inventory. RGB11 defines encrypted snapshots / heads, business revisions, and asset-evidence validation. Domains access data through the SDK coordinator; DKVS eventual consistency does not imply automatic domain merging or asset validity.
 
-For a subscribed prefix:
+Wallet-independent primitives, codecs, replicas, and outbox storage live in `sdk/wallet/dkvs`. Manager lifecycle, endpoint selection, and domain adapters live in the parent `wallet` package. The PWA calls domain-level WASM APIs and does not maintain its own DKVS transport.
 
-```text
-Get(key)
--> read local confirmed replica
--> evaluate expiry at the last trusted ViewHeight
--> return value and freshness
-```
-
-An unsubscribed key is read directly from the service node while online and is unavailable while offline. An ordinary `Get` never creates a permanent subscription.
-
-### Put and Update
-
-A write carries only:
-
-```text
-request_id
-exact signed record
-ExpectAbsent or ExpectedETag
-EndpointID when the batch contains FREE_LOCAL
-```
-
-The service node validates the current effective key state, precondition, continuous `Seq`, signature, namespace permission, fee mode, TTL, and quota, then atomically commits the record and change commit.
-
-Wallet may apply a successful write response immediately and idempotently, but it must not jump the subscription cursor to the cursor returned by that write. Background synchronization continues from the previous subscription cursor, consumes the complete commit order, and deduplicates the same ETag or RequestID.
-
-### Delete and Recreate
-
-Delete is an ordinary signed tombstone Put:
-
-```text
-Flags = Tombstone
-Value = empty
-Seq = current floor + 1
-ExpectedETag = current ETag
-```
-
-A FREE_LOCAL delete creates only an endpoint-local floor; a canonical delete enters the node-to-node delete floor. Before recreating a deleted key whose history is absent locally, Wallet calls `/key-state` for `active / deleted / never_seen`, the latest `Seq`, and the current ETag.
-
-### Multi-Key Batch
-
-A batch may contain several keys under one logical owner, with an independent ETag precondition for each mutation. All preconditions, records, delete states, internal PathMeta changes, and one change commit are written in one service-node database batch. A failure applies nothing. An exact signed request is replayable as-is; partial prior application indicates a server atomicity failure.
-
-## Durable Change Log and Opaque Cursor
-
-Every effective-view change at the current endpoint must append a change commit in the same transaction, including:
-
-- FREE_LOCAL or paid Put;
-- explicit Delete;
-- TTL or retention expiry;
-- ordinary-Put transition from FREE_LOCAL to AUTOPAY;
-- an incoming P2P canonical update;
-- a P2P mirror or path snapshot that changes the endpoint effective view.
-
-Failed transactions and real no-ops write no change and wake no waiter. One multi-key batch maps to one atomic commit.
-
-The external cursor is an opaque token bound to `EndpointID`, revision, the previous token, and commit history. A client must not parse or construct it, and it must not retain only a bare revision. `RESET_REQUIRED` or `ENDPOINT_MISMATCH` is returned when:
-
-- the cursor belongs to another endpoint;
-- it is unknown, compacted, ahead, or tampered with;
-- the revision matches but the token does not;
-- restoring an older database backup creates a different change history.
-
-A normal restart restores EndpointID, record state, change log, and head token together, so existing cursors remain valid. Cursor reset is a normal recovery path: Wallet fetches a new snapshot. No endpoint epoch is needed.
-
-## Explicit Prefix Subscription
-
-Wallet SDK explicitly registers, removes, lists, and reports the status of prefixes. The registry is durable and resumes after Wallet restart. Accessing one key never implicitly and permanently subscribes its path.
-
-On initial subscription or reset, the service node reads the following under one database snapshot, read transaction, or consistency lock:
-
-```text
-endpoint effective records
-+ current change-log head cursor
-```
-
-Changes before the snapshot are in its records, while changes after the snapshot appear after its cursor. There is no snapshot-to-watch loss window. Wallet validates record signature, key, identity, Seq, and expiry. It does not save or verify PathMeta, StateRoot, PathGeneration, EndpointPathState, or a local overlay.
-
-One terminal keeps one aggregated long-poll to one service endpoint. The request carries the complete prefix set and one cursor. Default or recommended boundaries are:
-
-```text
-MaxPrefixesPerTerminal = 16
-MaxPrefixLength        = 256
-MaxChangesPerResponse  = 256
-LongPollTimeout        = 60 seconds
-ReconnectJitter        = 0-1 second
-```
-
-The service indexes `topic -> waiter references` and wakes only topics affected by a mutation. It must not scan all terminals, create one long-poll per prefix, or create a periodic ticker per request. After registering a waiter, it rechecks backlog to close the query-to-wait race.
-
-Responses preserve atomic commit groups. Wallet applies all keys in one commit through one local database batch, writes the commit cursor last, and notifies domain observers only after success.
-
-## Wallet Local Replica and Outbox
-
-`dkvsManager` is the only DKVS coordination layer. Domain modules access logical keys or domain APIs; they do not own a DKVS client or implement restore, conflict, remote synchronization, or auto-backup workers. PWA JavaScript does not know the DKVS transport.
-
-The local replica stores only:
-
-```text
-dkvs:subscription-state
-dkvs:subscription-prefix:<prefix>
-dkvs:subscription-record:<key>
-dkvs:subscription-key-state:<key>
-dkvs:outbox:<request_id>
-```
-
-Subscription status is:
-
-```text
-SYNCING
-READY
-OFFLINE_READY
-RESET_REQUIRED
-ERROR
-```
-
-The replica does not store PathMeta, PathRoot, PathGeneration, separate network/local delete floors, EndpointGeneration, HasLocalOnly, or path-session state. The first release also keeps no old-schema fallback or automatic migration. Development cache, replica, subscription-state, and outbox data may be cleared and rebuilt.
-
-The durable outbox uses unique `RequestID` keys and stores exact signed mutations, per-key preconditions, state, attempt count, and errors. A request containing FREE_LOCAL is pinned to the current EndpointID. After a network timeout, the exact entry is replayed; it is not modified, re-signed, or given a new precondition. After conflict, the domain recalculates from fresh key state and creates a new RequestID and signed mutation.
-
-The server change log, Wallet replica, and outbox are durable data and therefore use compact deterministic binary encoding with strict decode validation. JSON is reserved for HTTP APIs, logs, and human diagnostics; API JSON must not become a persistence format unless an explicit compatibility requirement is documented.
-
-## Offline Read and Endpoint Switching
-
-Local subscription state retains the last trusted `ViewHeight`:
-
-- a record is hidden when that trusted height has reached its expiry;
-- when chain movement during offline time is unknown, freshness is `offline_last_known`;
-- wall-clock time never fabricates block height;
-- offline readability means the last confirmed state is available, not that it is currently network-latest.
-
-Before switching service endpoints, Wallet scans active FREE_LOCAL records and pending FREE_LOCAL outbox entries. Required data is first changed to canonical storage with an ordinary AUTOPAY Put, then Wallet waits for write success, empty outbox, and observation of the same ETag through the current subscription.
-
-On the new endpoint:
-
-```text
-obtain the new EndpointID
--> old cursor becomes invalid naturally
--> fetch a new snapshot for every explicit prefix
--> atomically install the new replica and cursor
--> complete the switch
-```
-
-Until the new snapshot is installed, the old replica may be used only as `offline_last_known`; it cannot be marked READY for the new endpoint.
-
-## Node-to-Node P2P Boundary
-
-Nodes continue to maintain internally:
-
-```text
-canonical PathMeta / StateRoot
-network tombstone / delete floor
-trusted PathSnapshot
-Notify / Inv / Get / Data
-anti-entropy
-ordinary-node subscription ranges
-complete Miner canonical data
-```
-
-The Wallet change log is an endpoint application-view delta and does not replace the P2P canonical root. Small P2P changes may emit ordinary change commits; large replacements may emit `RESET_PREFIX`. A canonical snapshot or mirror must not delete endpoint-local FREE_LOCAL keyspace, and the complete PathMeta/snapshot structure is never sent to Wallet.
-
-## Domain Boundaries
-
-### Account Management
-
-Account management uses stable `/personal/<account_id>/account/...` keys. A recovery package and related objects may be committed through one multi-key batch. Multi-device field merging, wallet inventory, root-wallet protection, and recovery policy belong to the account-management domain, not to a general DKVS multi-primary guarantee.
-
-### RGB11
-
-RGB11 uses separate `/personal/<account_id>/rgb11/...` and `/blob/<account_id>/...` keys:
-
-- encrypted snapshot and wallet head use one key-ETag batch CAS;
-- the head binds a monotonic domain revision, snapshot state hash, and operation ID;
-- FREE_LOCAL supports restore only through the same endpoint;
-- cross-node persistence is enabled by an ordinary AUTOPAY Put;
-- a stale writer receives a head or DKVS write conflict and cannot overwrite newer state;
-- RGB asset validity remains a client-validation and Bitcoin-evidence decision.
-
-See [RGB11 Assets and Wallet SDK](../rgb11/readme.md) for the asset-specific model.
-
-## Capacity Target and Acceptance
-
-The first-release target is at least 10,000 realtime terminals per service node, primarily for private prefixes. At an average of four to eight prefixes per terminal, there are still 10,000 active long-polls, not one connection per prefix. Public hot prefixes and unbounded large blobs are outside this phase's capacity SLA and require a later hot-distribution design.
-
-Ten-thousand-terminal capacity is an acceptance target, not something inferred from goroutine counts. Before release, testing must include at least:
-
-- staged runs at 100, 1,000, 5,000, and 10,000 terminals;
-- 10,000 terminals with five prefixes each and 60-second long-polls for 30–60 minutes;
-- idle request rate near `10,000 / 60 ≈ 167 RPS`, without linear growth in prefix count;
-- P99 notification latency below two seconds when 1,000 private prefixes change in a short interval;
-- no waiter, FD, goroutine, heap, or topic-reference leak after timeout, cancel, restart, and compaction;
-- race-detector, fault-injection, and target-hardware checks for CPU, RSS, database IOPS, and network headroom.
-
-## Stable Error Codes
-
-Wallet branches on typed errors or stable codes, never human-readable text. Primary application errors include:
-
-```text
-DKVS_WRITE_CONFLICT
-DKVS_ENDPOINT_MISMATCH
-DKVS_RESET_REQUIRED
-DKVS_PERMISSION_DENIED
-DKVS_INVALID_SEQUENCE
-DKVS_LOCAL_ONLY_ENDPOINT_MISMATCH
-DKVS_STORAGE_MODE_DOWNGRADE
-DKVS_QUOTA_EXCEEDED
-DKVS_RECORD_NOT_FOUND
-```
-
-Internal node synchronization may still use stale-generation or path-divergence errors, but those are not Wallet CRUD preconditions.
-
-## Explicit Boundaries
-
-DKVS first release does not provide:
-
-- arbitrary multi-primary CRDT semantics;
-- cross-account transactions;
-- cross-node linearizable commits;
-- quorum, BFT, or an on-chain commit certificate;
-- FREE_LOCAL recovery across endpoints;
-- downgrade from PAID/AUTOPAY to FREE_LOCAL;
-- a promote API or endpoint epoch;
-- general large-file storage;
-- a 10,000-terminal fan-out SLA for public hot prefixes;
-- automatic understanding and merging of arbitrary business objects;
-- compatibility with the old Wallet PathMeta protocol, old local schema, or versioned keys.
-
-Applications should treat DKVS as a verifiable, owner-controlled, eventually consistent small-data layer, not as a relational database or a global consensus database.
+See [RGB11 Assets and Wallet SDK](../rgb11/readme.md) for asset-validation and backup boundaries.
