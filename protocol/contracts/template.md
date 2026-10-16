@@ -104,10 +104,17 @@ Deployment content does not include a user list, payment interval, end height, o
 
 Invocation APIs:
 
-1. `config`: a delegate sets its own per-block amount. The amount must not be lower than the contract minimum.
-2. `default invoke`: a delegate funds the contract address and increases its own payable balance. If the delegate has not configured an amount, the contract minimum is used.
-3. `cancel`: a delegate cancels its own payment configuration and receives its remaining payment balance back.
-4. `close`: only the deployer can close the contract and batch-refund remaining balances to all delegates.
+1. `config`: a delegate explicitly sets its own per-block amount and funds its delegated payment principal. The amount must not be lower than the contract minimum.
+2. `default invoke`: an ordinary transfer to the contract increases only its execution GAS reserve. It does not create or change a delegate's balance or settings. Anyone may contribute the actual GAS asset without acquiring contract management rights.
+3. `funding`: only the deployer can replenish contract execution GAS. The parameters contain a positive `gasFundingAmount` only; delegate payment amounts and blob quotas cannot be set.
+4. `cancel`: a delegate cancels its own payment configuration and receives its remaining payment balance back.
+5. `close`: only the deployer can close the contract and batch-refund remaining balances to all delegates.
+
+`funding` reuses the existing compact configuration parameter encoding and GAS accounting checks. GAS funding remaining after this call’s Result fee must cover the declared amount. When payment and GAS use the same asset, no delegated principal may remain. No delegate is created or changed. The generic PWA Tools invocation retains `funding` for maintenance; account management uses explicit `config` for “Pay DKVS storage fees”, keeping delegated principal separate from contract operating reserves. Default invocation accepts only the actual GAS asset and credits its net amount after this call's Result fee. When fee and GAS assets differ, other assets follow the existing failure-result handling rather than silently becoming delegated principal.
+
+The PWA separately displays the actual last paid SatoshiNet height and the estimated balance-expiry height. For settled height H, remaining delegate balance B, and per-block fee r, the existing balance gate implies insufficient payment balance from H + floor(B/r). This estimate is not proof of advance payment. Paused payments, insufficient operating GAS, rate changes, or stale state can invalidate the estimate. It is recalculated from actual state after confirmation without changing DKVS validity or retention rules.
+
+Users can renew while payments are current by explicitly choosing renewal and confirming its payment parameters. Status queries and reuse of an existing storage authorization do not create payments. A pending payment resumes and verifies the original transaction rather than creating another funding transaction.
 
 The payment asset can be sats or any SatoshiNet asset. If the payment asset is also the GAS asset, runtime must distinguish business payment balance from contract trigger/result gas balance within the same physical asset.
 
@@ -122,7 +129,7 @@ Activation and funding rules:
 
 1. Deployment and default invocation can both fund the contract address.
 2. Funding in the deploy transaction belongs to the deployer.
-3. Funding in a default invocation belongs to that invocation's invoker.
+3. Net default-invocation GAS belongs to the contract operating reserve; delegates contribute their own payment principal through explicit `config`.
 4. The contract is active when at least one delegate has enough balance for the next block and the contract has enough trigger/result gas.
 5. If a delegate lacks balance for one block, that delegate enters funding status and does not participate in that block's payment. Other sufficiently funded delegates can continue paying.
 6. If no delegate can pay, or if the contract lacks required trigger/result gas, the contract enters funding status and waits for more funding.
