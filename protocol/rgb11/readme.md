@@ -10,17 +10,9 @@ The validity of an RGB11 asset is ultimately determined by its contract, consign
 
 ### 1.1 Adopted RGB version
 
-SAT20 explicitly fixes the `rgb11` protocol space to the **RGB 0.11.1 family**. The consensus, operations, invoicing, schema, and PSBT/API baseline used by the current Go implementation is frozen at the **`0.11.1` stable release**.
+The SAT20 `rgb11` Go implementation is pinned to the official **RGB `0.11.2-rc.2`** release. Wallet SDK, SatoshiNet, and transcend use the same Go module version, `v1.0.1-0.20261122044538-d71d2bf3142e`. The [upstream manifest](https://github.com/sat20-labs/rgb11/blob/main/UPSTREAM_MANIFEST.json) records the official crates, Git commits, and SHA256 checksums.
 
-The version relationship is:
-
-- SAT20 protocol name: `rgb11`;
-- protocol target: RGB `0.11.1`;
-- frozen Rust consensus and data-format baseline: `0.11.1`;
-- the code does not automatically track the latest upstream branch;
-- RGB `0.12` contains consensus-level and data-structure changes and is not a compatible upgrade of `rgb11`; future support must use a separate `rgb12` protocol space.
-
-Therefore, “RGB11” in this documentation does not mean every RGB release. It means the frozen version set described above.
+This release candidate removes the `terminals` field from V1 consignments. Receivers match assignments against their own seals or outpoints. IFA, PFA, and BFA have new schema IDs. NIA, CFA, and UDA retain their schema IDs. Earlier `rc.1` V1 files and wallet recovery snapshots are incompatible. Any future integration with RGB `0.12` will use the separate `rgb12` protocol namespace.
 
 ### 1.2 Official Rust sources and exact commits
 
@@ -28,21 +20,23 @@ The SAT20 Go implementation uses the following frozen upstream Rust sources as i
 
 | Area | Upstream version | Upstream source |
 | --- | --- | --- |
-| RGB consensus, operation IDs, seals, commitments | `rgb-consensus 0.11.1` | [`rgb-protocol/rgb-consensus@32a67862`](https://github.com/rgb-protocol/rgb-consensus/commit/32a67862aef0f4c7a1fdc7834a3555d702f1bdf0) |
-| Operations, consignments, invoicing | `rgb-ops` / `rgb-invoicing 0.11.1` | [`rgb-protocol/rgb-ops@8bcdbf2f`](https://github.com/rgb-protocol/rgb-ops/commit/8bcdbf2fd706782948a4cbd799639709a4ed10d9) |
-| PSBT utilities and API | `rgb-psbt-utils 0.11.1` | [`rgb-protocol/rgb-api@102f4b09`](https://github.com/rgb-protocol/rgb-api/commit/102f4b09efa8f0e5987e60714364ba693c89def7) |
-| Official NIA, IFA, CFA, and UDA schemata | `rgb-schemas 0.11.1` | [`rgb-protocol/rgb-schemas@906817a0`](https://github.com/rgb-protocol/rgb-schemas/commit/906817a0c24a6bb7d2e53ceac9e2c185ec70a5ff) |
-| Strict Encoding | `rgb-strict-encoding 1.0.4` | [`rgb-protocol/rgb-strict-encoding@aa90bf35`](https://github.com/rgb-protocol/rgb-strict-encoding/commit/aa90bf353f53e8220aaacec4a671545808da05ae) |
-| Strict Types | `rgb-strict-types 1.0.4` | [`rgb-protocol/rgb-strict-types@9eb3b484`](https://github.com/rgb-protocol/rgb-strict-types/commit/9eb3b484f23b01c70f2a940bda07a207377b3864) |
+| RGB consensus, operation IDs, seals, commitments | `rgb-consensus 0.11.2-rc.2` | [`rgb-protocol/rgb-consensus@f5a353e8`](https://github.com/rgb-protocol/rgb-consensus/commit/f5a353e84719f0a8c076d0e7a6152222f1feb4e1) |
+| Operations, consignments, invoicing | `rgb-ops` / `rgb-invoicing 0.11.2-rc.2` | [`rgb-protocol/rgb-ops@a15396db`](https://github.com/rgb-protocol/rgb-ops/commit/a15396db9dee9ed097b770c0b42a2450cbe578c0) |
+| PSBT utilities and API | `rgb-psbt-utils 0.11.2-rc.2` | [`rgb-protocol/rgb-api@b36b4e96`](https://github.com/rgb-protocol/rgb-api/commit/b36b4e9618b5f7f9c491b763a44af2c790c47ce8) |
+| Official schema definitions | `rgb-schemas 0.11.2-rc.2` | [`rgb-protocol/rgb-schemas@9ae0f35a`](https://github.com/rgb-protocol/rgb-schemas/commit/9ae0f35aee3b572ae47320e7d0300c2719749c74) |
+| Strict Encoding | `rgb-strict-encoding 1.0.6` | [`rgb-protocol/rgb-strict-encoding@b8cd17ff`](https://github.com/rgb-protocol/rgb-strict-encoding/commit/b8cd17ff56db3f3969ea1de2424b4447938924d5) |
+| Strict Types | `rgb-strict-types 1.0.6` | [`rgb-protocol/rgb-strict-types@7ad2a6c3`](https://github.com/rgb-protocol/rgb-strict-types/commit/7ad2a6c3a453920af2c1283864c3159f657c4588) |
 
 ### 1.3 Wallet interoperability references
 
-The main external wallet oracle is:
+The current wallet interoperability peer is RGB Protocol's official `rgb-cmd 0.11.2-rc.2`, pinned to `rgb-api` release commit `b36b4e9618b5f7f9c491b763a44af2c790c47ce8`. Run acceptance on Bitcoin Regtest first, then sample Testnet4 when needed. RC2 bidirectional on-chain transfers are still pending acceptance. [Current wallet interoperability guide](https://github.com/sat20-labs/rgb11/blob/main/OFFICIAL_INTEROP.md#当前钱包互操作基线)
+
+Historical verification tools:
 
 - [`RGB-Tools/rgb-lib`](https://github.com/RGB-Tools/rgb-lib), version `0.3.0-beta.7`, pinned to commit [`538f2abaa67d7ce96be32d94092e8f1b9e3ea38e`](https://github.com/RGB-Tools/rgb-lib/commit/538f2abaa67d7ce96be32d94092e8f1b9e3ea38e). It is used to verify wallet state, Esplora synchronization, invoices, consignments, signing, receiving, and balance flows.
 - The official [`RGB-WG/rgb`](https://github.com/RGB-WG/rgb) command-line wallet, pinned to tag `v0.11.1-alpha.3` and commit [`a9bba35ceed7e0c4bc4e477f663ab022d7b0a23e`](https://github.com/RGB-WG/rgb/commit/a9bba35ceed7e0c4bc4e477f663ab022d7b0a23e), is used only for manual checks of the CLI surface and wallet derivation paths.
 
-`RGB-WG/rgb v0.11.1-alpha.3` uses alpha.3 crate formats and cannot serve as the `0.11.1` stable consignment/parser release gate. `rgb-lib 0.3.0-beta.7` still depends on rc.11 crates; its prior bidirectional wallet interoperability results are historical compatibility evidence. The stable protocol gate uses pinned `0.11.1` Rust crates.
+Historical bidirectional wallet interoperability used `rgb-lib 0.3.0-beta.7` (RGB `0.11.1-rc.11`). The `rc.2` Go/Rust vectors and offline validation use the corresponding official crates. Live bidirectional transfers require separate acceptance with a matching wallet version. [rc.2 alignment record](https://github.com/sat20-labs/rgb11/blob/main/RC2_ALIGNMENT.md)
 
 ### 1.4 SAT20 Go implementation
 
@@ -293,7 +287,7 @@ Wallet SDK includes local real-three-node E2E coverage for:
 
 These tests use local SatoshiNet bootstrap, core, and miner nodes. They do not depend on a public testnet or an external RGB regtest service.
 
-The Go engine repository retains stable Rust/Go differential vectors and parser round trips, plus historical `rgb-lib` rc.11 bidirectional file-exchange/regtest interoperability evidence. The exact gates and evidence locations are documented in `UPSTREAM_MANIFEST.json` and `OFFICIAL_INTEROP.md`.
+The Go engine repository retains rc.2 Rust/Go differential vectors and official parser round trips, plus historical `rgb-lib` rc.11 bidirectional file-exchange/regtest interoperability evidence. The exact gates and evidence locations are documented in `UPSTREAM_MANIFEST.json` and `OFFICIAL_INTEROP.md`.
 
 ## 11. Main Wallet SDK APIs
 

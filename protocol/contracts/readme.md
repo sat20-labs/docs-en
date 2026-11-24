@@ -2,6 +2,8 @@
 
 This document defines the common SatoshiNet smart-contract protocol. Smart contracts are different from [channel contracts](../channel-contracts/): channel contracts manage public asset pools and coordinate user-initiated L1/L2 cross-layer actions, while smart contracts run in SatoshiNet's global execution environment.
 
+**SatoshiNet smart contracts are available on the public testnet.** Users and developers can switch the live [SAT20 PWA Wallet](https://sat20.org/pwa/) to testnet, [claim test GAS](../../use/test-assets-and-gas.md), and deploy or invoke contracts. Key parameters such as the mainnet GAS asset name and total supply are still undecided, and the SatoshiNet Foundation has yet to be established. The mainnet launch is on hold.
+
 Contract-type details:
 
 1. [Template Contracts](template.md)

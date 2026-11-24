@@ -2,7 +2,7 @@
 
 > Updated 2026-10-05. This page describes the DKVS data model, write authorization, synchronization protocol, and SDK integration boundaries.
 
-DKVS is an owner-controlled small-data storage and synchronization layer for account management, encrypted backups, and application configuration. It provides atomic writes at one service node and eventual convergence of network-visible data, without cross-node linearizability or arbitrary multi-primary merging.
+DKVS lets data owners store and synchronize small records. DKVS is complete, and SAT20 Wallet uses it for account management and encrypted RGB11 backups. Applications can also use DKVS to store configuration data. It provides atomic writes at one service node and eventual convergence of network-visible data, without cross-node linearizability or arbitrary multi-primary merging.
 
 ## Core Principles
 

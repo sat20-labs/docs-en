@@ -4,7 +4,7 @@ This page records GAS, node, and network-economics questions that are not finali
 
 ## Current Open Questions
 
-1. GAS protocol name and asset identifier.
+1. Mainnet GAS asset name, identifier, and total supply.
 2. Differentiated staking requirements for Mining Nodes and Core Nodes, where Core Nodes include Mining Node capabilities and take additional STP responsibilities.
 3. Unstaking time.
 4. Malicious behavior and offline penalties.

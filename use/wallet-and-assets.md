@@ -1,13 +1,13 @@
 # Wallet and Assets: First Entry into SatoshiNet
 
-This page describes the current SAT20 PWA Wallet entries, asset locations, and cross-layer operations. The PWA supports mainnet and testnet; test features, Faucet, and contract drills must remain on testnet.
+This page describes the current SAT20 PWA Wallet entries, asset locations, and cross-layer operations. SAT20 PWA Wallet is now live and supports mainnet and testnet. You can access the test faucet and deploy or invoke SatoshiNet smart contracts on the public testnet.
 
 ## Preparation
 
 1. Open or install [SAT20 PWA Wallet](https://sat20.org/pwa/).
 2. Create or import a wallet, back up the seed phrase, and unlock it.
 3. Confirm network, wallet, and subaccount.
-4. Prepare Bitcoin L1 assets or test assets and reserve network fees. Testnet SGAS is available under `Tools -> Faucet`.
+4. Prepare Bitcoin L1 assets or test assets and reserve network fees. Testnet SGAS is available under `Tools → Faucet`.
 
 ## Current Wallet Entries
 
@@ -16,8 +16,8 @@ This page describes the current SAT20 PWA Wallet entries, asset locations, and c
 | Assets | Balances and send/receive across Bitcoin L1, SatoshiNet L2, and Channel locations |
 | Channel mode | Open, close, splicing-in/out, unlock, lock, and user-approved lock-with-expand when capacity is insufficient |
 | Market | Opens the network-matched AMM/limit-order market in a controlled embedded page and approves requests in the wallet |
-| Tools | Test Faucet, smart-contract deploy/invoke, Mint, and Mining entries |
-| Settings | Subaccounts, account management, operation logs, password, phrase, public key, UTXO, node, and referrer |
+| Tools | Access Mint and BTC Lucky Mining. Switch to testnet to use the faucet or deploy and invoke smart contracts |
+| Settings | Subaccounts, account management, operation logs, password, recovery phrase, public key, UTXO, node, and referrer. Account management and RGB11 backups use [DKVS](../protocol/dkvs/readme.md) |
 | RGB11 | L1 issue, import, invoice, send, and account recovery; STP transfer into SatoshiNet is not yet open |
 
 ## Standard Flow
@@ -32,4 +32,4 @@ This page describes the current SAT20 PWA Wallet entries, asset locations, and c
 
 For pending operations, inspect operation logs and reservation/transaction state before any retry. Never send a seed phrase to an Agent or web form.
 
-**Page Status: Implemented / Iterating; checked against PWA and Wallet SDK source on 2026-08-29**
+**SAT20 PWA Wallet is live.**

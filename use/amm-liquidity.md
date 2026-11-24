@@ -60,4 +60,4 @@ For every operation, check:
 3. Page display may lag behind chain state.
 4. When a network error occurs, first check txid and market state. Do not repeatedly submit the same value movement.
 
-**Page Status: In Development**
+**The market is available on mainnet and testnet. This guide uses testnet.**

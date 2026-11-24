@@ -4,6 +4,8 @@ Build is for developers, wallets, exchanges, indexers, smart contract developers
 
 SatoshiNet needs a complete developer system: wallets, SDK, indexers, contract templates, testnet, docs, examples, and community support. STP and Indexer together form the foundation for bringing assets into SatoshiNet: STP protects control, and Indexer provides asset facts.
 
+SatoshiNet smart contracts are available on the public testnet. Developers can switch SAT20 PWA Wallet to testnet to deploy or invoke contracts. The mainnet launch is on hold. See [Smart Contract Protocol](../protocol/contracts/readme.md).
+
 ## Quick Starts
 
 | First Thing You Want to Do | Entry |

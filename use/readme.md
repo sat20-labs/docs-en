@@ -32,7 +32,7 @@ Status labels distinguish an existing protocol/runtime from a currently publishe
 4. Use Indexer to verify Bitcoin L1 asset UTXO, confirmations, and protocol state.
 5. Splice Bitcoin L1 assets into the channel.
 6. Use unlock to release assets to the SatoshiNet user address.
-7. Transfer, trade, or use contracts on SatoshiNet.
+7. Transfer assets or use the SatoshiNet market. To test on-chain smart contracts, switch to the public testnet and [claim test GAS](test-assets-and-gas.md).
 8. When returning to Bitcoin L1, use lock, splicing-out, or close.
 
 ## Quick Entry by Goal

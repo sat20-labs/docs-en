@@ -1,6 +1,6 @@
 # Complete Your First Swap
 
-The PWA `Market` entry selects the L2 market from the current wallet network: [satsnet.ordx.market](https://satsnet.ordx.market/swap/?network=mainnet) for mainnet and [test-satsnet.ordx.market](https://test-satsnet.ordx.market/swap/?network=testnet) for testnet. Current acceptance covers AMM and limit orders. Market Channel Contracts are different from template AMM/LimitOrder under `Tools -> Smart Contracts`.
+The PWA `Market` entry selects the L2 market from the current wallet network: [satsnet.ordx.market](https://satsnet.ordx.market/swap/?network=mainnet) for mainnet and [test-satsnet.ordx.market](https://test-satsnet.ordx.market/swap/?network=testnet) for testnet. The market offers AMM and limit orders. Market Channel Contracts are different from template AMM/LimitOrder under `Tools -> Smart Contracts`.
 
 ## Flow
 

@@ -18,7 +18,7 @@ Pending means the lifecycle is unresolved. The wallet must not restore another r
 
 ## Is the Market AMM the same as the Tools AMM?
 
-No. Market AMM/limit orders are L2 Market Channel Contracts. AMM/LimitOrder under `Tools -> Smart Contracts` are SatoshiNet smart-contract templates.
+Market AMMs and limit orders use L2 market channel contracts and are available on mainnet. The AMM and LimitOrder options under `Tools → Smart Contracts` are templates for on-chain smart contracts. Users can test them on the public testnet. The mainnet launch is on hold. See [Smart Contract Protocol](../protocol/contracts/readme.md).
 
 ## Is DKVS a wallet task cache?
 

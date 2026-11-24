@@ -130,9 +130,8 @@ Activation and funding rules:
 1. Deployment and default invocation can both fund the contract address.
 2. Funding in the deploy transaction belongs to the deployer.
 3. Net default-invocation GAS belongs to the contract operating reserve; delegates contribute their own payment principal through explicit `config`.
-4. The contract is active when at least one delegate has enough balance for the next block and the contract has enough trigger/result gas.
-5. If a delegate lacks balance for one block, that delegate enters funding status and does not participate in that block's payment. Other sufficiently funded delegates can continue paying.
-6. If no delegate can pay, or if the contract lacks required trigger/result gas, the contract enters funding status and waits for more funding.
+4. A deployed, open contract is `active` when its operating GAS covers the Trigger and Result fees for the next settlement. It can accept its first delegate in this state. Insufficient operating GAS puts the contract in `funding`. Replenishing the reserve restores `active`.
+5. A delegate with less than one block's payment is in `funding`. Other delegates with sufficient balances can continue paying. Each delegate's own settlement history determines whether that delegate has paid.
 
 Payment rules:
 
@@ -142,11 +141,12 @@ Payment rules:
 4. If the recipient address is not empty, the payment output goes to that recipient.
 5. If the recipient address is empty, the payment output is treated as miner fee and enters the block reward.
 6. One Autopay contract should emit only one payment Result per block, preventing many delegates from producing too many automatic trigger transactions in the block.
+7. A block with no delegate payments due skips payment and preserves the operating GAS and recorded payment progress.
 
 Close rules:
 
 1. Only the deployer can close an Autopay contract.
 2. On close, the contract refunds each delegate's remaining payment balance to that delegate.
-3. Each close Result can contain at most 1000 refund outputs. If the number of delegates exceeds that per-transaction limit, unrefunded balances remain at the contract address and are processed by later Results.
-4. After close completes, remaining managed gas balance is returned to the deployer.
+3. Each close Result can contain at most 1000 refund outputs. When refunds require multiple batches, the contract is `closing` and later Results process the unrefunded balances left at the contract address. The contract stops accepting delegation while `closing`.
+4. After close completes, the remaining managed gas balance is returned to the deployer and the contract becomes `closed`.
 5. Assets at the contract address that are not part of the managed balances continue to follow the common framework rule for residual contract-address assets.

@@ -75,6 +75,8 @@ Smart contracts run in the global SatoshiNet execution environment and rely on c
 
 GAS is the economic entry point for contract execution, transaction processing, and ecosystem incentives.
 
+The latest SatoshiNet mainnet update is complete. STP channels and channel contracts remain available on mainnet. Users can test on-chain smart contracts on the public testnet while the mainnet launch is on hold.
+
 See [Channel Contracts](../channel-contracts/), [Smart Contract Protocol](../contracts/), and [Network Economics](../../network-economics/).
 
 ## Safety Model

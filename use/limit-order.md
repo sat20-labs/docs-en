@@ -56,4 +56,4 @@ The smart contract template LimitOrder is a separate testing path. It can only b
 3. Page state may lag behind chain state.
 4. If a transaction result is unknown, first check txid and contract state. Do not repeatedly submit the same order or fill.
 
-**Page Status: In Development**
+**The market is available on mainnet and testnet. This guide uses testnet.**

@@ -1,6 +1,6 @@
 # GAS: Network Fee and Security Asset
 
-GAS is SatoshiNet's network fee and security staking asset. It connects network usage, node service, and long-term security.
+SatoshiNet plans to use GAS for network fees and node staking. It connects network usage, node service, and long-term security.
 
 ## What GAS Is Used For
 
@@ -19,6 +19,6 @@ GAS is SatoshiNet's network fee and security staking asset. It connects network 
 
 ## Current Status
 
-Runtime gas metering and fee deduction are implemented. Testnet SGAS covers transaction, contract, Faucet, and Autopay flows. Formal L1 GAS issuance, cross-layer supply reconciliation, staking, penalties, node admission, initial distribution, and foundation governance still require technical simulation, public discussion, and legal review.
+Runtime gas metering and fee deduction are implemented. Testnet SGAS covers transaction, contract, Faucet, and Autopay flows. The mainnet GAS asset name, total supply, and other key parameters are still undecided, and the SatoshiNet Foundation has yet to be established. The smart contract launch on mainnet is therefore on hold. Issuance, staking, distribution, and governance rules are still under design.
 
 **Page Status: Fee Mechanism Implemented / Economics Design in Progress**

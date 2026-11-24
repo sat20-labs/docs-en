@@ -44,14 +44,14 @@ Smart Contracts, DKVS, and AI Agent Wallet move SatoshiNet toward a more open va
 | SatoshiNet | Native execution layer for Bitcoin’s future value network |
 | Indexer | Mainnet asset fact layer for Bitcoin L1 and SatoshiNet |
 | STP / Transcend | Mainnet cross-layer asset control, exit, and punishment protocol between Bitcoin L1 and SatoshiNet |
-| SatoshiNet | Mainnet execution network for transactions, assets, blocks, contracts, applications, and services |
-| Smart Contracts | Programmability layer on SatoshiNet. The framework has been implemented and entered public testnet; current testing includes Agent / Prediction contracts and, under PWA `Tools -> Smart Contracts`, template AMM / limit order plus EVM `ConstantProductAMM` / `LimitOrderBook` samples |
-| DKVS | Implemented signed small-data storage and synchronization under testnet integration, used for account management, RGB11 backup, mailbox, and application configuration; it is not chain consensus state |
+| SatoshiNet | The latest mainnet update is complete. SatoshiNet supports transactions, asset transfers, STP channels, and channel contracts |
+| Smart Contracts | Programmability layer on SatoshiNet. Users can deploy and invoke contracts on the public testnet. The mainnet launch is on hold |
+| DKVS | Storage and synchronization layer for small records. DKVS is complete and is used for wallet account management and RGB11 backups |
 | D-Indexer | Distributed L1 Indexer direction still in R&D; DKVS is one reusable foundation, but the two are not one delivered product |
-| SAT20 Wallet | Wallet entry with existing browser extension and PWA forms, continuously iterating |
+| SAT20 Wallet | Available as a browser extension and as the [PWA Wallet](https://sat20.org/pwa/), which is now live |
 | AI Agent Wallet | Agent authorization and operation entry evolving from SAT20 Wallet |
 | ORDX | Satoshi-denominated asset protocol in the SAT20 stack |
-| GAS | SatoshiNet-native network fee and security staking asset |
+| GAS | Planned asset for SatoshiNet network fees and node staking. The mainnet asset name and total supply are still undecided |
 
 ## Why SatoshiNet Exists
 
@@ -77,7 +77,7 @@ STP: Mainnet cross-layer control, exit, and punishment
    ↓
 SatoshiNet: Mainnet transactions, assets, blocks, and service execution
    ↓
-Smart Contracts: Agent / Prediction contracts on public testnet, plus template AMM / limit order and EVM ConstantProductAMM / LimitOrderBook in PWA tools
+Smart Contracts: The public testnet is open for deploying or invoking template contracts, Prediction contracts, and EVM samples
    ↓
 DKVS: signed small data, account recovery, mailbox, and application-state coordination
    ↓
@@ -93,8 +93,8 @@ D-Indexer is intentionally not shown above as a delivered layer. It remains an R
 | Understand SatoshiNet | Understand why Bitcoin needs native extension, the asset safety model, Indexer, STP, contracts, GAS, and AI Agents | [Learn: Understanding SatoshiNet](learn/readme.md) |
 | Community infrastructure | Plan nodes, indexers, explorers, wallets, DEX, DAO, Launchpad, and operations backend for BTC communities | [Community Stack](community-stack/readme.md) |
 | Bring assets into SatoshiNet | Use mainnet Indexer to identify Bitcoin L1 asset facts and mainnet STP to place assets into a user-exitable channel safety boundary | [STP Introduction](learn/stp.md) |
-| User flows | Use SAT20 Wallet extension or PWA to enter SatoshiNet, complete swaps, and verify transactions with Explorer | [Use SatoshiNet](use/readme.md) |
-| Test smart contracts | Use PWA Wallet to claim test GAS, deploy or participate in Prediction contract testing | [Prediction Contract Test](use/prediction-contract.md) |
+| User flows | The SAT20 PWA Wallet is live. Use the PWA Wallet or browser extension to access SatoshiNet, complete swaps, and verify transactions in Explorer | [Use SatoshiNet](use/readme.md) |
+| Test smart contracts | Switch the PWA Wallet to the public testnet, then claim test GAS to deploy or invoke contracts | [Get Test GAS and Test Contracts](use/test-assets-and-gas.md) |
 | Developer integration | Integrate Indexer, STP, SatoshiNet, Smart Contracts, Wallet SDK, and community DEX / DAO | [Developer Center](build/readme.md) |
 | Network operation | Run Mining Node, Core Node, Indexer, Explorer, RPC, and monitoring | [Run the Network](run/readme.md) |
 | Network economics | Understand GAS, fee flows, node staking, incentives, and open design questions | [Network Economics](network-economics/README.md) |
@@ -133,11 +133,11 @@ The website and docs use the same status language to express capability boundari
 | --- | --- | --- |
 | Indexer | Implemented · Mainnet | Mainnet asset fact layer for Bitcoin L1 and SatoshiNet assets, transactions, confirmations, and protocol events |
 | STP | Implemented · Mainnet | STP has been implemented and deployed to mainnet for cross-layer asset control, exit paths, and punishment coverage |
-| SatoshiNet | Implemented · Mainnet | Mainnet execution network carrying transactions, asset representation, base applications, and services |
-| Smart Contracts / EVM Runtime / Agent Contracts | Testnet / Iterating | The smart contract framework has been implemented and entered public testnet; current validation includes Agent / Prediction contracts and, under PWA `Tools -> Smart Contracts`, template AMM / limit order plus EVM `ConstantProductAMM` / `LimitOrderBook` samples |
-| DKVS | Implemented · Testnet / Iterating | Signed records, CAS, subscriptions, FREE_LOCAL, AUTOPAY propagation, account management, and RGB11 recovery paths are implemented and remain under testnet integration and stability validation |
+| SatoshiNet | Implemented · Mainnet | The latest mainnet update is complete. Asset transfers, STP channels, and channel contracts remain available. See [Current Capabilities](ecosystem/satoshinet-today.md) |
+| Smart Contracts / EVM Runtime / Agent Contracts | Public Testnet / Mainnet on Hold | Users can deploy and invoke contracts on testnet. Key parameters such as the mainnet GAS asset name and total supply are still undecided, and the SatoshiNet Foundation has yet to be established. See [Smart Contract Protocol](protocol/contracts/readme.md) |
+| DKVS | Complete | Used for wallet account management and RGB11 backups. See [DKVS](protocol/dkvs/readme.md) |
 | D-Indexer | R&D / In Development | Distributed L1 asset-fact networking remains under development; DKVS implementation does not imply that D-Indexer is live |
-| SAT20 Wallet / AI Agent Wallet | Implemented · Iterating | SAT20 Wallet already exists as browser extension and PWA. AI Agent Wallet continues evolving from that base |
+| SAT20 Wallet / AI Agent Wallet | PWA Live / Agent Wallet Iterating | The PWA Wallet supports mainnet and testnet. See [Wallet and Assets](use/wallet-and-assets.md) |
 | VSN / Long-Term Governance | Design / R&D | These areas remain under design, experimentation, and validation, and are not presented as finished production capabilities |
 
 ## Status and Evidence

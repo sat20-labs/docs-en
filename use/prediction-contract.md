@@ -81,4 +81,4 @@ If page state, wallet records, and Explorer evidence are inconsistent, stop plac
 4. Users should never enter real private keys, mnemonics, or exchange account information.
 5. Result source URLs should be publicly accessible pages, not private chats, verbal commitments, or non-reviewable data.
 
-**Page Status: In Development**
+**Availability: SatoshiNet public testnet.**

@@ -4,6 +4,8 @@ Mining Nodes are responsible for SatoshiNet block production, transaction orderi
 
 The node software and block-production path are implemented and running. Open participation rules remain separate from implementation capability.
 
+The latest SatoshiNet mainnet update is complete. Mainnet nodes support BTC Lucky Mining. To participate, open [SAT20 PWA Wallet](https://sat20.org/pwa/) and go to `Tools → Mining`.
+
 ## Questions Still Requiring Public Answers
 
 1. What a Mining Node does.

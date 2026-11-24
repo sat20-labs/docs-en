@@ -1,6 +1,6 @@
 # Smart Contracts and GAS
 
-The SatoshiNet smart contract framework has been implemented and entered public testnet testing. STP + indexers solve how assets are identified, verified, safely entered, and safely exited. Smart contracts solve what assets can do after entering SatoshiNet.
+SatoshiNet smart contracts are open for testing on the public testnet. The mainnet launch is on hold. The mainnet GAS asset name, total supply, and other key parameters are still undecided, and the SatoshiNet Foundation has yet to be established. STP + indexers solve how assets are identified, verified, safely entered, and safely exited. Smart contracts solve what assets can do after entering SatoshiNet.
 
 With smart contracts, SatoshiNet can evolve from an asset circulation network into an application network.
 
