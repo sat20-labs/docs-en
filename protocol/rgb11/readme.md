@@ -75,29 +75,32 @@ A Go capability is considered compatible only after it passes the frozen Rust di
 RGB11 assets have two distinct identity layers:
 
 - **Contract ID / official asset ID**: the protocol-level unique identity and the final validation authority;
-- **SAT20 AssetName**: the readable index name used by wallets, UIs, and asset lists.
+- **SatoshiNet AssetName**: the readable index name assigned to a registered RGB11 asset on SatoshiNet.
 
-For newly issued or imported contracts, the current Wallet SDK derives a deterministic AssetName:
+Public Transcend uses the following canonical asset name format. The public contract registry stores contract data by full Contract ID.
 
 ```text
-rgb11:<type>:<normalized_ticker>@<contract_fingerprint>
+rgb11:<type>:<normalized_ticker>@<contract_id_suffix>
 ```
 
-Example:
+For the testnet contract `TRGB241`, this rule yields:
 
 ```text
-rgb11:f:usdt@k7m3q9x2
+rgb11:f:trgb241@0e8a
 ```
 
 Where:
 
 - `rgb11` is the protocol name;
 - `f` represents a fungible asset;
-- ticker metadata is lower-cased and restricted in characters and length;
-- the default fingerprint is a deterministic 8-character digest of the Contract ID; on a prefix collision, the registry may extend it by 2 characters at a time, up to 16;
-- the full Contract ID remains in ticker extension metadata and must not be inferred from the short ticker alone.
+- the ticker comes from the contract Genesis, is validated under the ticker rules, and is converted to lowercase;
+- the suffix is the last four characters of the full Contract ID's 64-character lowercase hexadecimal representation, with leading zeros preserved;
+- resubmitting the same contract returns the existing registration. If different Contract IDs produce the same full AssetName, the second registration is rejected;
+- the AssetName is bound to the full Contract ID, which remains the identity used for asset validation.
 
-A short ticker is a display alias only. Until a primary-asset registry or issuer verification has completed, the UI should retain the fingerprint. A short label such as `usdt` may become the primary display name only after explicit verification.
+Core derives the asset name from the verified public contract and signs an immutable name binding. The public Transcend deployment content, contract path, and deposit Anchor use the same asset name. Nodes independently derive the name from the Anchor's RGB proof and verify the Core-signed binding.
+
+Wallets display the canonical AssetName for RGB assets. On Bitcoin, the wallet can derive this name from the verified Genesis ticker and full Contract ID before SatoshiNet registration. In the SatoshiNet asset details API, `TickerInfo.name` and `displayname` contain the on-chain AssetName, and `contract_id` comes from the verified DKVS binding.
 
 ## 3. Wallet SDK Boundary
 
@@ -133,17 +136,16 @@ Balances before and after issuance come from client-verifiable state. They are n
 
 ### 4.2 Import
 
-A contract file must be parsed and validated before the SDK registers:
+A contract file must be parsed and validated before the SDK saves the local contract data:
 
 - Contract ID;
 - schema;
-- canonical AssetName;
-- original ticker, normalized ticker, and fingerprint;
+- original and normalized tickers;
 - issuer and control metadata;
 - optional reject-list or policy-adapter metadata;
 - current validation status.
 
-Invalid, damaged, or conflicting contracts do not enter the usable asset list.
+Invalid, damaged, or conflicting contracts do not enter the usable asset list. See Section 2 for the SatoshiNet AssetName registration rules.
 
 ## 5. Receive Modes
 
@@ -209,6 +211,8 @@ An RGB11 balance is the sum of locally valid allocations. The following do not b
 - Contract ID, schema, or assignment mismatch;
 - state rejected by a configured reject list or policy adapter;
 - local RGB11 state marked inconsistent or broken.
+
+A public-channel deposit carrying only an RGB11 asset sets the SatoshiNet Anchor asset output `Value` to `0`. The Bitcoin carrier retains its actual satoshi value, which is verified against the corresponding Bitcoin UTXO.
 
 ## 8. DKVS Wallet Backup
 
